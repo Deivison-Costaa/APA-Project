@@ -21,31 +21,19 @@ bool Instance::read(const std::string &filePath)
     costMatrix.resize(numberOfFlights, std::vector<int>(numberOfFlights));
 
 
-    for (int i = 0; i < numberOfFlights; ++i)
-    {
+    for (int i = 0; i < numberOfFlights; ++i) 
         file >> landingTakeoffTime[i];
-    }
-
 
     for (int i = 0; i < numberOfFlights; ++i)
-    {
         file >> waitingTime[i];
-    }
-
 
     for (int i = 0; i < numberOfFlights; ++i)
-    {
         file >> penalties[i];
-    }
 
-    // Lê matriz de custo
     for (int i = 0; i < numberOfFlights; ++i)
-    {
         for (int j = 0; j < numberOfFlights; ++j)
-        {
             file >> costMatrix[i][j];
-        }
-    }
+
 
     file.close();
     return true;
@@ -78,9 +66,7 @@ void Instance::print() const
     for (int i = 0; i < numberOfFlights; ++i)
     {
         for (int j = 0; j < numberOfFlights; ++j)
-        {
             std::cout << costMatrix[i][j] << " ";
-        }
         std::cout << "\n";
     }
 }
