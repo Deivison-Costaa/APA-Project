@@ -1,18 +1,33 @@
-CC = g++
-CFLAGS = -Wall -O2 -std=c++17 -Iinclude
-TARGET = airport_scheduler
-SOURCES = src/main.cpp src/InputReader.cpp src/Scheduler.cpp
-OBJECTS = $(SOURCES:.cpp=.o)
+# Compilador e flags
+CXX = g++
+CXXFLAGS = -Wall -Wextra -std=c++17 -I./Include -O2
 
+# Nome do executável final
+TARGET = apa_project
+
+# Fontes
+SRCS = src/main.cpp \
+       src/Instance.cpp \
+       src/GreedyAlgorithm.cpp \
+	   src/VariableNeighborhoodDescent.cpp \
+	   src/VND.cpp \
+
+# Objetos (substitui .cpp por .o)
+OBJS = $(SRCS:.cpp=.o)
+
+# Regra principal
 all: $(TARGET)
 
-$(TARGET): $(OBJECTS)
-	$(CC) -o $(TARGET) $(OBJECTS)
+# Linkagem final + limpeza automática dos .o
+$(TARGET): $(OBJS)
+	$(CXX) $(CXXFLAGS) -o $@ $^
+	rm -f $(OBJS)
 
-src/%.o: src/%.cpp
-	$(CC) $(CFLAGS) -c $< -o $@
 
+# Compilação dos arquivos fonte para objeto
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+# Limpeza
 clean:
-	rm -f src/*.o $(TARGET)
-
-.PHONY: all clean
+	rm -f $(OBJS) $(TARGET)
