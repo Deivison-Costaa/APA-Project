@@ -1,28 +1,31 @@
 # Compilador e flags
 CXX = g++
-CXXFLAGS = -Wall -Wextra -std=c++11 -I./Include -I./Include/InstanceReader
+CXXFLAGS = -Wall -Wextra -std=c++11 -I./Include
 
-# Nome do executável
+# Nome do executável final
 TARGET = apa_project
 
 # Fontes
 SRCS = src/main.cpp \
-       Include/InstanceReader/InstanceReader.cpp
+       src/Instance.cpp \
+       src/GreedyAlgorithm.cpp
 
-# Objetos
+# Objetos (substitui .cpp por .o)
 OBJS = $(SRCS:.cpp=.o)
 
-# Regra padrão
+# Regra principal
 all: $(TARGET)
 
-# Linkagem final
+# Linkagem final + limpeza automática dos .o
 $(TARGET): $(OBJS)
 	$(CXX) $(CXXFLAGS) -o $@ $^
+	rm -f $(OBJS)
 
-# Compilação dos arquivos .cpp
+
+# Compilação dos arquivos fonte para objeto
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-# Limpeza dos objetos e binários
+# Limpeza
 clean:
 	rm -f $(OBJS) $(TARGET)
