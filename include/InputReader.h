@@ -5,11 +5,9 @@
 #include <string>
 #include "Flight.h"
 
-using namespace std;
-
 class InputReader {
 public:
-    bool read(const string& filename, int& n, int& m, vector<Flight>& flights, vector<vector<int>>& t);
+    bool read(const std::string& filename, int& n, int& m, std::vector<Flight>& flights, std::vector<std::vector<int>>& t);
 };
 
 #endif
