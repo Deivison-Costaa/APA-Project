@@ -15,6 +15,7 @@ public:
     std::vector<int> waitingTime;
     std::vector<int> penalties;
     std::vector<std::vector<int>> costMatrix;
+    
 
     //Solução e lista de voos, fazem parte da resposta que devemos escrever depois.
     int solution = 0;
@@ -22,6 +23,7 @@ public:
 
     bool read(const std::string &filePath);
     void print() const;
+    int calculateTotalCost(const std::vector<std::vector<int>> &schedules);
 };
 
-#endif // INSTANCE_HPP
+#endif
