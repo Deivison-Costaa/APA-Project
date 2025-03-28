@@ -23,7 +23,9 @@ public:
 
     bool read(const std::string &filePath);
     void print() const;
-    int calculateTotalCost(const std::vector<std::vector<int>> &schedules);
+    int calculateTotalCost(const std::vector<std::vector<int>> &schedules) const;
+    int calculateRunwayCost(const std::vector<int> &runway) const;
+    void printFlightLists() const;
 };
 
 #endif

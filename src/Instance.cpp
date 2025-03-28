@@ -71,7 +71,7 @@ void Instance::print() const
     }
 }
 
-int Instance::calculateTotalCost(const std::vector<std::vector<int>> &schedules)
+int Instance::calculateTotalCost(const std::vector<std::vector<int>> &schedules) const
 {
     int totalCost = 0;
 
@@ -103,4 +103,35 @@ int Instance::calculateTotalCost(const std::vector<std::vector<int>> &schedules)
     }
 
     return totalCost;
+}
+
+int Instance::calculateRunwayCost(const std::vector<int> &runway) const
+{
+    int cost = 0;
+    int prevEndTime = 0;
+    int prevFlight = -1;
+    for (int flight : runway)
+    {
+        int tij = (prevFlight == -1) ? 0 : costMatrix[prevFlight][flight];
+        int startTime = std::max(prevEndTime + tij, landingTakeoffTime[flight]);
+        cost += (startTime - landingTakeoffTime[flight]) * penalties[flight];
+        prevEndTime = startTime + waitingTime[flight];
+        prevFlight = flight;
+    }
+    return cost;
+}
+
+void Instance::printFlightLists() const
+{
+    std::cout << "Flight Lists:" << std::endl;
+    for (size_t i = 0; i < flightList.size(); ++i)
+    {
+        std::cout << "Runway " << i << ": ";
+        for (int flight : flightList[i])
+        {
+            std::cout << flight << " ";
+        }
+        std::cout << std::endl;
+    }
+    std::cout << "\n\n" << std::endl;
 }
