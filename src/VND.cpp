@@ -6,7 +6,7 @@
 
     std::vector<std::vector<int>> VND::execute(std::vector<std::vector<int>> initialSolution)
     {
-        currentCost = instance.calculateTotalCost(initialSolution);
+        //currentCost = instance.calculateTotalCost(initialSolution);
         bool improved;
 
         do
