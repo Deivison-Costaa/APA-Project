@@ -12,19 +12,20 @@ r = [random.randint(0, 100) for _ in range(n)]
 c = [random.randint(5, 30) for _ in range(n)]
 p = [random.randint(10, 200) for _ in range(n)]
 
-# Generate symmetric t matrix with zeros on diagonal
+# Generate matrix with zeros on diagonal
 t = [[0] * n for _ in range(n)]
 for i in range(n):
-    for j in range(i + 1, n):
-        val = random.randint(5, 30)
-        t[i][j] = val
-        t[j][i] = val
+    for j in range(n):
+        if i != j:
+            t[i][j] = random.randint(5, 80)
 
 # Create directory if needed
 os.makedirs("Instances", exist_ok=True)
 
+path = "Instances/instance3.txt"
+
 # Write to file
-with open("Instances/instance3.txt", "w") as f:
+with open(path, "w") as f:
     f.write(f"{n}\n")
     f.write(f"{m}\n\n")
     
@@ -35,4 +36,4 @@ with open("Instances/instance3.txt", "w") as f:
     for row in t:
         f.write(" ".join(map(str, row)) + "\n")
 
-print(f"Instance generated successfully at Instances/instance3.txt")
+print(f"Instance generated successfully at path: {path}")
