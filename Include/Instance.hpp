@@ -14,6 +14,7 @@ public:
     std::vector<int> landingTakeoffTime;
     std::vector<int> waitingTime;
     std::vector<int> penalties;
+    std::vector<int> flightsOrder;
     std::vector<std::vector<int>> costMatrix;
     
 

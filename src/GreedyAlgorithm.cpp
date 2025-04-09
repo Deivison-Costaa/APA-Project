@@ -2,22 +2,24 @@
 #include <algorithm>
 #include <limits>
 #include <vector>
+#include <set>
+#include <climits>
 
 std::vector<std::vector<int>> GreedyAlgorithm::nearestNeighbor(const Instance &instance)
 {
-    int n = instance.numberOfFlights; // essa linha e a próxima são apenas para diminuir o nome das variáveis
-    int m = instance.numberOfRunways;
+    //int n = instance.numberOfFlights;
+    int m = instance.numberOfRunways; // essa linha e apenas para diminuir o nome das variáveis
 
     //aqui estamos dando nome para o vetor de voos
-    std::vector<int> flights(n);
-    for (int i = 0; i < n; ++i)
-    {
-        flights[i] = i;
-    }
+    std::vector<int> flights = instance.flightsOrder;
+    // for (int i = 0; i < n; ++i)
+    // {
+    //     flights[i] = i;
+    // }
 
-    // Ordena os voos por tempo de liberação do pouso/decolagem
-    std::sort(flights.begin(), flights.end(), [&](int a, int b)
-              { return instance.landingTakeoffTime[a] < instance.landingTakeoffTime[b]; });
+    // // Ordena os voos por tempo de liberação do pouso/decolagem
+    // std::sort(flights.begin(), flights.end(), [&](int a, int b)
+    //           { return instance.landingTakeoffTime[a] < instance.landingTakeoffTime[b]; });
 
     // Cria um vetor de pistas, cada uma com um par (tempo de término do último voo, lista de voos), depois
     //verificar se há uma forma melhor ou mais eficiente de fazer isso

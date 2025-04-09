@@ -6,7 +6,6 @@
 class GreedyAlgorithm{
 public:
     std::vector<std::vector<int>> nearestNeighbor(const Instance& instance);
-    std::vector<std::vector<int>> cheaperInsertion(const Instance& Instance);
 };
 
 

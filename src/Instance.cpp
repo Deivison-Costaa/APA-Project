@@ -1,6 +1,7 @@
 #include "Instance.hpp"
 #include <fstream>
 #include <iostream>
+#include <algorithm>
 
 bool Instance::read(const std::string &filePath)
 {
@@ -36,6 +37,19 @@ bool Instance::read(const std::string &filePath)
 
 
     file.close();
+
+    flightsOrder.resize(numberOfFlights);
+    for (int i = 0; i < numberOfFlights; ++i)
+    {
+        flightsOrder[i] = i;
+    }
+
+    std::sort(flightsOrder.begin(), flightsOrder.end(),
+              [this](int a, int b)
+              {
+                  return landingTakeoffTime[a] < landingTakeoffTime[b];
+              });
+
     return true;
 }
 
@@ -107,6 +121,8 @@ int Instance::calculateTotalCost(const std::vector<std::vector<int>> &schedules)
 
 int Instance::calculateRunwayCost(const std::vector<int> &runway) const
 {
+    //é parecido com o outro mas pra uma pista só (pras funções de vizinhança calcular só uma pista
+    //é bem menos custoso)
     int cost = 0;
     int prevEndTime = 0;
     int prevFlight = -1;

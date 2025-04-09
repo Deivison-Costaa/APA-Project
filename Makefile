@@ -1,6 +1,6 @@
 # Compilador e flags
 CXX = g++
-CXXFLAGS = -Wall -Wextra -std=c++17 -I./Include -O2
+CXXFLAGS = -Wall -Wextra -std=c++17 -I./Include -O3 -fopenmp
 
 # Nome do executável final
 TARGET = apa_project
@@ -10,7 +10,7 @@ SRCS = src/main.cpp \
        src/Instance.cpp \
        src/GreedyAlgorithm.cpp \
 	   src/VariableNeighborhoodDescent.cpp \
-	   src/VND.cpp \
+	   src/MetaHeuristics.cpp \
 
 # Objetos (substitui .cpp por .o)
 OBJS = $(SRCS:.cpp=.o)
