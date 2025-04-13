@@ -2,8 +2,8 @@ import os
 import random
 
 # Configuration
-n = 120  # Number of flights
-m = 30  # Number of runways
+n = 750  # Number of flights
+m = 50  # Number of runways
 
 # Generate arrays
 random.seed(42)  # For reproducibility (optional)
@@ -22,7 +22,7 @@ for i in range(n):
 # Create directory if needed
 os.makedirs("Instances", exist_ok=True)
 
-path = "Instances/instance3.txt"
+path = "Instances_2/instance4.txt"
 
 # Write to file
 with open(path, "w") as f:

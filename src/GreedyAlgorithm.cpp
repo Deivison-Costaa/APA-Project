@@ -62,6 +62,7 @@ std::vector<std::vector<int>> GreedyAlgorithm::nearestNeighbor(const Instance &i
 
     //isso aqui vai basicamente pegar a estrutura do runway e 
     //converter pra um vector<vector>>, preciso pensar se tem uma solução melhor
+    //provavelmente é melhor fazer isso separado pra livrar essa parte
     std::vector<std::vector<int>> result(m);
     for (int i = 0; i < m; ++i)
     {

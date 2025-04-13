@@ -74,7 +74,7 @@ void testAllInstances()
         // VariableNeighborhoodDescent vnd;
         // auto finalSolution = vnd.vnd(instance, initialSolution);
 
-        auto finalSolution = meta.grasp(10000, 0.1);
+        auto finalSolution = meta.grasp(100000, 0.3);
 
         // VND vnd(instance);
         // auto finalSolution = vnd.execute(initialSolution);
@@ -100,6 +100,7 @@ void testAllInstances()
         }
 
         cout << " | Tempo: " << timeVND << "s\n";
+
     }
 
     cout << "\n=========================================\n"
@@ -109,44 +110,57 @@ void testAllInstances()
 int main(void)
 {
 
-    testAllInstances();
+    // testAllInstances();
+    // return 0;
 
-    // string filePath = "Instances_2/instance3.txt";
-    // timespec start, end;
-    // double timeGreedy, timeVND1;
 
-    // Instance instance;
-    // instance.read(filePath);
 
-    // // Medição do Greedy
-    // clock_gettime(CLOCK_MONOTONIC, &start);
-    // GreedyAlgorithm greedy;
-    // auto test = greedy.nearestNeighbor(instance);
-    // clock_gettime(CLOCK_MONOTONIC, &end);
-    // timeGreedy = diffTimespec(start, end);
-    // auto testCost = instance.calculateTotalCost(test);
+    string filePath = "Instances_2/instance4.txt";
+    timespec start, end;
+    double timeGreedy, timeVND;
+
+    Instance instance;
+    instance.read(filePath);
+
+    // Medição do Greedy
+    clock_gettime(CLOCK_MONOTONIC, &start);
+    GreedyAlgorithm greedy;
+    auto test = greedy.nearestNeighbor(instance);
+    clock_gettime(CLOCK_MONOTONIC, &end);
+    timeGreedy = diffTimespec(start, end);
+    auto testCost = instance.calculateTotalCost(test);
 
     // instance.flightList = test;
     // // instance.printFlightLists();
 
-    // // Medição do VND 1
+    // Medição do VND
+    clock_gettime(CLOCK_MONOTONIC, &start);
+    VariableNeighborhoodDescent vnd;
+    auto test2 = vnd.vnd(instance, test);
+    clock_gettime(CLOCK_MONOTONIC, &end);
+    timeVND = diffTimespec(start, end);
+    auto testCost2 = instance.calculateTotalCost(test2);
+
+    // MetaHeuristics meta(instance);
     // clock_gettime(CLOCK_MONOTONIC, &start);
-    // VariableNeighborhoodDescent vnd;
-    // auto test2 = vnd.vnd(instance, test);
+    // auto test3 = meta.grasp(100, 0.2);
     // clock_gettime(CLOCK_MONOTONIC, &end);
-    // timeVND1 = diffTimespec(start, end);
-    // auto testCost2 = instance.calculateTotalCost(test2);
+    // timeMeta = diffTimespec(start, end);
+    // auto testCost3 = instance.calculateTotalCost(test3);
 
     // instance.flightList = test2;
     // // instance.printFlightLists();
 
     // // Exibição formatada
-    // cout << fixed << setprecision(6);
-    // cout << "Greedy Algorithm: " << testCost
-    //      << " | Tempo: " << timeGreedy << "s\n";
+    cout << fixed << setprecision(6);
+    cout << "Greedy Algorithm: " << testCost
+         << " | Tempo: " << timeGreedy << "s\n";
 
-    // cout << "VND 1: " << testCost2
-    //      << " | Tempo: " << timeVND1 << "s\n";
+    cout << "VND 1: " << testCost2
+         << " | Tempo: " << timeVND << "s\n";
+
+    // cout << "MetaHeuristics: " << testCost3
+    //      << " | Tempo: " << timeMeta << "s\n";
 
     return 0;
 }
