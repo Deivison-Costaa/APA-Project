@@ -32,26 +32,32 @@ double diffTimespec(const timespec &start, const timespec &end)
 void testAllInstances()
 {
     // Ajuste estes nomes conforme os arquivos na sua pasta "instancias_teste"
+    // vector<string> instanceFiles = {
+    //     "Instances/n3m10A.txt", "Instances/n3m10B.txt", "Instances/n3m10C.txt", "Instances/n3m10D.txt", "Instances/n3m10E.txt",
+    //     "Instances/n3m20A.txt", "Instances/n3m20B.txt", "Instances/n3m20C.txt", "Instances/n3m20D.txt", "Instances/n3m20E.txt",
+    //     "Instances/n3m40A.txt", "Instances/n3m40B.txt", "Instances/n3m40C.txt", "Instances/n3m40D.txt", "Instances/n3m40E.txt",
+    //     "Instances/n5m50A.txt", "Instances/n5m50B.txt", "Instances/n5m50C.txt", "Instances/n5m50D.txt", "Instances/n5m50E.txt"
+    //     };
     vector<string> instanceFiles = {
-        "Instances/n3m10A.txt", "Instances/n3m10B.txt", "Instances/n3m10C.txt", "Instances/n3m10D.txt", "Instances/n3m10E.txt",
-        "Instances/n3m20A.txt", "Instances/n3m20B.txt", "Instances/n3m20C.txt", "Instances/n3m20D.txt", "Instances/n3m20E.txt",
-        "Instances/n3m40A.txt", "Instances/n3m40B.txt", "Instances/n3m40C.txt", "Instances/n3m40D.txt", "Instances/n3m40E.txt",
-        "Instances/n5m50A.txt", "Instances/n5m50B.txt", "Instances/n5m50C.txt", "Instances/n5m50D.txt", "Instances/n5m50E.txt"
+        "copa_apa/n500m10E.txt"
+        // "copa_apa/n700m12E.txt",
+        // "copa_apa/n1000m15E.txt",
+    };
+
+    map<string, double>
+        bestKnown = {
+            {"Instances/n3m10A.txt", 7483.0}, // (opt)
+            {"Instances/n3m10B.txt", 1277.0}, // (opt)
+            {"Instances/n3m10C.txt", 2088.0}, // (opt)
+            {"Instances/n3m10D.txt", 322.0},  // (opt)
+            {"Instances/n3m10E.txt", 3343.0}, // (opt)
+            {"Instances/n3m20A.txt", 3129.0}, // (LB)
+            {"Instances/n3m20B.txt", 1258.0}, // (LB)
+            {"Instances/n3m20C.txt", 855.0},  // (LB)
+            {"Instances/n3m20D.txt", 4357.0}, // (opt)
+            {"Instances/n3m20E.txt", 3798.0}, // (opt)
         };
 
-    map<string, double> bestKnown = {
-        {"Instances/n3m10A.txt", 7483.0}, // (opt)
-        {"Instances/n3m10B.txt", 1277.0}, // (opt)
-        {"Instances/n3m10C.txt", 2088.0}, // (opt)
-        {"Instances/n3m10D.txt", 322.0},  // (opt)
-        {"Instances/n3m10E.txt", 3343.0}, // (opt)
-        {"Instances/n3m20A.txt", 3129.0}, // (LB)
-        {"Instances/n3m20B.txt", 1258.0}, // (LB)
-        {"Instances/n3m20C.txt", 855.0},  // (LB)
-        {"Instances/n3m20D.txt", 4357.0}, // (opt)
-        {"Instances/n3m20E.txt", 3798.0}, // (opt)
-    };
-    
     cout << "\n===== Testando todas as instâncias =====\n"
          << endl;
 
@@ -74,7 +80,7 @@ void testAllInstances()
         // VariableNeighborhoodDescent vnd;
         // auto finalSolution = vnd.vnd(instance, initialSolution);
 
-        auto finalSolution = meta.grasp(100000, 0.3);
+        auto finalSolution = meta.grasp(10, 0.3);
 
         // VND vnd(instance);
         // auto finalSolution = vnd.execute(initialSolution);
@@ -99,6 +105,9 @@ void testAllInstances()
             cout << " | Gap: " << gap << "% (Best = " << bestVal << ")";
         }
 
+        instance.flightList = finalSolution;
+        instance.printFlightLists();
+
         cout << " | Tempo: " << timeVND << "s\n";
 
     }
@@ -110,8 +119,8 @@ void testAllInstances()
 int main(void)
 {
 
-    // testAllInstances();
-    // return 0;
+    testAllInstances();
+    return 0;
 
 
 
