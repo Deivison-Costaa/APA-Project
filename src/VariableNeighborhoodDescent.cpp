@@ -5,225 +5,207 @@
 #include <vector>
 #include <tuple>
 
-std::pair<std::vector<std::vector<int>>, int>
-VariableNeighborhoodDescent::swapWithinRunway(
+std::pair<bool, int> VariableNeighborhoodDescent::swapWithinRunway(
     const Instance &instance,
     std::vector<std::vector<int>> &solution,
     int currentBestCost)
 {
-    int bestCost = currentBestCost;                        // Custo inicial da solução
-    std::vector<std::vector<int>> bestSolution = solution; // Cópia da solução inicial para a melhor encontrada
-    bool improvementFound = false;                         // Flag para indicar se houve melhoria
+    int bestCost = currentBestCost;
+    bool improvementFound = false;
+    unsigned int bestRunway = 0, bestI = 0, bestJ = 0;
 
     // Itera sobre todas as pistas
-    for (size_t r = 0; r < solution.size(); ++r)
+    for (unsigned int r = 0; r < solution.size(); ++r)
     {
-        auto &runway = solution[r];                                    // Referência para a pista atual
-        int originalRunwayCost = instance.calculateRunwayCost(runway); // Custo original da pista
+        auto &runway = solution[r];
+        int originalRunwayCost = instance.calculateRunwayCost(runway);
 
         // Itera sobre todas as combinações de voos na pista
-        for (size_t i = 0; i < runway.size(); ++i)
+        for (unsigned int i = 0; i < runway.size(); ++i)
         {
-            for (size_t j = i + 1; j < runway.size(); ++j)
+            for (unsigned int j = i + 1; j < runway.size(); ++j)
             {
-                // Realiza a troca entre runway[i] e runway[j]
-                std::swap(runway[i], runway[j]);
-
-                // Calcula o novo custo da pista após a troca
+                std::swap(runway[i], runway[j]); // Realiza a troca
                 int newRunwayCost = instance.calculateRunwayCost(runway);
                 int delta = newRunwayCost - originalRunwayCost;
                 int newCost = currentBestCost + delta;
 
-                // Se o novo custo for menor que o melhor custo encontrado até agora
                 if (newCost < bestCost)
                 {
-                    bestCost = newCost;      // Atualiza o melhor custo
-                    bestSolution = solution; // Armazena a solução correspondente
-                    improvementFound = true; // Marca que uma melhoria foi encontrada
+                    bestCost = newCost;
+                    improvementFound = true;
+                    bestRunway = r;
+                    bestI = i;
+                    bestJ = j;
                 }
-
-                // Desfaz a troca para testar a próxima combinação
-                std::swap(runway[i], runway[j]);
+                std::swap(runway[i], runway[j]); // Desfaz a troca
             }
         }
     }
 
-    // Se uma melhoria foi encontrada, atualiza a solução para a melhor encontrada
+    // Aplica a melhor troca, se encontrada
     if (improvementFound)
     {
-        solution = bestSolution;
+        std::swap(solution[bestRunway][bestI], solution[bestRunway][bestJ]);
     }
 
-    return {solution, bestCost}; // Retorna a solução e o melhor custo
+    return {improvementFound, bestCost};
 }
 
 // Função que remove um voo de uma pista e o reinsere em outra para tentar melhorar o custo
-std::pair<std::vector<std::vector<int>>, int>
-VariableNeighborhoodDescent::reinsertBetweenRunways(
+std::pair<bool, int> VariableNeighborhoodDescent::reinsertBetweenRunways(
     const Instance &instance,
     std::vector<std::vector<int>> &solution,
     int currentBestCost)
 {
-    int bestCost = currentBestCost;                        // Custo inicial da solução
-    std::vector<std::vector<int>> bestSolution = solution; // Cópia da solução inicial para armazenar a melhor encontrada
-    bool improvementFound = false;                         // Flag para indicar se houve melhoria
+    int bestCost = currentBestCost;
+    bool improvementFound = false;
+    unsigned int bestRSource = 0, bestI = 0, bestRTarget = 0, bestPos = 0;
+    int bestFlight = -1;
 
     // Itera sobre todas as pistas de origem
-    for (size_t rSource = 0; rSource < solution.size(); ++rSource)
+    for (unsigned int rSource = 0; rSource < solution.size(); ++rSource)
     {
-        // Itera sobre todos os voos da pista de origem
-        for (size_t i = 0; i < solution[rSource].size(); ++i)
+        for (unsigned int i = 0; i < solution[rSource].size(); ++i)
         {
-            int flight = solution[rSource][i];                                        // Voo a ser movido
-            int originalSourceCost = instance.calculateRunwayCost(solution[rSource]); // Custo da pista de origem antes da remoção
-            solution[rSource].erase(solution[rSource].begin() + i);                   // Remove o voo da pista de origem
-            int costAfterRemoval = instance.calculateRunwayCost(solution[rSource]);   // Custo após remoção
-            int deltaRemoval = costAfterRemoval - originalSourceCost;                 // Diferença de custo devido à remoção
+            int flight = solution[rSource][i];
+            int originalSourceCost = instance.calculateRunwayCost(solution[rSource]);
+            solution[rSource].erase(solution[rSource].begin() + i);
+            int costAfterRemoval = instance.calculateRunwayCost(solution[rSource]);
+            int deltaRemoval = costAfterRemoval - originalSourceCost;
 
             // Itera sobre todas as pistas de destino
-            for (size_t rTarget = 0; rTarget < solution.size(); ++rTarget)
+            for (unsigned int rTarget = 0; rTarget < solution.size(); ++rTarget)
             {
-                if (rTarget == rSource) // Evita reinserção na mesma pista
+                if (rTarget == rSource)
                     continue;
-
-                int originalTargetCost = instance.calculateRunwayCost(solution[rTarget]); // Custo da pista de destino antes da inserção
-                // Itera sobre todas as posições possíveis na pista de destino
-                for (size_t pos = 0; pos <= solution[rTarget].size(); ++pos)
+                int originalTargetCost = instance.calculateRunwayCost(solution[rTarget]);
+                for (unsigned int pos = 0; pos <= solution[rTarget].size(); ++pos)
                 {
-                    solution[rTarget].insert(solution[rTarget].begin() + pos, flight);        // Insere o voo na posição atual
-                    int costAfterInsertion = instance.calculateRunwayCost(solution[rTarget]); // Custo após inserção
-                    int deltaInsertion = costAfterInsertion - originalTargetCost;             // Diferença de custo devido à inserção
-                    int newCost = currentBestCost + deltaRemoval + deltaInsertion;            // Novo custo total
+                    solution[rTarget].insert(solution[rTarget].begin() + pos, flight);
+                    int costAfterInsertion = instance.calculateRunwayCost(solution[rTarget]);
+                    int deltaInsertion = costAfterInsertion - originalTargetCost;
+                    int newCost = currentBestCost + deltaRemoval + deltaInsertion;
 
-                    // Se o novo custo for menor que o melhor custo encontrado até agora
                     if (newCost < bestCost)
                     {
-                        bestCost = newCost;      // Atualiza o melhor custo
-                        bestSolution = solution; // Armazena a solução correspondente
-                        improvementFound = true; // Marca que uma melhoria foi encontrada
+                        bestCost = newCost;
+                        improvementFound = true;
+                        bestRSource = rSource;
+                        bestI = i;
+                        bestRTarget = rTarget;
+                        bestPos = pos;
+                        bestFlight = flight;
                     }
-                    // Desfaz a inserção para testar a próxima posição
                     solution[rTarget].erase(solution[rTarget].begin() + pos);
                 }
             }
-            // Restaura o voo na posição original na pista de origem para testar o próximo voo
             solution[rSource].insert(solution[rSource].begin() + i, flight);
         }
     }
 
-    // Se uma melhoria foi encontrada, atualiza a solução para a melhor encontrada
+    // Aplica a melhor reinserção, se encontrada
     if (improvementFound)
     {
-        solution = bestSolution;
+        solution[bestRSource].erase(solution[bestRSource].begin() + bestI);
+        solution[bestRTarget].insert(solution[bestRTarget].begin() + bestPos, bestFlight);
     }
 
-    return {solution, bestCost}; // Retorna a solução e o melhor custo
+    return {improvementFound, bestCost};
 }
 
-std::pair<std::vector<std::vector<int>>, int>
-VariableNeighborhoodDescent::swapBetweenRunways(
+std::pair<bool, int> VariableNeighborhoodDescent::swapBetweenRunways(
     const Instance &instance,
     std::vector<std::vector<int>> &solution,
     int currentBestCost)
 {
-    int bestCost = currentBestCost;                        // Custo inicial da solução
-    std::vector<std::vector<int>> bestSolution = solution; // Cópia da solução inicial para armazenar a melhor encontrada
-    bool improvementFound = false;                         // Flag para indicar se houve melhoria
+    int bestCost = currentBestCost;
+    bool improvementFound = false;
+    unsigned int bestR1 = 0, bestI = 0, bestR2 = 0, bestJ = 0;
 
     // Itera sobre todas as combinações de pistas diferentes
-    for (size_t r1 = 0; r1 < solution.size(); ++r1)
+    for (unsigned int r1 = 0; r1 < solution.size(); ++r1)
     {
-        for (size_t r2 = r1 + 1; r2 < solution.size(); ++r2)
+        for (unsigned int r2 = r1 + 1; r2 < solution.size(); ++r2)
         {
-            // Calcula os custos originais das duas pistas
             int originalCostR1 = instance.calculateRunwayCost(solution[r1]);
             int originalCostR2 = instance.calculateRunwayCost(solution[r2]);
 
-            // Itera sobre todos os voos da pista r1
-            for (size_t i = 0; i < solution[r1].size(); ++i)
+            for (unsigned int i = 0; i < solution[r1].size(); ++i)
             {
-                // Itera sobre todos os voos da pista r2
-                for (size_t j = 0; j < solution[r2].size(); ++j)
+                for (unsigned int j = 0; j < solution[r2].size(); ++j)
                 {
-                    // Realiza a troca entre solution[r1][i] e solution[r2][j]
                     std::swap(solution[r1][i], solution[r2][j]);
-
-                    // Calcula os novos custos das pistas após a troca
                     int newCostR1 = instance.calculateRunwayCost(solution[r1]);
                     int newCostR2 = instance.calculateRunwayCost(solution[r2]);
-
-                    // Calcula as diferenças de custo
                     int deltaR1 = newCostR1 - originalCostR1;
                     int deltaR2 = newCostR2 - originalCostR2;
                     int newCost = currentBestCost + deltaR1 + deltaR2;
 
-                    // Se o novo custo for menor que o melhor custo encontrado até agora
                     if (newCost < bestCost)
                     {
-                        bestCost = newCost;      // Atualiza o melhor custo
-                        bestSolution = solution; // Armazena a solução correspondente
-                        improvementFound = true; // Marca que uma melhoria foi encontrada
+                        bestCost = newCost;
+                        improvementFound = true;
+                        bestR1 = r1;
+                        bestI = i;
+                        bestR2 = r2;
+                        bestJ = j;
                     }
-
-                    // Desfaz a troca para testar a próxima combinação
-                    std::swap(solution[r1][i], solution[r2][j]);
+                    std::swap(solution[r1][i], solution[r2][j]); // Desfaz a troca
                 }
             }
         }
     }
 
-    // Se uma melhoria foi encontrada, atualiza a solução para a melhor encontrada
+    // Aplica a melhor troca, se encontrada
     if (improvementFound)
     {
-        solution = bestSolution;
+        std::swap(solution[bestR1][bestI], solution[bestR2][bestJ]);
     }
 
-    return {solution, bestCost}; // Retorna a solução e o melhor custo
+    return {improvementFound, bestCost};
 }
 
 std::vector<std::vector<int>> VariableNeighborhoodDescent::vnd(
     const Instance &instance,
-    const std::vector<std::vector<int>> &initialSolution)
+    std::vector<std::vector<int>> &initialSolution)
 {
-    std::vector<std::vector<int>> currentSolution = initialSolution; //copia a solução inicial
-    int currentCost = instance.calculateTotalCost(currentSolution);  //calcula o custo atual
-    bool improved = true; //controla o loop principal
+    std::vector<std::vector<int>> &currentSolution = initialSolution; // Referência direta
+    int currentCost = instance.calculateTotalCost(currentSolution);
+    bool improved = true;
 
-    while (improved) //enquanto melhorar
+    while (improved)
     {
         improved = false;
-        int neighborhood = 1; //esse loop segue o que foi ensinado na aula de bruck
+        int neighborhood = 1;
         while (neighborhood <= 3)
         {
-            // isso aqui é uma lambda function que recebe um parr (ver esse video se tiver dúvidas sobre
-            // https://www.youtube.com/watch?v=MH8mLFqj-n8)
-            auto [newSolution, newCost] = [&]() -> std::pair<std::vector<std::vector<int>>, int>
+            std::pair<bool, int> result;
+            switch (neighborhood)
             {
-                switch (neighborhood)
-                {
-                case 1:
-                    return swapWithinRunway(instance, currentSolution, currentCost);
-                case 2:
-                    return reinsertBetweenRunways(instance, currentSolution, currentCost);
-                case 3:
-                    return swapBetweenRunways(instance, currentSolution, currentCost);
-                default:
-                    return {currentSolution, currentCost};
-                }
-            }();
+            case 1:
+                result = swapWithinRunway(instance, currentSolution, currentCost);
+                break;
+            case 2:
+                result = reinsertBetweenRunways(instance, currentSolution, currentCost);
+                break;
+            case 3:
+                result = swapBetweenRunways(instance, currentSolution, currentCost);
+                break;
+            default:
+                result = {false, currentCost};
+                break;
+            }
 
-            //atualmente pensando se vale a pena mudar o bloco anterior pra mexer só por referência, o problema é o risco
-            //de vazamentos (aumentou ainda mais após o paralelismo)
-            if (newCost < currentCost) //atualiza as variáveis
+            if (result.first) // Se houve melhoria
             {
-                currentSolution = newSolution;
-                currentCost = newCost;
+                currentCost = result.second;
                 improved = true;
-                neighborhood = 1;
+                neighborhood = 1; // Reinicia para a primeira vizinhança
             }
             else
             {
-                neighborhood++; //se não melhorou vai pra próxima vizinhança
+                neighborhood++; // Próxima vizinhança
             }
         }
     }

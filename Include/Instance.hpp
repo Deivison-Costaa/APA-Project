@@ -27,6 +27,7 @@ public:
     int calculateTotalCost(const std::vector<std::vector<int>> &schedules) const;
     int calculateRunwayCost(const std::vector<int> &runway) const;
     void printFlightLists() const;
+    void writeFlightList(const std::string &filePath) const;
 };
 
 #endif

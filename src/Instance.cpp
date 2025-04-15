@@ -2,6 +2,8 @@
 #include <fstream>
 #include <iostream>
 #include <algorithm>
+#include <filesystem>
+#include <string>
 
 bool Instance::read(const std::string &filePath)
 {
@@ -150,4 +152,36 @@ void Instance::printFlightLists() const
         std::cout << std::endl;
     }
     std::cout << "\n\n" << std::endl;
+}
+
+void Instance::writeFlightList(const std::string &filePath) const
+{
+    // Cria um path a partir do filePath original
+    std::filesystem::path originalPath(filePath);
+
+    // Monta o novo nome do arquivo, adicionando o sufixo _flightlist antes da extensão
+    //dá pra melhorar isso passando o valor calculado na main aqui, mas esse é o menor dos nossos problemas
+    std::string newFileName = originalPath.stem().string() + "_" + std::to_string(calculateTotalCost(flightList)) + originalPath.extension().string();
+    std::filesystem::path newFilePath = originalPath.parent_path() / newFileName;
+
+    // Abre (ou cria) o novo arquivo
+    std::ofstream outFile(newFilePath);
+    if (!outFile.is_open())
+    {
+        std::cerr << "Error creating file: " << newFilePath << std::endl;
+        return;
+    }
+
+    
+    for (size_t i = 0; i < flightList.size(); ++i)
+    {
+        for (int flight : flightList[i])
+        {
+            outFile << flight << " ";
+        }
+        outFile << "\n";
+    }
+
+    outFile.close();
+    std::cout << "Flight list written to: " << newFilePath << std::endl;
 }

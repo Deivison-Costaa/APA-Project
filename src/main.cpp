@@ -8,6 +8,8 @@
 #include <vector>
 #include <string>
 #include <map>
+#include <climits>
+#include <cstdlib> // Para system()
 
 using namespace std;
 
@@ -31,7 +33,6 @@ double diffTimespec(const timespec &start, const timespec &end)
 // Nova função para testar todas as instâncias do diretório
 void testAllInstances()
 {
-    // Ajuste estes nomes conforme os arquivos na sua pasta "instancias_teste"
     // vector<string> instanceFiles = {
     //     "Instances/n3m10A.txt", "Instances/n3m10B.txt", "Instances/n3m10C.txt", "Instances/n3m10D.txt", "Instances/n3m10E.txt",
     //     "Instances/n3m20A.txt", "Instances/n3m20B.txt", "Instances/n3m20C.txt", "Instances/n3m20D.txt", "Instances/n3m20E.txt",
@@ -40,7 +41,7 @@ void testAllInstances()
     //     };
     vector<string> instanceFiles = {
         "copa_apa/n500m10E.txt"
-        // "copa_apa/n700m12E.txt",
+        // "copa_apa/n700m12E.txt"
         // "copa_apa/n1000m15E.txt",
     };
 
@@ -79,17 +80,35 @@ void testAllInstances()
         // Executa o VND
         // VariableNeighborhoodDescent vnd;
         // auto finalSolution = vnd.vnd(instance, initialSolution);
+        vector<vector<int>> solution;
+        vector<vector<int>> finalSolution;
+        int finalCost = INT_MAX;
 
-        auto finalSolution = meta.grasp(10, 0.3);
+        float inc = 0.0;
+        for (int i = 0; i <= 100; i++)
+        {
+            std::cout << "Iteração: " << i
+                      << " | Alpha: " << std::fixed << std::setprecision(2) << inc
+                      << std::endl;
 
+            solution = meta.grasp(30, inc);
+
+            int cost = instance.calculateTotalCost(solution);
+            if (cost < finalCost)
+            {
+                finalSolution = solution;
+                finalCost = cost;
+                std::cout << "Nova melhor solução encontrada! probabilidade: " << inc
+                            << " | custo: " << finalCost << std::endl;
+            }
+            inc += 0.01;
+        }
         // VND vnd(instance);
         // auto finalSolution = vnd.execute(initialSolution);
 
         clock_gettime(CLOCK_MONOTONIC, &end);
         double timeVND = diffTimespec(start, end);
 
-        // Calcula o custo da solução final
-        auto finalCost = instance.calculateTotalCost(finalSolution);
 
         // Impressão dos resultados
         cout << fixed << setprecision(6);
@@ -105,8 +124,9 @@ void testAllInstances()
             cout << " | Gap: " << gap << "% (Best = " << bestVal << ")";
         }
 
+        cout << " " << endl;
         instance.flightList = finalSolution;
-        instance.printFlightLists();
+        instance.writeFlightList(filePath);
 
         cout << " | Tempo: " << timeVND << "s\n";
 
