@@ -41,8 +41,8 @@ void testAllInstances()
     //     };
     vector<string> instanceFiles = {
         "copa_apa/n500m10E.txt"
-        // "copa_apa/n700m12E.txt"
-        // "copa_apa/n1000m15E.txt",
+        // "copa_apa/n700m12E.txt",
+        // "copa_apa/n1000m15E.txt"
     };
 
     map<string, double>
@@ -84,14 +84,14 @@ void testAllInstances()
         vector<vector<int>> finalSolution;
         int finalCost = INT_MAX;
 
-        float inc = 0.0;
-        for (int i = 0; i <= 100; i++)
+        float inc = 0.01;
+        for (int i = 0; i < 8; i++)
         {
-            std::cout << "Iteração: " << i
+            std::cout << "Iteração: " << i + 1
                       << " | Alpha: " << std::fixed << std::setprecision(2) << inc
                       << std::endl;
 
-            solution = meta.grasp(30, inc);
+            solution = meta.grasp(1024, inc);
 
             int cost = instance.calculateTotalCost(solution);
             if (cost < finalCost)
@@ -100,6 +100,8 @@ void testAllInstances()
                 finalCost = cost;
                 std::cout << "Nova melhor solução encontrada! probabilidade: " << inc
                             << " | custo: " << finalCost << std::endl;
+            }else{
+                cout << "Probabilidade: " << inc << " | custo: " << cost << endl;
             }
             inc += 0.01;
         }

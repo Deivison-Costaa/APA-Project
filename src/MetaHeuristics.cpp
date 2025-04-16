@@ -1,6 +1,6 @@
 #include "MetaHeuristics.hpp"
-#include <cstdlib> // Para rand()
-#include <ctime>   // Para srand()
+//#include <cstdlib> // Para rand()
+//#include <ctime>   // Para srand()
 #include <climits> // Para INT_MAX
 #include <omp.h> //Adiciona paralelismo
 #include <random> //thread_safee
@@ -10,7 +10,7 @@ MetaHeuristics::MetaHeuristics(const Instance &inst)
     //depois discutir se vale a pena desacoplar
     : instance(inst)
 {
-    srand(static_cast<unsigned>(time(0))); // Inicializa a semente para números aleatórios (rand() não é thread_safe
+    //srand(static_cast<unsigned>(time(0))); // Inicializa a semente para números aleatórios (rand() não é thread_safe
     //então foi de base)
 }
 
@@ -32,7 +32,8 @@ std::vector<std::vector<int>> MetaHeuristics::grasp(int maxIterations, double al
         //verificar qual thread é
         int threadId = omp_get_thread_num();
 
-        unsigned int seed = static_cast<unsigned int>(iter) + threadId; //geraar seed
+        std::random_device rd;
+        unsigned int seed = rd() ^ (iter << 10) ^ (threadId << 20);
         std::mt19937 gen(seed);
 
         Instance localInstance = instance; //necessário pela explicação que dei do parallel for
