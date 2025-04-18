@@ -166,6 +166,54 @@ std::pair<bool, int> VariableNeighborhoodDescent::swapBetweenRunways(
     return {improvementFound, bestCost};
 }
 
+std::pair<bool, int> VariableNeighborhoodDescent::reinsertWithinRunway(
+    const Instance &instance,
+    std::vector<std::vector<int>> &solution,
+    int currentBestCost)
+{
+    int bestCost = currentBestCost;
+    bool improvementFound = false;
+    unsigned bestR = 0, bestFrom = 0, bestTo = 0;
+
+    // percorre cada pista
+    for (unsigned r = 0; r < solution.size(); ++r)
+    {
+        auto &runway = solution[r];
+        int originalCost = instance.calculateRunwayCost(runway);
+
+        for (unsigned i = 0; i < runway.size(); ++i)
+        {
+            int flight = runway[i];
+            runway.erase(runway.begin() + i); // remove
+
+            for (unsigned pos = 0; pos <= runway.size(); ++pos)
+            {
+                runway.insert(runway.begin() + pos, flight); // insere
+                int newCost = currentBestCost - originalCost + instance.calculateRunwayCost(runway);
+
+                if (newCost < bestCost)
+                {
+                    bestCost = newCost;
+                    improvementFound = true;
+                    bestR = r;
+                    bestFrom = i;
+                    bestTo = pos;
+                }
+                runway.erase(runway.begin() + pos); // desfaz
+            }
+            runway.insert(runway.begin() + i, flight); // restaura
+        }
+    }
+
+    if (improvementFound)
+    {
+        int flight = solution[bestR][bestFrom];
+        solution[bestR].erase(solution[bestR].begin() + bestFrom);
+        solution[bestR].insert(solution[bestR].begin() + bestTo, flight);
+    }
+    return {improvementFound, bestCost};
+}
+
 std::vector<std::vector<int>> VariableNeighborhoodDescent::vnd(
     const Instance &instance,
     std::vector<std::vector<int>> &initialSolution)
@@ -178,7 +226,7 @@ std::vector<std::vector<int>> VariableNeighborhoodDescent::vnd(
     {
         improved = false;
         int neighborhood = 1;
-        while (neighborhood <= 3)
+        while (neighborhood <= 4)
         {
             std::pair<bool, int> result;
             switch (neighborhood)
@@ -187,10 +235,13 @@ std::vector<std::vector<int>> VariableNeighborhoodDescent::vnd(
                 result = swapWithinRunway(instance, currentSolution, currentCost);
                 break;
             case 2:
-                result = reinsertBetweenRunways(instance, currentSolution, currentCost);
+                result = swapBetweenRunways(instance, currentSolution, currentCost);
                 break;
             case 3:
-                result = swapBetweenRunways(instance, currentSolution, currentCost);
+                result = reinsertWithinRunway(instance, currentSolution, currentCost);
+                break;
+            case 4: 
+                result = reinsertBetweenRunways(instance, currentSolution, currentCost);
                 break;
             default:
                 result = {false, currentCost};

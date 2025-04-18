@@ -14,15 +14,15 @@ public:
     MetaHeuristics(const Instance &inst);
 
     std::vector<std::vector<int>> grasp(int maxIterations, double alpha);
+    std::vector<std::vector<int>> ils(int maxIterations, int perturbationStrength);
 
-private:
-    const Instance &instance;
-    // GreedyAlgorithm greedy;
-    // VariableNeighborhoodDescent vnd;
+    private : const Instance &instance;
 
-    // Método auxiliar para construção gulosa randomizada (GRASP) (não sei se deixo ele aqui ou coloco no greedyAlgorithm
-    //discutir depois)
     std::vector<std::vector<int>> randomizedNearestNeighbor(double alpha, std::mt19937 &gen);
+    std::vector<std::vector<int>> perturb(
+        const std::vector<std::vector<int>> &solution,
+        int perturbationStrength,
+        std::mt19937 &gen);
 };
 
 #endif

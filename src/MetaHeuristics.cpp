@@ -4,6 +4,7 @@
 #include <climits> // Para INT_MAX
 #include <omp.h> //Adiciona paralelismo
 #include <random> //thread_safee
+#include <iostream>
 
 MetaHeuristics::MetaHeuristics(const Instance &inst) 
     //meio que acoplei uma metaheuristica a uma instancia
@@ -24,7 +25,7 @@ std::vector<std::vector<int>> MetaHeuristics::grasp(int maxIterations, double al
     std::vector<std::vector<std::vector<int>>> bestSolPerThread(numThreads); // cada thread tem sua posição de escrita 
     //para solução
 
-#pragma omp parallel for 
+#pragma omp parallel for schedule(dynamic, 1)
 //tudo chamado dentro do for após essa diretiva é variavel isolada da thread, o que foi declarado antes é de uso compartilhado
 // das threads
     for (int iter = 0; iter < maxIterations; ++iter)
@@ -48,11 +49,12 @@ std::vector<std::vector<int>> MetaHeuristics::grasp(int maxIterations, double al
         int improvedCost = localInstance.calculateTotalCost(improvedSolution);
 
         // Atualiza a melhor solução
-        #pragma omp critical //pra evitar race condition, segurança nunca é demais
+        #pragma omp critical //pra evitar race condition, segurança nunca é demais (embora desnecessário)
         if (improvedCost < bestCostPerThread[threadId])
         {
             bestCostPerThread[threadId] = improvedCost;
             bestSolPerThread[threadId] = improvedSolution;
+            std::cout <<    "Solução encontrada: " << improvedCost << std::endl;
         }
     }
 
@@ -106,4 +108,85 @@ std::vector<std::vector<int>> MetaHeuristics::randomizedNearestNeighbor(double a
     }
 
     return solution;
+}
+
+std::vector<std::vector<int>> MetaHeuristics::ils(int maxIterations, int perturbationStrength)
+{
+    // Inicialização: Gera solução inicial com Nearest Neighbor
+    GreedyAlgorithm greedy;
+    std::vector<std::vector<int>> currentSolution = greedy.nearestNeighbor(instance);
+
+    // Aplica busca local (VND) na solução inicial
+    VariableNeighborhoodDescent vnd;
+    currentSolution = vnd.vnd(instance, currentSolution);
+    int currentCost = instance.calculateTotalCost(currentSolution);
+
+    // Mantém a melhor solução encontrada
+    std::vector<std::vector<int>> bestSolution = currentSolution;
+    int bestCost = currentCost;
+
+    // Gerador de números aleatórios thread-safe
+    std::random_device rd;
+    std::mt19937 gen(rd());
+
+    // Loop principal do ILS
+    for (int iter = 0; iter < maxIterations; ++iter)
+    {
+        // Perturbação da solução atual
+        std::vector<std::vector<int>> perturbedSolution = perturb(currentSolution, perturbationStrength, gen);
+
+        // Busca local na solução perturbada
+        std::vector<std::vector<int>> improvedSolution = vnd.vnd(instance, perturbedSolution);
+        int improvedCost = instance.calculateTotalCost(improvedSolution);
+
+        // Critério de aceitação: aceita se a nova solução for melhor
+        if (improvedCost < currentCost)
+        {
+            currentSolution = improvedSolution;
+            currentCost = improvedCost;
+
+            // Atualiza a melhor solução se necessário (sei que é estranho ter 3 variáveis, mas faz sentido)
+            if (improvedCost < bestCost)
+            {
+                bestCost = improvedCost;
+                bestSolution = improvedSolution;
+                std::cout << "Solução encontrada: " << improvedCost << std::endl;
+            }
+        }
+    }
+
+    return bestSolution;
+}
+
+std::vector<std::vector<int>> MetaHeuristics::perturb(const std::vector<std::vector<int>> &solution,
+                                                      int perturbationStrength,
+                                                      std::mt19937 &gen)
+{
+    std::vector<std::vector<int>> perturbedSolution = solution;
+    int numRunways = instance.numberOfRunways;
+    std::uniform_int_distribution<int> distRunways(0, numRunways - 1);
+
+    // Realiza trocas aleatórias conforme a força de perturbação
+    for (int i = 0; i < perturbationStrength; ++i)
+    {
+        int r1 = distRunways(gen);
+        int r2 = distRunways(gen);
+        while (r1 == r2)
+        {
+            r2 = distRunways(gen); // Garante que as pistas sejam diferentes
+        }
+
+        if (!perturbedSolution[r1].empty() && !perturbedSolution[r2].empty())
+        {
+            std::uniform_int_distribution<int> distPos1(0, perturbedSolution[r1].size() - 1);
+            std::uniform_int_distribution<int> distPos2(0, perturbedSolution[r2].size() - 1);
+
+            int pos1 = distPos1(gen);
+            int pos2 = distPos2(gen);
+
+            std::swap(perturbedSolution[r1][pos1], perturbedSolution[r2][pos2]);
+        }
+    }
+
+    return perturbedSolution;
 }

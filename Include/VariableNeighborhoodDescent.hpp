@@ -6,18 +6,22 @@
 class VariableNeighborhoodDescent
 {
 public:
-    std::pair<bool, int> swapWithinRunway(
+    static std::pair<bool, int> swapWithinRunway(
         const Instance &instance,
         std::vector<std::vector<int>> &solution,
         int currentBestCost);
 
-    std::pair<bool, int> reinsertBetweenRunways(
+    static std::pair<bool, int> reinsertBetweenRunways(
         const Instance &instance,
         std::vector<std::vector<int>> &solution,
         int currentBestCost);
 
-    std::pair<bool, int>
-    swapBetweenRunways(
+    static std::pair<bool, int> swapBetweenRunways(
+        const Instance &instance,
+        std::vector<std::vector<int>> &solution,
+        int currentBestCost);
+
+    static std::pair<bool, int> reinsertWithinRunway(
         const Instance &instance,
         std::vector<std::vector<int>> &solution,
         int currentBestCost);
