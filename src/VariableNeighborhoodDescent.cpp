@@ -214,12 +214,11 @@ std::pair<bool, int> VariableNeighborhoodDescent::reinsertWithinRunway(
     return {improvementFound, bestCost};
 }
 
-std::vector<std::vector<int>> VariableNeighborhoodDescent::vnd(
+void VariableNeighborhoodDescent::vnd(
     const Instance &instance,
     std::vector<std::vector<int>> &initialSolution)
 {
-    std::vector<std::vector<int>> &currentSolution = initialSolution; // Referência direta
-    int currentCost = instance.calculateTotalCost(currentSolution);
+    int currentCost = instance.calculateTotalCost(initialSolution);
     bool improved = true;
 
     while (improved)
@@ -232,16 +231,16 @@ std::vector<std::vector<int>> VariableNeighborhoodDescent::vnd(
             switch (neighborhood)
             {
             case 1:
-                result = swapWithinRunway(instance, currentSolution, currentCost);
+                result = swapWithinRunway(instance, initialSolution, currentCost);
                 break;
             case 2:
-                result = swapBetweenRunways(instance, currentSolution, currentCost);
+                result = swapBetweenRunways(instance, initialSolution, currentCost);
                 break;
             case 3:
-                result = reinsertWithinRunway(instance, currentSolution, currentCost);
+                result = reinsertWithinRunway(instance, initialSolution, currentCost);
                 break;
-            case 4: 
-                result = reinsertBetweenRunways(instance, currentSolution, currentCost);
+            case 4:
+                result = reinsertBetweenRunways(instance, initialSolution, currentCost);
                 break;
             default:
                 result = {false, currentCost};
@@ -260,5 +259,4 @@ std::vector<std::vector<int>> VariableNeighborhoodDescent::vnd(
             }
         }
     }
-    return currentSolution;
 }

@@ -26,7 +26,7 @@ public:
         std::vector<std::vector<int>> &solution,
         int currentBestCost);
 
-    std::vector<std::vector<int>> vnd(const Instance &instance, std::vector<std::vector<int>> &initialSolution);
+    void vnd(const Instance &instance, std::vector<std::vector<int>> &initialSolution);
 };
 
 

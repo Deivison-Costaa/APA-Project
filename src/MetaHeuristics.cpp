@@ -23,7 +23,7 @@ std::vector<std::vector<int>> MetaHeuristics::ils(int maxIterations, int perturb
 
     // Aplica busca local (VND) na solução inicial
     VariableNeighborhoodDescent vnd;
-    currentSolution = vnd.vnd(instance, currentSolution);
+    vnd.vnd(instance, currentSolution);
     int currentCost = instance.calculateTotalCost(currentSolution);
 
     // Mantém a melhor solução encontrada
@@ -38,10 +38,10 @@ std::vector<std::vector<int>> MetaHeuristics::ils(int maxIterations, int perturb
     for (int iter = 0; iter < maxIterations; ++iter)
     {
         // Perturbação da solução atual
-        std::vector<std::vector<int>> perturbedSolution = perturb(currentSolution, perturbationStrength, gen);
+        std::vector<std::vector<int>> improvedSolution = perturb(currentSolution, perturbationStrength, gen);
 
         // Busca local na solução perturbada
-        std::vector<std::vector<int>> improvedSolution = vnd.vnd(instance, perturbedSolution);
+        vnd.vnd(instance, improvedSolution);
         int improvedCost = instance.calculateTotalCost(improvedSolution);
 
         // Critério de aceitação: aceita se a nova solução for melhor

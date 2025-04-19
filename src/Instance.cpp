@@ -40,18 +40,6 @@ bool Instance::read(const std::string &filePath)
 
     file.close();
 
-    flightsOrder.resize(numberOfFlights);
-    for (int i = 0; i < numberOfFlights; ++i)
-    {
-        flightsOrder[i] = i;
-    }
-
-    std::sort(flightsOrder.begin(), flightsOrder.end(),
-              [this](int a, int b)
-              {
-                  return landingTakeoffTime[a] < landingTakeoffTime[b];
-              });
-
     return true;
 }
 

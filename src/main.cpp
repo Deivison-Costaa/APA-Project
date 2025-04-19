@@ -42,7 +42,7 @@ void testAllInstances()
     vector<string> instanceFiles = {
         // "copa_apa/n500m10E.txt" //perturbação 3
         // "copa_apa/n700m12E.txt" //perturbação 4
-        // "copa_apa/n1000m15E.txt" //perturbação 2
+        "copa_apa/n1000m15E.txt" //perturbação 2
     };
 
     // map<string, double>
@@ -85,13 +85,13 @@ void testAllInstances()
         int finalCost = INT_MAX;
 
         //float inc = 0.01;
-        for (int i = 1; i < 4; i++)
+        for (int i = 3; i < 4; i++)
         {
             std::cout << "Iteração: " << i + 1
                       << " | Alpha: " << std::fixed << std::setprecision(2) << i + 1
                       << std::endl;
 
-            solution = meta.ils(5000, i + 1);
+            solution = meta.ils(100, i + 1);
 
             int cost = instance.calculateTotalCost(solution);
             if (cost < finalCost)
