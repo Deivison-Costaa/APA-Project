@@ -14,12 +14,12 @@ public:
     std::vector<int> landingTakeoffTime;
     std::vector<int> waitingTime;
     std::vector<int> penalties;
-    std::vector<int> flightsOrder;
+    std::vector<int> flightsOrder; 
     std::vector<std::vector<int>> costMatrix;
     
 
     //Solução e lista de voos, fazem parte da resposta que devemos escrever depois.
-    int solution = 0;
+    // int solution = 0;
     std::vector<std::vector<int>> flightList;
 
     bool read(const std::string &filePath);

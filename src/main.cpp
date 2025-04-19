@@ -40,9 +40,9 @@ void testAllInstances()
     //     "Instances/n5m50A.txt", "Instances/n5m50B.txt", "Instances/n5m50C.txt", "Instances/n5m50D.txt", "Instances/n5m50E.txt"
     //     };
     vector<string> instanceFiles = {
-        // "copa_apa/n500m10E.txt"
-        // "copa_apa/n700m12E.txt"
-        "copa_apa/n1000m15E.txt"
+        // "copa_apa/n500m10E.txt" //perturbação 3
+        // "copa_apa/n700m12E.txt" //perturbação 4
+        // "copa_apa/n1000m15E.txt" //perturbação 2
     };
 
     // map<string, double>
@@ -85,13 +85,13 @@ void testAllInstances()
         int finalCost = INT_MAX;
 
         //float inc = 0.01;
-        for (int i = 0; i < 6; i++)
+        for (int i = 1; i < 4; i++)
         {
             std::cout << "Iteração: " << i + 1
                       << " | Alpha: " << std::fixed << std::setprecision(2) << i + 1
                       << std::endl;
 
-            solution = meta.ils(800, i + 1);
+            solution = meta.ils(5000, i + 1);
 
             int cost = instance.calculateTotalCost(solution);
             if (cost < finalCost)
@@ -102,7 +102,7 @@ void testAllInstances()
                 instance.flightList = solution;
                 instance.writeFlightList(filePath);
                 std::cout << "Nova melhor solução encontrada! probabilidade: " << i + 1
-                            << " | custo: " << finalCost << std::endl;
+                           << " | custo: " << finalCost << std::endl;
             }else{
                 cout << "Probabilidade: " << i + 1 << " | custo: " << cost << endl;
             }
@@ -120,7 +120,7 @@ void testAllInstances()
         cout << "Instância: " << filePath
              << " | Custo (GRASP): " << finalCost;
 
-        // Se existir valor ótimo (ou LB) conhecido para esta instância, calcula o gap
+        //Se existir valor ótimo (ou LB) conhecido para esta instância, calcula o gap
         // if (bestKnown.find(filePath) != bestKnown.end())
         // {
         //     cout << fixed << setprecision(6);

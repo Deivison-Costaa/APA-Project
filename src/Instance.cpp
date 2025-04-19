@@ -10,7 +10,7 @@ bool Instance::read(const std::string &filePath)
     std::ifstream file(filePath);
     if (!file.is_open())
     {
-        std::cerr << "Error opening file: " << filePath << std::endl;
+        std::cerr << "Error openi    //atributosng file: " << filePath << std::endl;
         return false;
     }
 
