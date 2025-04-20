@@ -91,7 +91,7 @@ void testAllInstances()
                       << " | Alpha: " << std::fixed << std::setprecision(2) << i + 1
                       << std::endl;
 
-            solution = meta.ils(10000, {1, 2, 3, 4, 5, 6, 7, 8});
+            solution = meta.ils(10000, {1, 2, 3, 4});
 
             int cost = instance.calculateTotalCost(solution);
             if (cost < finalCost)

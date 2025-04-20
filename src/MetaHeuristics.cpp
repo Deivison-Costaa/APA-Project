@@ -44,7 +44,7 @@ std::vector<std::vector<int>> MetaHeuristics::ils(int maxIterations, const std::
 
         int minCost = INT_MAX;
         int bestIndex = -1;
-        for (int i = 0; i < numThreads; ++i)
+        for (size_t i = 0; i < numThreads; ++i)
         {
             if (costs[i] < minCost)
             {
