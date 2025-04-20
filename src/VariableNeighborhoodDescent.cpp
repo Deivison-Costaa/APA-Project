@@ -1,9 +1,8 @@
 #include "VariableNeighborhoodDescent.hpp"
 #include "Instance.hpp"
-#include <algorithm>
-#include <limits>
-#include <vector>
-#include <tuple>
+
+#include <vector> 
+#include <utility>
 
 std::pair<bool, int> VariableNeighborhoodDescent::swapWithinRunway(
     const Instance &instance,

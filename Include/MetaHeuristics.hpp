@@ -18,10 +18,11 @@ public:
 private:
     const Instance &instance;
 
-    std::vector<std::vector<int>> perturb(
+    void perturb(
         const std::vector<std::vector<int>> &solution,
         int perturbationStrength,
-        std::mt19937 &gen);
+        std::mt19937 &gen,
+        std::vector<std::vector<int>> &perturbedSolution);
 
     std::size_t validateNumThreads(const std::vector<int> &strengths) const;
 };

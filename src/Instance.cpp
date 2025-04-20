@@ -10,7 +10,7 @@ bool Instance::read(const std::string &filePath)
     std::ifstream file(filePath);
     if (!file.is_open())
     {
-        std::cerr << "Error openi    //atributosng file: " << filePath << std::endl;
+        std::cerr << "Error opening    //atributos file: " << filePath << std::endl;
         return false;
     }
 
@@ -83,24 +83,14 @@ int Instance::calculateTotalCost(const std::vector<std::vector<int>> &schedules)
     for (const auto &runwaySchedule : schedules)
     {
         int prevEndTime = 0;
-        int prevFlight = -1; // Nenhum voo anterior inicialmente
+        int prevFlight = -1;
 
-        // Para cada voo na pista
         for (int flight : runwaySchedule)
         {
-            // Tempo de liberação do voo atual
             int ri = landingTakeoffTime[flight];
-
-            // Tempo de espera obrigatório entre voos consecutivos
             int tij = (prevFlight == -1) ? 0 : costMatrix[prevFlight][flight];
-
-            // Calcula o horário de início do voo
             int startTime = std::max(prevEndTime + tij, ri);
-
-            // Atualiza o custo total com a penalidade do atraso
             totalCost += (startTime - ri) * penalties[flight];
-
-            // Atualiza o tempo de término para o próximo voo
             prevEndTime = startTime + waitingTime[flight];
             prevFlight = flight;
         }
@@ -132,7 +122,6 @@ void Instance::writeFlightList(const std::string &filePath, std::vector<std::vec
     // Cria um path a partir do filePath original
     std::filesystem::path originalPath(filePath);
 
-    // Monta o novo nome do arquivo, adicionando o sufixo _flightlist antes da extensão
     //dá pra melhorar isso passando o valor calculado na main aqui, mas esse é o menor dos nossos problemas
     std::string newFileName = originalPath.stem().string() + "_" + std::to_string(calculateTotalCost(flightList)) + originalPath.extension().string();
     std::filesystem::path newFilePath = originalPath.parent_path() / newFileName;
@@ -151,7 +140,7 @@ void Instance::writeFlightList(const std::string &filePath, std::vector<std::vec
     {
         for (int flight : flightList[i])
         {
-            outFile << flight + 1 << " "; //precisa do +1 pra estar de acordo com a especificação do projeto
+            outFile << flight + 1 << " "; // <- precisa do +1 pra estar de acordo com a especificação do projeto
         }
         outFile << "\n";
     }

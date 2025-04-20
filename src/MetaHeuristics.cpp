@@ -19,27 +19,23 @@ std::vector<std::vector<int>> MetaHeuristics::ils(int maxIterations, const std::
     vnd.vnd(instance, currentSolution);
     int currentCost = instance.calculateTotalCost(currentSolution);
 
-    std::vector<std::vector<int>> bestSolution = currentSolution;
-    int bestCost = currentCost;
+    std::vector<std::vector<std::vector<int>>> solutions(numThreads);
+    std::vector<int> costs(numThreads, INT_MAX);
+    std::random_device rd;
+    std::mt19937 gen(rd());
 
     for (int iter = 0; iter < maxIterations; ++iter)
     {
-        std::vector<std::vector<std::vector<int>>> solutions(numThreads);
-        std::vector<int> costs(numThreads, INT_MAX);
 
         #pragma omp parallel num_threads(numThreads)
         {
             int threadId = omp_get_thread_num();
             int strength = perturbationStrengths[threadId];
-            std::random_device rd;
-            std::mt19937 gen(rd());
 
-            solutions[threadId] = perturb(currentSolution, strength, gen);
+            perturb(currentSolution, strength, gen, solutions[threadId]);
 
             vnd.vnd(instance, solutions[threadId]);
             costs[threadId] = instance.calculateTotalCost(solutions[threadId]);
-
-        #pragma omp barrier //Aula de Bidu na veia
         }
 
         int minCost = INT_MAX;
@@ -58,25 +54,19 @@ std::vector<std::vector<int>> MetaHeuristics::ils(int maxIterations, const std::
         {
             currentSolution = solutions[bestIndex];
             currentCost = minCost;
-
-            // Atualiza a melhor solução global se necessário
-            if (minCost < bestCost)
-            {
-                bestCost = minCost;
-                bestSolution = solutions[bestIndex];
-                // std::cout << "Solução encontrada: " << minCost << std::endl;
-            }
         }
     }
 
-    return bestSolution;
+    return currentSolution;
 }
 
-std::vector<std::vector<int>> MetaHeuristics::perturb(const std::vector<std::vector<int>> &solution,
+
+void MetaHeuristics::perturb(const std::vector<std::vector<int>> &solution,
                                                       int perturbationStrength,
-                                                      std::mt19937 &gen)
+                                                      std::mt19937 &gen,
+                                                      std::vector<std::vector<int>> &perturbedSolution)
 {
-    std::vector<std::vector<int>> perturbedSolution = solution;
+    perturbedSolution = solution; //custoso, embora o multithread não me deixe escolha
     int numRunways = instance.numberOfRunways;
     std::uniform_int_distribution<int> distRunways(0, numRunways - 1);
 
@@ -101,8 +91,6 @@ std::vector<std::vector<int>> MetaHeuristics::perturb(const std::vector<std::vec
             std::swap(perturbedSolution[r1][pos1], perturbedSolution[r2][pos2]);
         }
     }
-
-    return perturbedSolution;
 }
 
 std::size_t MetaHeuristics::validateNumThreads(const std::vector<int> &strengths) const

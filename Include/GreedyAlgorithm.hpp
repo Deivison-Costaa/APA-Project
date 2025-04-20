@@ -1,7 +1,7 @@
-#include "Instance.hpp"
-
 #ifndef GREEDYALGORITHM_HPP
 #define GREEDYALGORITHM_HPP
+
+#include "Instance.hpp"
 
 class GreedyAlgorithm{
 public:

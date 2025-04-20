@@ -1,7 +1,6 @@
-#include "Instance.hpp"
-
 #ifndef VARIABLE_NEIGHBORHOOD_DESCENT_HPP
 #define VARIABLE_NEIGHBORHOOD_DESCENT_HPP
+#include "Instance.hpp"
 
 class VariableNeighborhoodDescent
 {
