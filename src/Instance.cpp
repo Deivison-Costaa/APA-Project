@@ -127,22 +127,7 @@ int Instance::calculateRunwayCost(const std::vector<int> &runway) const
     return cost;
 }
 
-void Instance::printFlightLists() const
-{
-    std::cout << "Flight Lists:" << std::endl;
-    for (size_t i = 0; i < flightList.size(); ++i)
-    {
-        std::cout << "Runway " << i << ": ";
-        for (int flight : flightList[i])
-        {
-            std::cout << flight << " ";
-        }
-        std::cout << std::endl;
-    }
-    std::cout << "\n\n" << std::endl;
-}
-
-void Instance::writeFlightList(const std::string &filePath) const
+void Instance::writeFlightList(const std::string &filePath, std::vector<std::vector<int>> flightList) const
 {
     // Cria um path a partir do filePath original
     std::filesystem::path originalPath(filePath);
@@ -160,6 +145,7 @@ void Instance::writeFlightList(const std::string &filePath) const
         return;
     }
 
+    outFile << calculateTotalCost(flightList) << "\n";
     
     for (size_t i = 0; i < flightList.size(); ++i)
     {

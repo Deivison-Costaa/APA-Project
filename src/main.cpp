@@ -41,23 +41,32 @@ void testAllInstances()
     //     };
     vector<string> instanceFiles = {
         // "copa_apa/n500m10E.txt" //perturbação 3
-        // "copa_apa/n700m12E.txt" //perturbação 4
-        "copa_apa/n1000m15E.txt" //perturbação 2
+        "copa_apa/n700m12E.txt" //perturbação 4
+        // "copa_apa/n1000m15E.txt" //perturbação 2
     };
 
-    // map<string, double>
-    //     bestKnown = {
-    //         {"Instances/n3m10A.txt", 7483.0}, // (opt)
-    //         {"Instances/n3m10B.txt", 1277.0}, // (opt)
-    //         {"Instances/n3m10C.txt", 2088.0}, // (opt)
-    //         {"Instances/n3m10D.txt", 322.0},  // (opt)
-    //         {"Instances/n3m10E.txt", 3343.0}, // (opt)
-    //         {"Instances/n3m20A.txt", 3129.0}, // (LB)
-    //         {"Instances/n3m20B.txt", 1258.0}, // (LB)
-    //         {"Instances/n3m20C.txt", 855.0},  // (LB)
-    //         {"Instances/n3m20D.txt", 4357.0}, // (opt)
-    //         {"Instances/n3m20E.txt", 3798.0}, // (opt)
-    //     };
+    map<string, double> bestKnown = {
+        {"Instances/n3m10A.txt", 7483.0}, // (opt)
+        {"Instances/n3m10B.txt", 1277.0}, // (opt)
+        {"Instances/n3m10C.txt", 2088.0}, // (opt)
+        {"Instances/n3m10D.txt", 322.0},  // (opt)
+        {"Instances/n3m10E.txt", 3343.0}, // (opt)
+        {"Instances/n3m20A.txt", 8230.0}, // (LB) - Atualizado
+        {"Instances/n3m20B.txt", 1820.0}, // (LB) - Atualizado
+        {"Instances/n3m20C.txt", 855.0},  // (LB)
+        {"Instances/n3m20D.txt", 4357.0}, // (opt)
+        {"Instances/n3m20E.txt", 3798.0}, // (opt)
+        {"Instances/n3m40A.txt", 112.0},  // (LB) - Adicionado
+        {"Instances/n3m40B.txt", 880.0},  // (LB) - Adicionado
+        {"Instances/n3m40C.txt", 1962.0}, // (LB) - Adicionado
+        {"Instances/n3m40D.txt", 263.0},  // (LB) - Adicionado
+        {"Instances/n3m40E.txt", 1192.0}, // (LB) - Adicionado
+        {"Instances/n5m50A.txt", 0.0},    // (LB) - Adicionado
+        {"Instances/n5m50B.txt", 0.0},    // (LB) - Adicionado
+        {"Instances/n5m50C.txt", 0.0},    // (LB) - Adicionado
+        {"Instances/n5m50D.txt", 0.0},    // (LB) - Adicionado
+        {"Instances/n5m50E.txt", 0.0}     // (LB) - Adicionado
+    };
 
     cout << "\n===== Testando todas as instâncias =====\n"
          << endl;
@@ -91,7 +100,7 @@ void testAllInstances()
                       << " | Alpha: " << std::fixed << std::setprecision(2) << i + 1
                       << std::endl;
 
-            solution = meta.ils(100, i + 1);
+            solution = meta.ils(5000, {1,2,3,4});
 
             int cost = instance.calculateTotalCost(solution);
             if (cost < finalCost)
@@ -99,8 +108,7 @@ void testAllInstances()
                 finalSolution = solution;
                 finalCost = cost;
                 //salvar solução parcial
-                instance.flightList = solution;
-                instance.writeFlightList(filePath);
+                instance.writeFlightList(filePath, solution);
                 std::cout << "Nova melhor solução encontrada! probabilidade: " << i + 1
                            << " | custo: " << finalCost << std::endl;
             }else{
@@ -130,8 +138,7 @@ void testAllInstances()
         // }
 
         cout << " " << endl;
-        instance.flightList = finalSolution;
-        instance.writeFlightList(filePath);
+        instance.writeFlightList(filePath, solution);
 
         cout << " | Tempo: " << timeVND << "s\n";
 
