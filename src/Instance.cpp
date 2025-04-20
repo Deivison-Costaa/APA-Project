@@ -139,6 +139,21 @@ int Instance::calculateRunwayCost(const std::vector<int> &runway) const
     return cost;
 }
 
+int Instance::calculatePartialRunwayCost(const std::vector<int> &runway, int startPos, int prevEndTime, int prevFlight) const
+{
+    int cost = 0;
+    for (size_t i = startPos; i < runway.size(); ++i)
+    {
+        int flight = runway[i];
+        int tij = (prevFlight == -1) ? 0 : costMatrix[prevFlight][flight];
+        int startTime = std::max(prevEndTime + tij, landingTakeoffTime[flight]);
+        cost += (startTime - landingTakeoffTime[flight]) * penalties[flight];
+        prevEndTime = startTime + waitingTime[flight];
+        prevFlight = flight;
+    }
+    return cost;
+}
+
 void Instance::printFlightLists() const
 {
     std::cout << "Flight Lists:" << std::endl;
@@ -177,7 +192,7 @@ void Instance::writeFlightList(const std::string &filePath) const
     {
         for (int flight : flightList[i])
         {
-            outFile << flight << " ";
+            outFile << flight+1 << " ";
         }
         outFile << "\n";
     }

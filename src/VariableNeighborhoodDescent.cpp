@@ -18,17 +18,46 @@ std::pair<bool, int> VariableNeighborhoodDescent::swapWithinRunway(
     for (unsigned int r = 0; r < solution.size(); ++r)
     {
         auto &runway = solution[r];
-        int originalRunwayCost = instance.calculateRunwayCost(runway);
+        if (runway.size() < 2) continue; // Não há trocas possíveis
+
+        // Calcula os tempos de início e custos acumulados para a pista original
+        std::vector<int> startTimes(runway.size());
+        std::vector<int> accumulatedCosts(runway.size());
+        int prevEndTime = 0;
+        int prevFlight = -1;
+        for (size_t k = 0; k < runway.size(); ++k)
+        {
+            int flight = runway[k];
+            int tij = (prevFlight == -1) ? 0 : instance.costMatrix[prevFlight][flight];
+            startTimes[k] = std::max(prevEndTime + tij, instance.landingTakeoffTime[flight]);
+            accumulatedCosts[k] = (k > 0 ? accumulatedCosts[k-1] : 0) + 
+                                  (startTimes[k] - instance.landingTakeoffTime[flight]) * instance.penalties[flight];
+            prevEndTime = startTimes[k] + instance.waitingTime[flight];
+            prevFlight = flight;
+        }
 
         // Itera sobre todas as combinações de voos na pista
         for (unsigned int i = 0; i < runway.size(); ++i)
         {
             for (unsigned int j = i + 1; j < runway.size(); ++j)
             {
-                std::swap(runway[i], runway[j]); // Realiza a troca
-                int newRunwayCost = instance.calculateRunwayCost(runway);
-                int delta = newRunwayCost - originalRunwayCost;
-                int newCost = currentBestCost + delta;
+                // Ponto de impacto: a menor posição afetada pela troca
+                int impactPos = std::min(i, j);
+
+                // Custo até o voo anterior ao ponto de impacto
+                int costBefore = (impactPos > 0) ? accumulatedCosts[impactPos - 1] : 0;
+
+                // Cria a nova sequência com a troca
+                std::vector<int> newRunway = runway;
+                std::swap(newRunway[i], newRunway[j]);
+
+                // Recalcula o custo a partir do ponto de impacto
+                int prevEndTimeForPartial = (impactPos > 0) ? startTimes[impactPos - 1] + instance.waitingTime[newRunway[impactPos - 1]] : 0;
+                int prevFlightForPartial = (impactPos > 0) ? newRunway[impactPos - 1] : -1;
+                int costAfter = instance.calculatePartialRunwayCost(newRunway, impactPos, prevEndTimeForPartial, prevFlightForPartial);
+
+                // Novo custo total
+                int newCost = costBefore + costAfter;
 
                 if (newCost < bestCost)
                 {
@@ -38,7 +67,6 @@ std::pair<bool, int> VariableNeighborhoodDescent::swapWithinRunway(
                     bestI = i;
                     bestJ = j;
                 }
-                std::swap(runway[i], runway[j]); // Desfaz a troca
             }
         }
     }

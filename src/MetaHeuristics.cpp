@@ -1,61 +1,70 @@
 #include "MetaHeuristics.hpp"
-//#include <cstdlib> // Para rand()
-//#include <ctime>   // Para srand()
-#include <climits> // Para INT_MAX
-#include <omp.h> //Adiciona paralelismo
-#include <random> //thread_safee
+#include <climits>
+#include <omp.h>
+#include <random>
 #include <iostream>
 
-MetaHeuristics::MetaHeuristics(const Instance &inst) 
-    //meio que acoplei uma metaheuristica a uma instancia
-    //depois discutir se vale a pena desacoplar
-    : instance(inst)
-{
-    //srand(static_cast<unsigned>(time(0))); // Inicializa a semente para números aleatórios (rand() não é thread_safe
-    //então foi de base)
-}
+MetaHeuristics::MetaHeuristics(const Instance &inst) : instance(inst) {}
 
-std::vector<std::vector<int>> MetaHeuristics::ils(int maxIterations, int perturbationStrength)
+std::vector<std::vector<int>> MetaHeuristics::ils(int maxIterations, const std::vector<int> &perturbationStrengths)
 {
-    // Inicialização: Gera solução inicial com Nearest Neighbor
+
+    size_t numThreads = validateNumThreads(perturbationStrengths);
+
     GreedyAlgorithm greedy;
+    VariableNeighborhoodDescent vnd;
+
     std::vector<std::vector<int>> currentSolution = greedy.nearestNeighbor(instance);
 
-    // Aplica busca local (VND) na solução inicial
-    VariableNeighborhoodDescent vnd;
-    currentSolution = vnd.vnd(instance, currentSolution);
+    vnd.vnd(instance, currentSolution);
     int currentCost = instance.calculateTotalCost(currentSolution);
 
-    // Mantém a melhor solução encontrada
     std::vector<std::vector<int>> bestSolution = currentSolution;
     int bestCost = currentCost;
 
-    // Gerador de números aleatórios
-    std::random_device rd;
-    std::mt19937 gen(rd());
-
-    // Loop principal do ILS
     for (int iter = 0; iter < maxIterations; ++iter)
     {
-        // Perturbação da solução atual
-        std::vector<std::vector<int>> perturbedSolution = perturb(currentSolution, perturbationStrength, gen);
+        std::vector<std::vector<std::vector<int>>> solutions(4);
+        std::vector<int> costs(4, INT_MAX);
 
-        // Busca local na solução perturbada
-        std::vector<std::vector<int>> improvedSolution = vnd.vnd(instance, perturbedSolution);
-        int improvedCost = instance.calculateTotalCost(improvedSolution);
-
-        // Critério de aceitação: aceita se a nova solução for melhor
-        if (improvedCost < currentCost)
+        #pragma omp parallel num_threads(numThreads)
         {
-            currentSolution = improvedSolution;
-            currentCost = improvedCost;
+            int threadId = omp_get_thread_num();
+            int strength = perturbationStrengths[threadId];
+            std::random_device rd;
+            std::mt19937 gen(rd());
 
-            // Atualiza a melhor solução se necessário (sei que é estranho ter 3 variáveis, mas faz sentido)
-            if (improvedCost < bestCost)
+            solutions[threadId] = perturb(currentSolution, strength, gen);
+
+            vnd.vnd(instance, solutions[threadId]);
+            costs[threadId] = instance.calculateTotalCost(solutions[threadId]);
+
+        #pragma omp barrier //Aula de Bidu na veia
+        }
+
+        int minCost = INT_MAX;
+        int bestIndex = -1;
+        for (int i = 0; i < numThreads; ++i)
+        {
+            if (costs[i] < minCost)
             {
-                bestCost = improvedCost;
-                bestSolution = improvedSolution;
-                std::cout << "Solução encontrada: " << improvedCost << std::endl;
+                minCost = costs[i];
+                bestIndex = i;
+            }
+        }
+
+        // Atualiza a solução atual se a melhor encontrada for superior
+        if (minCost < currentCost)
+        {
+            currentSolution = solutions[bestIndex];
+            currentCost = minCost;
+
+            // Atualiza a melhor solução global se necessário
+            if (minCost < bestCost)
+            {
+                bestCost = minCost;
+                bestSolution = solutions[bestIndex];
+                std::cout << "Solução encontrada: " << minCost << std::endl;
             }
         }
     }
@@ -94,4 +103,21 @@ std::vector<std::vector<int>> MetaHeuristics::perturb(const std::vector<std::vec
     }
 
     return perturbedSolution;
+}
+
+std::size_t MetaHeuristics::validateNumThreads(const std::vector<int> &strengths) const
+{
+    if (strengths.empty()) // Nenhuma força → nenhuma thread
+        return 0;
+
+    const std::size_t numThreads = std::min(strengths.size(),
+                                            static_cast<std::size_t>(omp_get_max_threads()));
+
+    if (numThreads < strengths.size())
+        std::cerr << "Aviso: usando " << numThreads
+                  << " threads (limite do sistema). "
+                  << "Valores após a posição " << numThreads
+                  << " não serão usados.\n";
+
+    return numThreads;
 }
