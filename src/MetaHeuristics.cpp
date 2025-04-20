@@ -24,8 +24,8 @@ std::vector<std::vector<int>> MetaHeuristics::ils(int maxIterations, const std::
 
     for (int iter = 0; iter < maxIterations; ++iter)
     {
-        std::vector<std::vector<std::vector<int>>> solutions(4);
-        std::vector<int> costs(4, INT_MAX);
+        std::vector<std::vector<std::vector<int>>> solutions(numThreads);
+        std::vector<int> costs(numThreads, INT_MAX);
 
         #pragma omp parallel num_threads(numThreads)
         {
@@ -44,7 +44,7 @@ std::vector<std::vector<int>> MetaHeuristics::ils(int maxIterations, const std::
 
         int minCost = INT_MAX;
         int bestIndex = -1;
-        for (int i = 0; i < 4; ++i)
+        for (size_t i = 0; i < numThreads; ++i)
         {
             if (costs[i] < minCost)
             {
@@ -64,7 +64,7 @@ std::vector<std::vector<int>> MetaHeuristics::ils(int maxIterations, const std::
             {
                 bestCost = minCost;
                 bestSolution = solutions[bestIndex];
-                std::cout << "Solução encontrada: " << minCost << std::endl;
+                // std::cout << "Solução encontrada: " << minCost << std::endl;
             }
         }
     }
@@ -107,7 +107,7 @@ std::vector<std::vector<int>> MetaHeuristics::perturb(const std::vector<std::vec
 
 std::size_t MetaHeuristics::validateNumThreads(const std::vector<int> &strengths) const
 {
-    if (strengths.empty()) // Nenhuma força → nenhuma thread
+    if (strengths.empty()) // Nenhuma força -> nenhuma thread
         return 0;
 
     const std::size_t numThreads = std::min(strengths.size(),

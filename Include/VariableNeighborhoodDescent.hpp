@@ -5,7 +5,7 @@
 
 class VariableNeighborhoodDescent
 {
-public:
+private:
     static std::pair<bool, int> swapWithinRunway(
         const Instance &instance,
         std::vector<std::vector<int>> &solution,
@@ -25,7 +25,8 @@ public:
         const Instance &instance,
         std::vector<std::vector<int>> &solution,
         int currentBestCost);
-
+    
+public:
     void vnd(const Instance &instance, std::vector<std::vector<int>> &initialSolution);
 };
 

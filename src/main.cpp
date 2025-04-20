@@ -33,17 +33,17 @@ double diffTimespec(const timespec &start, const timespec &end)
 // Nova função para testar todas as instâncias do diretório
 void testAllInstances()
 {
-    // vector<string> instanceFiles = {
-    //     "Instances/n3m10A.txt", "Instances/n3m10B.txt", "Instances/n3m10C.txt", "Instances/n3m10D.txt", "Instances/n3m10E.txt",
-    //     "Instances/n3m20A.txt", "Instances/n3m20B.txt", "Instances/n3m20C.txt", "Instances/n3m20D.txt", "Instances/n3m20E.txt",
-    //     "Instances/n3m40A.txt", "Instances/n3m40B.txt", "Instances/n3m40C.txt", "Instances/n3m40D.txt", "Instances/n3m40E.txt",
-    //     "Instances/n5m50A.txt", "Instances/n5m50B.txt", "Instances/n5m50C.txt", "Instances/n5m50D.txt", "Instances/n5m50E.txt"
-    //     };
     vector<string> instanceFiles = {
-        // "copa_apa/n500m10E.txt" //perturbação 3
-        "copa_apa/n700m12E.txt" //perturbação 4
-        // "copa_apa/n1000m15E.txt" //perturbação 2
-    };
+        "Instances/n3m10A.txt", "Instances/n3m10B.txt", "Instances/n3m10C.txt", "Instances/n3m10D.txt", "Instances/n3m10E.txt",
+        "Instances/n3m20A.txt", "Instances/n3m20B.txt", "Instances/n3m20C.txt", "Instances/n3m20D.txt", "Instances/n3m20E.txt",
+        "Instances/n3m40A.txt", "Instances/n3m40B.txt", "Instances/n3m40C.txt", "Instances/n3m40D.txt", "Instances/n3m40E.txt",
+        "Instances/n5m50A.txt", "Instances/n5m50B.txt", "Instances/n5m50C.txt", "Instances/n5m50D.txt", "Instances/n5m50E.txt"
+        };
+    // vector<string> instanceFiles = {
+    //     "copa_apa/n500m10E.txt" //perturbação 3
+    //     "copa_apa/n700m12E.txt" //perturbação 4
+    //     "copa_apa/n1000m15E.txt" //perturbação 2
+    // };
 
     map<string, double> bestKnown = {
         {"Instances/n3m10A.txt", 7483.0}, // (opt)
@@ -68,84 +68,72 @@ void testAllInstances()
         {"Instances/n5m50E.txt", 0.0}     // (LB) - Adicionado
     };
 
-    cout << "\n===== Testando todas as instâncias =====\n"
-         << endl;
+    cout << "\n===== Testando todas as instâncias =====\n\n";
 
-    for (auto &filePath : instanceFiles)
+
+    for (const auto &filePath : instanceFiles)
     {
-        // Cria e lê a instância
-        Instance instance;
-        instance.read(filePath);
-        MetaHeuristics meta(instance);
+        int meanCost = 0;
+        double meanTime = 0;
 
-        // Cria uma solução inicial via Greedy (ou outra heurística de sua preferência)
-        // GreedyAlgorithm greedy;
-        // auto initialSolution = greedy.nearestNeighbor(instance);
-
-        // Mede o tempo do VND
-        timespec start, end;
-        clock_gettime(CLOCK_MONOTONIC, &start);
-
-        // Executa o VND
-        // VariableNeighborhoodDescent vnd;
-        // auto finalSolution = vnd.vnd(instance, initialSolution);
-        vector<vector<int>> solution;
-        vector<vector<int>> finalSolution;
-        int finalCost = INT_MAX;
-
-        //float inc = 0.01;
-        for (int i = 3; i < 4; i++)
-        {
-            std::cout << "Iteração: " << i + 1
-                      << " | Alpha: " << std::fixed << std::setprecision(2) << i + 1
-                      << std::endl;
-
-            solution = meta.ils(5000, {1,2,3,4});
-
-            int cost = instance.calculateTotalCost(solution);
-            if (cost < finalCost)
+        for(int i = 0; i < 10; i++){
+            Instance instance;
+            if (!instance.read(filePath))
             {
-                finalSolution = solution;
-                finalCost = cost;
-                //salvar solução parcial
-                instance.writeFlightList(filePath, solution);
-                std::cout << "Nova melhor solução encontrada! probabilidade: " << i + 1
-                           << " | custo: " << finalCost << std::endl;
-            }else{
-                cout << "Probabilidade: " << i + 1 << " | custo: " << cost << endl;
+                cerr << "Erro ao ler " << filePath << '\n';
+                continue;
             }
-            //inc += 0.01;
+
+            MetaHeuristics meta(instance);
+
+            /* ---------- Greedy + cronômetro ---------- */
+            timespec start{}, end{};
+            clock_gettime(CLOCK_MONOTONIC, &start);
+
+            auto solution = meta.ils(1000, {1, 2, 3, 4, 5, 6, 7, 8});
+
+            clock_gettime(CLOCK_MONOTONIC, &end);
+            const double timeGreedy = diffTimespec(start, end);
+            /* ---------------------------------------- */
+
+            const int cost = instance.calculateTotalCost(solution);
+
+            // Gap em relação ao melhor valor conhecido (se existir e for > 0)
+            double gap = NAN;
+            auto it = bestKnown.find(filePath);
+            if (it != bestKnown.end() && it->second > 0.0)
+                gap = ((cost - it->second) / it->second) * 100.0;
+
+            /* ---------- Saída no console ---------- */
+            cout << fixed << setprecision(6)
+                << "Instância: " << filePath
+                << " | Custo (Greedy): " << cost;
+
+            if (!std::isnan(gap))
+                cout << " | Gap: " << gap << '%';
+
+            cout << " | Tempo: " << timeGreedy << " s\n";
+            /* -------------------------------------- */
+
+            /* ---------- Grava solução ---------- */
+            // Prefixo para diferenciar cada arquivo de saída
+            string outPath = "results/metaheuristics/" + filePath;
+
+            size_t dotPos = outPath.rfind('.');
+            if (dotPos != std::string::npos)
+                outPath.insert(dotPos, "_" + std::to_string(i));
+            
+            instance.writeFlightList(outPath, solution);
+            /* ----------------------------------- */
+
+            meanCost += cost;
+            meanTime += timeGreedy;
         }
-        // VND vnd(instance);
-        // auto finalSolution = vnd.execute(initialSolution);
-
-        clock_gettime(CLOCK_MONOTONIC, &end);
-        double timeVND = diffTimespec(start, end);
-
-
-        // Impressão dos resultados
-        cout << fixed << setprecision(6);
-        cout << "Instância: " << filePath
-             << " | Custo (GRASP): " << finalCost;
-
-        //Se existir valor ótimo (ou LB) conhecido para esta instância, calcula o gap
-        // if (bestKnown.find(filePath) != bestKnown.end())
-        // {
-        //     cout << fixed << setprecision(6);
-        //     double bestVal = bestKnown[filePath];
-        //     double gap = ((finalCost - bestVal) / bestVal) * 100.0;
-        //     cout << " | Gap: " << gap << "% (Best = " << bestVal << ")";
-        // }
-
-        cout << " " << endl;
-        instance.writeFlightList(filePath, solution);
-
-        cout << " | Tempo: " << timeVND << "s\n";
-
+    
+    cout << "\nmeanCost: " << meanCost / 10 << " meanTime: " << meanTime / 10 << "\n" << endl;
     }
 
-    cout << "\n=========================================\n"
-         << endl;
+    cout << "\n=========================================\n\n";
 }
 
 int main(void)

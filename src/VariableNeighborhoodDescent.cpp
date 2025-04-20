@@ -175,7 +175,6 @@ std::pair<bool, int> VariableNeighborhoodDescent::reinsertWithinRunway(
     bool improvementFound = false;
     unsigned bestR = 0, bestFrom = 0, bestTo = 0;
 
-    // percorre cada pista
     for (unsigned r = 0; r < solution.size(); ++r)
     {
         auto &runway = solution[r];

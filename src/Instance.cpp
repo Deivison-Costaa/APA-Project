@@ -151,7 +151,7 @@ void Instance::writeFlightList(const std::string &filePath, std::vector<std::vec
     {
         for (int flight : flightList[i])
         {
-            outFile << flight << " ";
+            outFile << flight + 1 << " "; //precisa do +1 pra estar de acordo com a especificação do projeto
         }
         outFile << "\n";
     }
