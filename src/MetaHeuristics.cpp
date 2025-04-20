@@ -55,6 +55,7 @@ std::vector<std::vector<int>> MetaHeuristics::ils(int maxIterations, const std::
             currentSolution = solutions[bestIndex];
             currentCost = minCost;
         }
+        std::cout << "Iteração: " << iter << " custo: " << minCost << std::endl;
     }
 
     return currentSolution;
