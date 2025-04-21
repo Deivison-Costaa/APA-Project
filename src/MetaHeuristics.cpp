@@ -54,8 +54,14 @@ std::vector<std::vector<int>> MetaHeuristics::ils(int maxIterations, const std::
         {
             currentSolution = solutions[bestIndex];
             currentCost = minCost;
+            std::cout << "Iteração: " << iter << " custo: " << minCost << std::endl;
+            if(minCost < 6717) {
+                instance.writeFlightList("copa_apa/n1000m15E.txt", currentSolution);
+            }
+        }else{
+            std::cout << "Iteração: " << iter << std::endl;
         }
-        std::cout << "Iteração: " << iter << " custo: " << minCost << std::endl;
+        
     }
 
     return currentSolution;

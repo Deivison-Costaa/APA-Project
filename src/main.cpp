@@ -88,7 +88,7 @@ void testAllInstances()
         timespec start{}, end{};
         clock_gettime(CLOCK_MONOTONIC, &start);
 
-        auto solution = meta.ils(0, {1, 2, 3, 4, 5, 6, 7, 8});
+        auto solution = meta.ils(20000, {1, 2, 3, 4, 5, 6, 7, 8});
 
         clock_gettime(CLOCK_MONOTONIC, &end);
         const double timeGreedy = diffTimespec(start, end);
