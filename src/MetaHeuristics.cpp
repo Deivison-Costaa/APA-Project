@@ -14,10 +14,14 @@ std::vector<std::vector<int>> MetaHeuristics::ils(int maxIterations, const std::
     GreedyAlgorithm greedy;
     VariableNeighborhoodDescent vnd;
 
-    std::vector<std::vector<int>> currentSolution = greedy.nearestNeighbor(instance);
+    //std::vector<std::vector<int>> currentSolution = greedy.nearestNeighbor(instance);
+    std::vector<std::vector<int>> currentSolution = instance.readSolution("copa_apa/n500m10E_19454.txt");
+    std::cout << "custoooo: " << instance.calculateTotalCost(currentSolution) << std::endl;
 
     vnd.vnd(instance, currentSolution);
     int currentCost = instance.calculateTotalCost(currentSolution);
+
+    std::cout << "custoooo2: " << instance.calculateTotalCost(currentSolution) << std::endl;
 
     std::vector<std::vector<std::vector<int>>> solutions(numThreads);
     std::vector<int> costs(numThreads, INT_MAX);
@@ -55,8 +59,8 @@ std::vector<std::vector<int>> MetaHeuristics::ils(int maxIterations, const std::
             currentSolution = solutions[bestIndex];
             currentCost = minCost;
             std::cout << "Iteração: " << iter << " custo: " << minCost << std::endl;
-            if(minCost < 6717) {
-                instance.writeFlightList("copa_apa/n1000m15E.txt", currentSolution);
+            if(minCost < 19454) {
+                instance.writeFlightList("copa_apa/n500m10E.txt", currentSolution);
             }
         }else{
             std::cout << "Iteração: " << iter << std::endl;
