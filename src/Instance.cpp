@@ -206,7 +206,7 @@ std::vector<std::vector<int>> Instance::readSolution(const std::string &filePath
         std::vector<int> row;
         int value;
         while (iss >> value)
-            row.push_back(value);
+            row.push_back(value - 1);
         if (!row.empty())
             matrix.push_back(std::move(row));
     }

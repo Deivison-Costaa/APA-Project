@@ -1,5 +1,5 @@
 # Nome do arquivo original
-original_filename = '/home/deivison-costa/Área de trabalho/programas/Cpp/APA-Project/copa_apa/n1000m15E_8448.txt'
+original_filename = '/home/deivison-costa/Área de trabalho/programas/Cpp/APA-Project/copa_apa/n1000m15E_7769.txt'
 
 # Lendo o conteúdo do arquivo original
 with open(original_filename, 'r') as file:

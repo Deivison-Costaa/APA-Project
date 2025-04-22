@@ -43,8 +43,8 @@ void testAllInstances()
 
     vector<string> instanceFiles = {
         "copa_apa/n500m10E.txt"
-        //"copa_apa/n700m12E.txt",
-        //"copa_apa/n1000m15E.txt"
+        // "copa_apa/n700m12E.txt",
+        // "copa_apa/n1000m15E.txt"
         };
 
     // map<string, double>
@@ -88,7 +88,7 @@ void testAllInstances()
         timespec start{}, end{};
         clock_gettime(CLOCK_MONOTONIC, &start);
 
-        auto solution = meta.ils(15000, {1, 2, 3, 4, 5, 6, 7, 8});
+        auto solution = meta.ils(15000, {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15});
 
         clock_gettime(CLOCK_MONOTONIC, &end);
         const double timeGreedy = diffTimespec(start, end);
