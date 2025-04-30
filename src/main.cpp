@@ -42,8 +42,8 @@ void testAllInstances()
     //     };
 
     vector<string> instanceFiles = {
-        "copa_apa/n500m10E.txt"
-        // "copa_apa/n700m12E.txt",
+        // "copa_apa/n500m10E.txt"
+        "copa_apa/n700m12E.txt",
         // "copa_apa/n1000m15E.txt"
         };
 
@@ -88,7 +88,10 @@ void testAllInstances()
         timespec start{}, end{};
         clock_gettime(CLOCK_MONOTONIC, &start);
 
-        auto solution = meta.ils(15000, {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15});
+        // vector<vector<int>> is = instance.readSolution("copa_apa/n700m12E_13877.txt");
+        vector<vector<int>> is;
+
+        auto solution = meta.lns(100000, 130, "copa_apa/n700m12E_13807.txt", filePath);
 
         clock_gettime(CLOCK_MONOTONIC, &end);
         const double timeGreedy = diffTimespec(start, end);

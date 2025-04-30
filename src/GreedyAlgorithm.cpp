@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <limits>
 #include <vector>
+#include <random>
 
 std::vector<std::vector<int>> GreedyAlgorithm::nearestNeighbor(const Instance &instance)
 {
@@ -63,4 +64,69 @@ std::vector<std::vector<int>> GreedyAlgorithm::nearestNeighbor(const Instance &i
         result[i] = runways[i].second;
     }
     return result;
+}
+
+std::vector<std::vector<int>> GreedyAlgorithm::graspNearestNeighbor(const Instance &instance, double alpha)
+{
+    int n = instance.numberOfFlights;
+    int m = instance.numberOfRunways;
+
+    std::vector<int> flights(n);
+    for (int i = 0; i < n; ++i)
+    {
+        flights[i] = i;
+    }
+
+    std::sort(flights.begin(), flights.end(), [&](int a, int b)
+              { return instance.landingTakeoffTime[a] < instance.landingTakeoffTime[b]; });
+
+    std::vector<std::vector<int>> runways(m);
+    std::vector<int> runwaysEndTime(m, 0);
+
+    std::mt19937 gen(std::random_device{}());
+
+    for (int flight : flights)
+    {
+        std::vector<int> penalties(m, std::numeric_limits<int>::max());
+
+        for (int r = 0; r < m; ++r)
+        {
+            int prevEndTime = runwaysEndTime[r];
+            int prevFlight = runways[r].empty() ? -1 : runways[r].back();
+            int tRequired = (prevFlight == -1) ? 0 : instance.costMatrix[prevFlight][flight];
+            int startTime = std::max(instance.landingTakeoffTime[flight], prevEndTime + tRequired);
+            int delay = startTime - instance.landingTakeoffTime[flight];
+            penalties[r] = instance.penalties[flight] * delay;
+        }
+
+        int minPenalty = *std::min_element(penalties.begin(), penalties.end());
+
+        std::vector<int> rcl;
+        for (int r = 0; r < m; ++r)
+        {
+            if (static_cast<long long>(penalties[r]) <= static_cast<long long>(minPenalty) * (1 + alpha))
+            {
+                rcl.push_back(r);
+            }
+        }
+
+        if (rcl.empty())
+        {
+            int bestR = std::distance(penalties.begin(), std::min_element(penalties.begin(), penalties.end()));
+            rcl.push_back(bestR);
+        }
+
+        std::uniform_int_distribution<int> dist(0, rcl.size() - 1);
+        int selected = rcl[dist(gen)];
+
+        int r = selected;
+        int prevEndTime_r = runwaysEndTime[r];
+        int prevFlight_r = runways[r].empty() ? -1 : runways[r].back();
+        int tRequired_r = (prevFlight_r == -1) ? 0 : instance.costMatrix[prevFlight_r][flight];
+        int startTime_r = std::max(instance.landingTakeoffTime[flight], prevEndTime_r + tRequired_r);
+        runways[r].push_back(flight);
+        runwaysEndTime[r] = startTime_r + instance.waitingTime[flight];
+    }
+
+    return runways;
 }
