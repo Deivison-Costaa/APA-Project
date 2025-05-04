@@ -181,6 +181,7 @@ std::vector<std::vector<int>> MetaHeuristics::lns(int maxIterations,
                 }else{
                     sol = greedy.graspNearestNeighbor(instance, 0.01);
                     vnd.vnd(instance, sol);
+                    currentK = k;
                 }
                 iterationsWithoutImprovement = 0;
             }
