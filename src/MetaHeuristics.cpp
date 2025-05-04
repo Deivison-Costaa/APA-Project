@@ -139,11 +139,14 @@ std::vector<std::vector<int>> MetaHeuristics::lns(int maxIterations,
     int bestCost = curCost;
 
     std::mt19937 gen(std::random_device{}());
+    int iterationsWithoutImprovement = 0;
+    int currentK = k;
+
     for (int iter = 0; iter < maxIterations; ++iter)
     {
         auto s = sol;
-        auto removed = destroy(s, k);
-        if (removed.empty() && k > 0)
+        auto removed = destroy(s, currentK);
+        if (removed.empty() && currentK > 0)
             continue;
         auto repaired = repair(s, removed);
         vnd.vnd(instance, repaired);
@@ -152,19 +155,31 @@ std::vector<std::vector<int>> MetaHeuristics::lns(int maxIterations,
         {
             sol = repaired;
             curCost = c;
+            iterationsWithoutImprovement = 0;
+            currentK = k;
             if (c < bestCost)
             {
                 bestSol = sol;
                 bestCost = c;
                 std::cout << "Iter " << iter
                           << ": novo melhor LNS = " << bestCost << std::endl;
-                if(bestCost < 13807) instance.writeFlightList(outputBaseName, bestSol);
+                std::cout << "Solução melhor encontrada, resetando k para " << currentK << std::endl;
+                if(bestCost < 18528) instance.writeFlightList(outputBaseName, bestSol);
             }
         }
         else
         {
             std::cout << "Iter: " << iter
                       << ": | custo: " << c << " | melhor: " << bestCost << std::endl;
+            iterationsWithoutImprovement++;
+            if (iterationsWithoutImprovement >= 100)
+            {
+                if (currentK < 100) {
+                    currentK += 5;
+                    std::cout << "Aumentando nível de perturbação para " << currentK << std::endl;
+                }
+                iterationsWithoutImprovement = 0;
+            }
         }
     }
     if (!bestSol.empty())
