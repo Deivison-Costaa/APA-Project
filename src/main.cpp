@@ -91,7 +91,7 @@ void testAllInstances()
         // vector<vector<int>> is = instance.readSolution("copa_apa/n700m12E_13877.txt");
         vector<vector<int>> is;
 
-        auto solution = meta.lns(10000000, 10, "", filePath);
+        auto solution = meta.lns(1000000, 40, "", filePath);
 
         clock_gettime(CLOCK_MONOTONIC, &end);
         const double timeGreedy = diffTimespec(start, end);

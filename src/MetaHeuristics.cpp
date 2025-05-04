@@ -72,7 +72,7 @@ std::vector<std::vector<int>> MetaHeuristics::ils(int maxIterations,
             std::cout << "Iter " << iter
                       << ": novo melhor custo ILS = " << bestCost
                       << " (thread " << bestThread << ")" << std::endl;
-            if(minCost < 13877)
+            if(minCost < 18700)
                 instance.writeFlightList(outputBaseName, solutionsPerThread[bestThread]);
         }else{
             std::cout << "Iter: " << iter << " | best: " << bestCost << std::endl;
@@ -132,7 +132,7 @@ std::vector<std::vector<int>> MetaHeuristics::lns(int maxIterations,
     VariableNeighborhoodDescent vnd;
 
     auto sol = initialPath.empty()
-                   ? greedy.nearestNeighbor(instance)
+                   ? greedy.graspNearestNeighbor(instance, 0.01)
                    : instance.readSolution(initialPath);
     int curCost = instance.calculateTotalCost(sol);
     auto bestSol = sol;
@@ -163,7 +163,8 @@ std::vector<std::vector<int>> MetaHeuristics::lns(int maxIterations,
                 bestCost = c;
                 std::cout << "Iter " << iter
                           << ": novo melhor LNS = " << bestCost << std::endl;
-                std::cout << "Solução melhor encontrada, resetando k para " << currentK << std::endl;
+                std::cout << "Solução melhor encontrada, resetando k para " << k << std::endl;
+                currentK = k;
                 if(bestCost < 18528) instance.writeFlightList(outputBaseName, bestSol);
             }
         }
@@ -174,9 +175,12 @@ std::vector<std::vector<int>> MetaHeuristics::lns(int maxIterations,
             iterationsWithoutImprovement++;
             if (iterationsWithoutImprovement >= 100)
             {
-                if (currentK < 100) {
+                if (currentK < 125) {
                     currentK += 5;
                     std::cout << "Aumentando nível de perturbação para " << currentK << std::endl;
+                }else{
+                    sol = greedy.graspNearestNeighbor(instance, 0.01);
+                    vnd.vnd(instance, sol);
                 }
                 iterationsWithoutImprovement = 0;
             }
