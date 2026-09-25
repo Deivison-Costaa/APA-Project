@@ -1,0 +1,6 @@
+instance /tmp/claude-1000/-home-ddscosta--rea-de-trabalho-Faculdade-APA-APA-Project--claude-code-/5aab076d-8aac-4e11-afe9-0cef821c0125/scratchpad/APA-Project/Instances/n5m50A.txt n=50 m=5 time=5s seed=5 threads=1 sp=0 out=/tmp/claude-1000/-home-ddscosta--rea-de-trabalho-Faculdade-APA-APA-Project--claude-code-/5aab076d-8aac-4e11-afe9-0cef821c0125/scratchpad/adapt4/n5m50A_narrow_s5.txt
+greedy cost 232187
+congestion: 80% delayed after local search -> wide windows (not applied: fixed on the command line)
+round 1 [t=5]: ils 232187 -> 55182 |
+final 55182 | best at 0.35s | time 5.0s | threads 1 | iters 64544 (12903/s) acc 26757 | evals 282427603 (56.46M/s) | pool 0 | SP solves 0 improved 0 avg 0.00s max 0.00s maxcols 0
+wrote /tmp/claude-1000/-home-ddscosta--rea-de-trabalho-Faculdade-APA-APA-Project--claude-code-/5aab076d-8aac-4e11-afe9-0cef821c0125/scratchpad/adapt4/n5m50A_narrow_s5.txt cost 55182

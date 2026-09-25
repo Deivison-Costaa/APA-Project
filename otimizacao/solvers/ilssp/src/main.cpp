@@ -4,6 +4,7 @@
 #include <filesystem>
 #include <string>
 
+#include "adapt.hpp"
 #include "construct.hpp"
 #include "driver.hpp"
 
@@ -26,7 +27,7 @@ std::string outputPath(const Options& o) {
 }  // namespace
 
 int main(int argc, char** argv) {
-    const Options opt = parseOptions(argc, argv);
+    Options opt = parseOptions(argc, argv);
     const double tStart = nowSec();
     Instance ins;
     try {
@@ -56,6 +57,9 @@ int main(int argc, char** argv) {
         std::printf("init cost %lld (claimed %lld)\n", start.cost, claimed);
     }
 
+    const AdaptResult ad = adaptWindows(ins, start, opt);
+    std::printf("congestion: %.0f%% delayed after local search -> %s windows%s\n", 100.0 * ad.delayedFrac,
+                ad.wide ? "wide" : "narrow", ad.applied ? "" : " (not applied: fixed on the command line)");
     Driver driver(ins, opt);
     const Solution best = driver.solve(start, tStart, tStart + opt.timeLimit, outFile);
     std::string err;

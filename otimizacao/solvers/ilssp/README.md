@@ -33,6 +33,13 @@ The best solution is (re)written to `--out` after every round and at the end
   then reinserted at the cheapest position with 3% blinks. Undo journal for rejection.
 * **Acceptance**: simulated annealing, T from 1.0 to 0.05 times the mean penalty over
   each round; each round restarts from the global best.
+* **Adaptive windows**: before the search, one local search from the greedy start
+  measures the fraction of delayed flights. At 30% or more (congested instances such as
+  the course's n3m40/n5m50, 38-90%) the windows are widened: LS positions +-10 around r_j,
+  reinsertion +-15, ruin strings up to 8. The Copa instances (6-19%) keep the narrow
+  defaults. Explicit --pos-window/--insert-window/--max-string win; --no-adapt turns it off.
+* **Stopping / timing**: `--target C` stops once the best cost is <= C; the final line
+  reports `best at X s`, the time the best solution was first found.
 * **SP**: accepted local optima within 0.2% of the best feed a hashed column pool.
   After each round, a set-partitioning MIP (cover every flight once, at most m columns,
   warm-started with the incumbent) is solved with HiGHS through its C API. Presolve is

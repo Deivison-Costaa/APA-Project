@@ -11,7 +11,7 @@ namespace {
     std::fprintf(stderr,
                  "usage: ilssp <instance> [--time s] [--seed k] [--threads k] [--init file]\n"
                  "             [--out file|dir] [--pool-dir dir] [--no-sp] [--round s]\n"
-                 "             [--sp-time s] [--sp-max-cols k] [--T0 x] [--Tf x] [--tol x] [--target cost]\n"
+                 "             [--sp-time s] [--sp-max-cols k] [--T0 x] [--Tf x] [--tol x] [--target cost] [--no-adapt]\n"
                  "             [--margin t] [--pos-window w] [--max-runways k] [--max-string k]\n"
                  "             [--blink x] [--delayed-seed x] [--insert-window w]\n"
                  "             [--selftest] [--quiet] [--sp-verbose]\n");
@@ -59,12 +59,13 @@ Options parseOptions(int argc, char** argv) {
         else if (a == "--Tf") o.ils.Tf = toDouble(val());
         else if (a == "--tol") o.ils.poolTol = toDouble(val());
         else if (a == "--margin") o.ls.activationMargin = static_cast<int>(toInt(val()));
-        else if (a == "--pos-window") o.ls.posWindow = static_cast<int>(toInt(val()));
+        else if (a == "--pos-window") o.ls.posWindow = static_cast<int>(toInt(val())), o.windowsSet = true;
         else if (a == "--max-runways") o.ruin.maxRunways = static_cast<int>(toInt(val()));
-        else if (a == "--max-string") o.ruin.maxString = static_cast<int>(toInt(val()));
+        else if (a == "--max-string") o.ruin.maxString = static_cast<int>(toInt(val())), o.windowsSet = true;
         else if (a == "--blink") o.ruin.blink = toDouble(val());
         else if (a == "--delayed-seed") o.ruin.delayedSeed = toDouble(val());
-        else if (a == "--insert-window") o.ruin.insertWindow = static_cast<int>(toInt(val()));
+        else if (a == "--insert-window") o.ruin.insertWindow = static_cast<int>(toInt(val())), o.windowsSet = true;
+        else if (a == "--no-adapt") o.adapt = false;
         else if (a == "--selftest") o.selfTest = true;
         else if (a == "--quiet") o.quiet = true;
         else if (a == "--sp-verbose") o.spVerbose = true;

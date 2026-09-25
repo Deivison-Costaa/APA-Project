@@ -20,6 +20,8 @@ struct Options {
     double spTime = 10.0;      // MIP time limit per solve
     int spMaxCols = 5000;     // cap on columns passed to the MIP
     bool selfTest = false;
+    bool adapt = true;         // pick the window widths from the instance congestion
+    bool windowsSet = false;   // --pos-window/--insert-window/--max-string given: no adaptation
     bool quiet = false;
     bool spVerbose = false;
     IlsParams ils;

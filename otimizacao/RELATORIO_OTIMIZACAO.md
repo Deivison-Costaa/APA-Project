@@ -160,6 +160,7 @@ A perturbação é pequena e concentrada num instante, exatamente onde os voos d
 | Blink | 3% | Diversificação na reinserção |
 | Janela de reinserção | ±2 posições em volta de `r_j` | Granularidade da perturbação |
 | Margem de reativação | 100 unidades de tempo | Alcance dos *don't look bits* |
+| Janelas adaptativas | ±10 / ±15 / trechos até 8 se ≥ 30% dos voos atrasam | Instâncias congestionadas (seção 8) |
 
 ## 5 Como os ótimos foram encontrados e quanto tempo leva
 
@@ -258,6 +259,7 @@ python3 ../../tools/check.py ../../instances/n700m12E.txt saida.txt
 | `--target C` | Para ao atingir custo C e informa o tempo |
 | `--no-sp` | Sem set partitioning (obrigatório no `ilssp-pure`) |
 | `--init arq` | Parte de uma solução existente |
+| `--no-adapt` | Desliga a escolha automática das janelas (seção 8) |
 
 A prova de otimalidade (`winlb`) e o ILS com set partitioning (`ilssp`) usam o HiGHS, que vem com o pacote Python `highspy`:
 
@@ -269,3 +271,23 @@ make ilssp winlb HIGHSDIR=$(realpath ../../../venv/lib/python3.*/site-packages/h
 ```
 
 Cada janela da prova usa de 1 a 4 GB de RAM e leva de 5 a 20 minutos. Com 15 GB de RAM, rode uma janela por vez.
+
+## 8 Instâncias da disciplina
+
+O solver também foi testado nas 20 instâncias da disciplina (`Instances/`). Elas são muito mais congestionadas que as da Copa: depois da primeira busca local, 38% a 90% dos voos estão atrasados, contra 6% a 19% na Copa. Nessas condições, a busca granular com janelas estreitas em volta de `r_j` perdia posições boas. No n5m50A, por exemplo, só 2 de 20 sementes chegavam ao melhor valor conhecido.
+
+Por isso o solver escolhe as janelas sozinho. Antes da busca, uma busca local a partir do guloso mede a fração de voos atrasados. A partir de 30%, as janelas são alargadas: posições ±10 em volta de `r_j` na busca local, ±15 na reinserção e trechos de até 8 voos na ruína. As instâncias da Copa ficam com as janelas estreitas, sem mudança de comportamento. Passar `--pos-window`, `--insert-window` ou `--max-string` na linha de comando, ou usar `--no-adapt`, desliga a escolha automática.
+
+Resultado com 5 sementes de 5 s cada. A referência é o ótimo, quando conhecido, ou o melhor valor do ILS original:
+
+| Instâncias | Referência | Solver novo |
+| --- | --- | --- |
+| n3m10 A a E | 7483, 1277, 2088, 322, 3343 (ótimos) | Todas iguais, 5 de 5, em menos de 0,01 s |
+| n3m20 A a E | 31357, 16719, 6462, 4357, 3798 | Todas iguais, 5 de 5, em menos de 0,01 s |
+| n3m40A | 45474 | 5 de 5 (antes da adaptação: 1 de 3) |
+| n3m40B, D, E | 28971, 12963, 17838 | 5 de 5 |
+| n3m40C | 43665 | 2 de 5; com 20 sementes, 3 de 20 contra 5 de 20 da janela estreita (média igual: 43807 x 43808) |
+| n5m50A | 54401 | 3 de 5; com 20 sementes, **17 de 20** contra 2 de 20 da janela estreita |
+| n5m50B a E | 23739, 14510, 15240, 6327 | 5 de 5 |
+
+O solver novo empata com a referência em todas as 20 instâncias, mas não melhora nenhuma, o que sugere que esses valores também sejam ótimos (não provado). Nas instâncias da Copa, a validação depois da mudança manteve o comportamento: 5 de 5 na n500 em 120 s, e 4 de 5 na n700 e na n1000.
