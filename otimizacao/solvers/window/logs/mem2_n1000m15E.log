@@ -1,0 +1,2 @@
+instance n1000m15E n=1000 m=15 start cost 21663 (greedy) mode=hybrid
+[n1000m15E] t=7.3 iter=6144 acc=4192 impr=72 cur=5335 best=5335 T=17.11 evals=183962738

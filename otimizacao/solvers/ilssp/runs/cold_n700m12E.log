@@ -1,0 +1,22 @@
+instance /tmp/claude-1000/-home-ddscosta--rea-de-trabalho-Faculdade-APA-APA-Project--claude-code-/5aab076d-8aac-4e11-afe9-0cef821c0125/scratchpad/work/instances/n700m12E.txt n=700 m=12 time=300s seed=1 threads=1 sp=1 out=out/cold_n700m12E.txt
+greedy cost 54819
+  t=    0.0 best 27010
+  t=    0.6 best 15476
+  t=    1.1 best 14506
+  t=    2.1 best 13875
+  t=    2.7 best 13742
+  t=    5.9 best 13402
+  t=    6.4 best 13244
+  t=    8.4 best 13154
+  t=   16.5 best 13107
+round 1 [t=30]: ils 54819 -> 13090 | SP cols 5000/29615 -> feasible 13090 (bound 0, 10.0s)
+round 2 [t=70]: ils 13090 -> 13090 | SP cols 5000/59792 -> feasible 13090 optimal (bound 13090, 7.5s)
+round 3 [t=108]: ils 13090 -> 13090 | SP cols 5000/86837 -> feasible 13090 optimal (bound 13090, 6.0s)
+round 4 [t=144]: ils 13090 -> 13090 | SP cols 5000/119070 -> feasible 13090 optimal (bound 13090, 6.6s)
+round 5 [t=180]: ils 13090 -> 13090 | SP cols 5000/153531 -> feasible 13090 optimal (bound 13090, 7.8s)
+round 6 [t=218]: ils 13090 -> 13090 | SP cols 5000/189778 -> feasible 13090 optimal (bound 13090, 7.2s)
+round 7 [t=255]: ils 13090 -> 13090 | SP cols 5000/216431 -> feasible 13090 optimal (bound 13090, 5.7s)
+round 8 [t=290]: ils 13090 -> 13090 | SP cols 5000/249050 -> feasible 13090 optimal (bound 13090, 5.4s)
+round 9 [t=300]: ils 13090 -> 13090 |
+final 13090 | time 300.0s | threads 1 | iters 598016 (1993/s) acc 468403 | evals 6168731929 (20.56M/s) | pool 249050 | SP solves 8 improved 0 avg 7.03s max 10.04s maxcols 5000
+wrote out/cold_n700m12E.txt cost 13090

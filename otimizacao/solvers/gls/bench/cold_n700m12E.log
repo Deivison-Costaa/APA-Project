@@ -1,0 +1,24 @@
+instance n700m12E n=700 m=12  init=greedy cost=54819  (setup 0.04s)
+[t=0.0s] after initial LS: 27068 (evals 776528, moves 96)
+[t=30.0s tid=0] it=56061 it/s=1869 evals/s=60.56M acc=79.1% T=87.74 cur=14152 best=13147
+[t=60.0s tid=0] it=122936 it/s=2229 evals/s=70.63M acc=75.4% T=25.68 cur=13169 best=13090
+[t=90.0s tid=0] it=189881 it/s=2231 evals/s=70.74M acc=73.3% T=7.52 cur=13090 best=13090
+[t=120.0s tid=0] it=251845 it/s=2065 evals/s=66.83M acc=74.1% T=131.98 cur=14551 best=13090
+[t=150.0s tid=0] it=305625 it/s=1793 evals/s=57.43M acc=74.1% T=38.63 cur=13394 best=13090
+[t=180.0s tid=0] it=349597 it/s=1466 evals/s=46.41M acc=73.6% T=11.31 cur=13090 best=13090
+[t=210.0s tid=0] it=404648 it/s=1835 evals/s=58.79M acc=73.6% T=198.55 cur=14282 best=13090
+[t=240.0s tid=0] it=463954 it/s=1977 evals/s=63.44M acc=74.0% T=58.11 cur=13395 best=13090
+[t=270.0s tid=0] it=524894 it/s=2031 evals/s=64.55M acc=73.6% T=17.01 cur=13172 best=13090
+[tid=0] done: iters=567050 (1891/s) evals=18115419418 best=13090 (at 43.3s) assignHits=174932 flights/iter=38.7 moves/iter=4.68
+   LS: flights examined 21948930, pruned candidates 87842739
+   time: perturb 11.5s  LS 223.1s  assign+LS 64.6s
+   delta hist: <0 21662 | 0 374390 | 1-10 4154 | 11-50 15722 | 51-100 11702 | 101-500 76609 | >500 62811
+   relocP  evals=  9.06% applied=126652
+   crossP  evals= 33.69% applied=879251
+   2optP   evals=  5.81% applied=430428
+   relocS  evals=  9.08% applied=48548
+   crossS  evals= 34.13% applied=526073
+   2optS   evals=  5.67% applied=626080
+   intra   evals=  1.80% applied=18459
+   starts  evals=  0.03% applied=980
+FINAL cost=13090 reference=13090 time=300.0s out=bench/cold_n700m12E.txt

@@ -5,6 +5,14 @@ Allejandro Sousa dos Santos
 Deivison da Silva Costa
 Giancarlo Silveira Cavalcante
 
+## Pós-Copa: ótimos provados
+
+Depois da Copa APA, as três instâncias foram resolvidas até o ótimo, e a otimalidade foi
+provada: **n500m10E = 18435, n700m12E = 13090, n1000m15E = 5095** (a equipe tinha entregado
+18528 / 13541 / 5461). Um ILS em C++ puro encontra os três ótimos em menos de um minuto
+(mediana). O código, as provas e o relatório comparando com esta versão original estão em
+[`otimizacao/`](otimizacao/) ([relatório](otimizacao/RELATORIO_OTIMIZACAO.md)).
+
 ## Problema
 
 Escalonamento de pousos e decolagens em `m` pistas: cada voo `i` tem horário de

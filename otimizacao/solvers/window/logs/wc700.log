@@ -1,0 +1,8 @@
+instance n700m12E n=700 m=12 start cost 50658 (greedy) mode=window
+after LS: 24389
+sweep 1 delta -2395 cost 21994
+[n700m12E] t=54.1 windows=49 improved=13 gain=2355 optimal=37 timeouts=12 skipped=0 avgFree=28.6 avgStates=806 avgArcs=15497 mipTime=54.0s (1.102s/win)
+sweep 2 delta -390 cost 21604
+[n700m12E] t=121.1 windows=95 improved=14 gain=2745 optimal=72 timeouts=23 skipped=0 avgFree=29.0 avgStates=809 avgArcs=16013 mipTime=120.9s (1.273s/win)
+[n700m12E] t=121.1 windows=95 improved=14 gain=2745 optimal=72 timeouts=23 skipped=0 avgFree=29.0 avgStates=809 avgArcs=16013 mipTime=120.9s (1.273s/win)
+FINAL n700m12E cost 21604 time 121.1

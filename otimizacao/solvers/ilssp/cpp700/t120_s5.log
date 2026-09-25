@@ -1,0 +1,21 @@
+instance ../../instances/n700m12E.txt n=700 m=12 time=120s seed=5 threads=1 sp=0 out=cpp700/t120_s5.txt
+greedy cost 54819
+  t=    0.0 best 29297
+  t=    0.7 best 14656
+  t=    1.7 best 14382
+  t=    2.3 best 14066
+  t=    3.6 best 13964
+  t=    4.2 best 13787
+  t=    4.9 best 13767
+  t=    5.7 best 13670
+  t=    8.5 best 13663
+  t=    9.5 best 13660
+  t=   10.7 best 13559
+  t=   14.2 best 13455
+  t=   17.3 best 13325
+  t=   18.9 best 13130
+  t=   37.8 best 13102
+  t=   38.4 best 13090
+round 1 [t=120]: ils 54819 -> 13090 |
+final 13090 | time 120.0s | threads 1 | iters 302752 (2523/s) acc 237166 | evals 3124493948 (26.04M/s) | pool 0 | SP solves 0 improved 0 avg 0.00s max 0.00s maxcols 0
+wrote cpp700/t120_s5.txt cost 13090

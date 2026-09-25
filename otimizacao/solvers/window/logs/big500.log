@@ -1,0 +1,5 @@
+instance n500m10E n=500 m=10 start cost 18455 (../../pool/n500m10E/n500m10E_18455_window.txt) mode=onewin
+    win T0=1720 T1=2420 R=10 F=138 S=8274/8715 A=425148 ubw=4691 gap=2470 obj=4691 bound=4691.0 nodes=1 opt=1 t=252.320
+onewin delta 0 cost 18455
+[n500m10E] t=252.3 windows=1 improved=0 gain=0 lbProven=0 optimal=1 timeouts=0 skipped=0 avgFree=138.0 avgStates=8274 avgArcs=425148 lbTime=0.0s mipTime=252.3s (252.277s/win)
+FINAL n500m10E cost 18455 time 252.3

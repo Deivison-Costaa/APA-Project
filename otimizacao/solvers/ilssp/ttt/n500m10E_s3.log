@@ -1,0 +1,5 @@
+instance ../../instances/n500m10E.txt n=500 m=10 time=120s seed=3 threads=1 sp=0 out=ttt/n500m10E_s3.txt
+greedy cost 71890
+round 1 [t=38]: ils 71890 -> 18435 |
+final 18435 | best at 38.23s (target) | time 38.2s | threads 1 | iters 121824 (3187/s) acc 94356 | evals 1036445187 (27.11M/s) | pool 0 | SP solves 0 improved 0 avg 0.00s max 0.00s maxcols 0
+wrote ttt/n500m10E_s3.txt cost 18435

@@ -1,0 +1,8 @@
+instance ../../instances/n1000m15E.txt n=1000 m=15 time=25s seed=1 sp=0 out=out/mg50.txt
+greedy cost 23429
+  t=    1.2 best 5771
+  t=    3.5 best 5434
+  t=    7.5 best 5185
+  t=    9.1 best 5120
+round 1: ils 23429 -> 5095
+final 5095 | time 25.0s | iters 45216 (1808/s) acc 36607 | evals 440360840 (17.61M/s) | pool 0 | SP solves 0 improved 0 avg 0.00s max 0.00s

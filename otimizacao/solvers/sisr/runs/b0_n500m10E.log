@@ -1,0 +1,8 @@
+instance n500m10E n=500 m=10 time=30.0s threads=1 seed=1
+initial cost 48501 (greedy) after 0.01s
+[t=    5.0s] it=764608 (152919 it/s) T=15.162 cur=20733 best=20683 global=20683
+[t=   10.0s] it=1534784 (153477 it/s) T=7.663 cur=20525 best=20490 global=20490
+[t=   15.0s] it=2305536 (153701 it/s) T=3.873 cur=20477 best=20472 global=20472
+[t=   20.0s] it=3077952 (153895 it/s) T=1.957 cur=20472 best=20472 global=20472
+[t=   25.0s] it=3849664 (153984 it/s) T=0.989 cur=20472 best=20472 global=20472
+final best 20342  iters=4620352 (154010 it/s total)  written to runs/b0_n500m10E.txt

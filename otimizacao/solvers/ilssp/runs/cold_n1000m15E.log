@@ -1,0 +1,24 @@
+instance /tmp/claude-1000/-home-ddscosta--rea-de-trabalho-Faculdade-APA-APA-Project--claude-code-/5aab076d-8aac-4e11-afe9-0cef821c0125/scratchpad/work/instances/n1000m15E.txt n=1000 m=15 time=300s seed=1 threads=1 sp=1 out=out/cold_n1000m15E.txt
+greedy cost 23429
+  t=    0.0 best 14744
+  t=    0.6 best 6795
+  t=    1.2 best 5966
+  t=    2.3 best 5798
+  t=    3.1 best 5575
+  t=    3.6 best 5455
+  t=    4.8 best 5332
+  t=    5.6 best 5308
+  t=    6.5 best 5295
+  t=   14.9 best 5175
+  t=   15.5 best 5131
+  t=   18.5 best 5095
+round 1 [t=30]: ils 23429 -> 5095 | SP cols 5000/34385 -> feasible 5095 (bound 0, 10.1s)
+round 2 [t=70]: ils 5095 -> 5095 | SP cols 5000/63111 -> feasible 5095 (bound 0, 10.0s)
+round 3 [t=110]: ils 5095 -> 5095 | SP cols 5000/63181 -> feasible 5095 (bound 0, 10.3s)
+round 4 [t=151]: ils 5095 -> 5095 | SP cols 5000/81094 -> feasible 5095 (bound 0, 10.0s)
+round 5 [t=191]: ils 5095 -> 5095 | SP cols 5000/85531 -> feasible 5095 (bound 0, 10.3s)
+round 6 [t=231]: ils 5095 -> 5095 | SP cols 5000/105126 -> feasible 5095 (bound 0, 10.1s)
+round 7 [t=271]: ils 5095 -> 5095 | SP cols 5000/131768 -> feasible 5095 (bound 0, 10.0s)
+round 8 [t=294]: ils 5095 -> 5095 | SP cols 5000/144743 -> feasible 5095 (bound 0, 5.8s)
+final 5095 | time 300.1s | threads 1 | iters 454048 (1513/s) acc 367347 | evals 5869439395 (19.56M/s) | pool 144743 | SP solves 8 improved 0 avg 9.58s max 10.31s maxcols 5000
+wrote out/cold_n1000m15E.txt cost 5095

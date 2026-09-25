@@ -1,0 +1,5 @@
+instance ../../instances/n1000m15E.txt n=1000 m=15 time=30s seed=2 threads=1 sp=0 out=ttt/n1000m15E_s2.txt
+greedy cost 23429
+round 1 [t=21]: ils 23429 -> 5095 |
+final 5095 | best at 20.95s (target) | time 21.0s | threads 1 | iters 43616 (2081/s) acc 35778 | evals 563646238 (26.89M/s) | pool 0 | SP solves 0 improved 0 avg 0.00s max 0.00s maxcols 0
+wrote ttt/n1000m15E_s2.txt cost 5095

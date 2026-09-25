@@ -1,0 +1,10 @@
+./ilssp-pure ../../instances/n500m10E.txt --time 120 --seed 1 --no-sp --out bench/n500m10E_t120_s1.txt > bench/n500m10E_t120_s1.log 2>&1
+./ilssp-pure ../../instances/n500m10E.txt --time 120 --seed 2 --no-sp --out bench/n500m10E_t120_s2.txt > bench/n500m10E_t120_s2.log 2>&1
+./ilssp-pure ../../instances/n500m10E.txt --time 120 --seed 3 --no-sp --out bench/n500m10E_t120_s3.txt > bench/n500m10E_t120_s3.log 2>&1
+./ilssp-pure ../../instances/n500m10E.txt --time 120 --seed 4 --no-sp --out bench/n500m10E_t120_s4.txt > bench/n500m10E_t120_s4.log 2>&1
+./ilssp-pure ../../instances/n500m10E.txt --time 120 --seed 5 --no-sp --out bench/n500m10E_t120_s5.txt > bench/n500m10E_t120_s5.log 2>&1
+./ilssp-pure ../../instances/n500m10E.txt --time 120 --seed 6 --no-sp --out bench/n500m10E_t120_s6.txt > bench/n500m10E_t120_s6.log 2>&1
+./ilssp-pure ../../instances/n500m10E.txt --time 300 --seed 3 --no-sp --out bench/n500m10E_t300_s3.txt > bench/n500m10E_t300_s3.log 2>&1
+./ilssp-pure ../../instances/n500m10E.txt --time 300 --seed 4 --no-sp --out bench/n500m10E_t300_s4.txt > bench/n500m10E_t300_s4.log 2>&1
+./ilssp-pure ../../instances/n500m10E.txt --time 300 --seed 5 --no-sp --out bench/n500m10E_t300_s5.txt > bench/n500m10E_t300_s5.log 2>&1
+./ilssp-pure ../../instances/n500m10E.txt --time 300 --seed 6 --no-sp --out bench/n500m10E_t300_s6.txt > bench/n500m10E_t300_s6.log 2>&1

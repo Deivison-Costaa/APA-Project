@@ -1,0 +1,27 @@
+w2_1_n700m12E: --T0 100 --Tf 10 --tail 0.3 --slice 0.2 --bias 0.5 --slicew 100 --global 0.2 --wT0 100 --wTf 5 --witers 300000
+instance n700m12E n=700 m=12 time=120.0s threads=1 seed=1
+initial cost 35893 (greedy) after 0.03s
+[t=    5.0s] global it=355584 (71113 it/s) T=61.895 cur=16576 best=15338 global=15338 windows=0
+[t=   10.0s] global it=709888 (70984 it/s) T=38.309 cur=14961 best=14847 global=14847 windows=0
+[t=   15.0s] global it=1060672 (70708 it/s) T=23.712 cur=14862 best=14747 global=14747 windows=0
+[t=   20.0s] global it=1410112 (70502 it/s) T=14.677 cur=14608 best=14546 global=14546 windows=0
+[t=   25.0s] window it=1758080 (70319 it/s) T=49.892 cur=14907 best=14473 global=14473 windows=1
+[t=   30.0s] window it=2137376 (71241 it/s) T=22.602 cur=14376 best=14220 global=14220 windows=2
+[t=   35.0s] window it=2607456 (74492 it/s) T=82.712 cur=14968 best=14220 global=14220 windows=4
+[t=   40.0s] window it=2937152 (73422 it/s) T=61.487 cur=14448 best=14220 global=14220 windows=5
+[t=   45.0s] window it=3378528 (75071 it/s) T=14.986 cur=14394 best=14220 global=14220 windows=6
+[t=   50.0s] window it=3904672 (78086 it/s) T=31.331 cur=14540 best=14220 global=14220 windows=8
+[t=   55.0s] window it=4420512 (80366 it/s) T=72.602 cur=14400 best=14220 global=14220 windows=10
+[t=   60.0s] window it=5039456 (83984 it/s) T=60.089 cur=14862 best=14220 global=14220 windows=12
+[t=   65.0s] window it=5491968 (84485 it/s) T=13.103 cur=13612 best=13538 global=13538 windows=13
+[t=   70.0s] window it=5962432 (85171 it/s) T=47.770 cur=14024 best=13538 global=13538 windows=15
+[t=   75.0s] window it=6440800 (85870 it/s) T=8.047 cur=13757 best=13538 global=13538 windows=16
+[t=   80.0s] window it=6904544 (86299 it/s) T=31.371 cur=13842 best=13538 global=13538 windows=18
+[t=   85.0s] window it=7390880 (86944 it/s) T=97.602 cur=13874 best=13443 global=13443 windows=20
+[t=   90.0s] window it=7937920 (88191 it/s) T=8.281 cur=13679 best=13443 global=13443 windows=21
+[t=   95.0s] window it=8490624 (89367 it/s) T=13.280 cur=13485 best=13443 global=13443 windows=23
+[t=  100.0s] window it=9074944 (90742 it/s) T=15.532 cur=13504 best=13443 global=13443 windows=25
+[t=  105.0s] window it=9652608 (91922 it/s) T=19.412 cur=13800 best=13433 global=13433 windows=27
+[t=  110.0s] window it=10196416 (92687 it/s) T=34.023 cur=13928 best=13433 global=13433 windows=29
+[t=  115.0s] window it=10761664 (93572 it/s) T=48.138 cur=14231 best=13433 global=13433 windows=31
+final best 13433  iters=11357760 (94648 it/s total)  written to /tmp/claude-1000/-home-ddscosta--rea-de-trabalho-Faculdade-APA-APA-Project--claude-code-/5aab076d-8aac-4e11-afe9-0cef821c0125/scratchpad/work/solvers/sisr/runs/w2_1_n700m12E.txt

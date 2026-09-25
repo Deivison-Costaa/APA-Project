@@ -1,0 +1,4 @@
+instance ../../instances/n500m10E.txt n=500 m=10 time=30s seed=1 sp=0 out=out/ns_n500m10E.txt
+greedy cost 71890
+round 1: ils 71890 -> 18435
+final 18435 | time 30.0s | iters 98208 (3273/s) acc 75012 | evals 832317960 (27.74M/s) | pool 0 | SP solves 0 improved 0 avg 0.00s max 0.00s

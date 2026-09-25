@@ -1,0 +1,49 @@
+instance n500m10E n=500 m=10 horizon=2731 | time 60.0s seed 1 threads 1 xover rx mu 25 lambda 40
+[    0.03s] T0 new best 37746
+[    0.11s] T0 new best 37360
+[    0.24s] T0 new best 35444
+[    0.31s] T0 new best 35003
+[    0.34s] T0 new best 34347
+[    0.39s] T0 new best 33366
+[    0.63s] T0 new best 33070
+[    1.01s] T0 new best 31704
+[    1.58s] T0 gen 0 pop 50 best 31704 avg 37719.5 div 0.613 | global 31704 | moves 9295 evals 51561653
+[    1.65s] T0 new best 31237
+[    1.68s] T0 new best 31076
+[    1.99s] T0 new best 30966
+[    2.03s] T0 new best 29464
+[    2.50s] T0 new best 28649
+[    3.10s] T0 new best 27926
+[    3.16s] T0 new best 27435
+[    3.42s] T0 new best 26081
+[    3.44s] T0 new best 24174
+[    4.50s] T0 new best 23896
+[    6.59s] T0 gen 208 pop 53 best 23896 avg 28211.2 div 0.475 | global 23896 | moves 46502 evals 216534762
+[    8.12s] T0 new best 23847
+[    9.64s] T0 new best 23231
+[   11.59s] T0 gen 416 pop 56 best 23231 avg 26889.1 div 0.420 | global 23231 | moves 79688 evals 372644037
+[   14.31s] T0 new best 23195
+[   15.46s] T0 new best 23016
+[   16.60s] T0 gen 621 pop 56 best 23016 avg 26079.5 div 0.397 | global 23016 | moves 113047 evals 526589758
+[   17.37s] T0 new best 22658
+[   17.56s] T0 new best 22606
+[   19.87s] T0 new best 22456
+[   21.59s] T0 gen 837 pop 26 best 22456 avg 23935.7 div 0.375 | global 22456 | moves 146415 evals 680443276
+[   22.81s] T0 new best 22333
+[   24.27s] T0 new best 22267
+[   26.59s] T0 gen 1054 pop 38 best 22267 avg 24368.6 div 0.344 | global 22267 | moves 180372 evals 836697583
+[   26.97s] T0 new best 22142
+[   31.59s] T0 gen 1276 pop 55 best 22142 avg 24994.6 div 0.318 | global 22142 | moves 214086 evals 994389034
+[   31.88s] T0 new best 21771
+[   36.59s] T0 gen 1508 pop 41 best 21771 avg 23933.7 div 0.321 | global 21771 | moves 247121 evals 1157159805
+[   38.25s] T0 new best 21727
+[   41.59s] T0 gen 1756 pop 43 best 21727 avg 23358.6 div 0.269 | global 21727 | moves 281052 evals 1324962500
+[   43.27s] T0 new best 21659
+[   43.75s] T0 new best 21621
+[   46.59s] T0 gen 1996 pop 37 best 21621 avg 24116.4 div 0.370 | global 21621 | moves 315848 evals 1494046562
+[   51.58s] T0 gen 2228 pop 64 best 21621 avg 24442.4 div 0.308 | global 21621 | moves 350234 evals 1660878191
+[   55.37s] T0 new best 21495
+[   55.72s] T0 new best 21399
+[   56.61s] T0 gen 2477 pop 26 best 21399 avg 21904.1 div 0.221 | global 21399 | moves 384393 evals 1832314411
+generations 2641 (44.0/s) | LS moves 406899 | evals 1947088434 (32.45M/s) | restarts 0
+FINAL 21399 ./runs/rx500.txt

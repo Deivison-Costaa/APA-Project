@@ -1,0 +1,15 @@
+w1_1_n700m12E: --T0 100 --Tf 10 --tail 0.3 --slice 0.2 --bias 0.5 --slicew 100 --global 0.3 --witers 30000
+instance n700m12E n=700 m=12 time=60.0s threads=1 seed=1
+initial cost 35893 (greedy) after 0.02s
+[t=    5.0s] global it=448448 (89686 it/s) T=52.749 cur=15620 best=15076 global=15076 windows=0
+[t=   10.0s] global it=889408 (88937 it/s) T=27.824 cur=14659 best=14456 global=14456 windows=0
+[t=   15.0s] global it=1338368 (89219 it/s) T=14.676 cur=14473 best=14409 global=14409 windows=0
+[t=   20.0s] window it=1816160 (90803 it/s) T=3.163 cur=14434 best=14313 global=14313 windows=7
+[t=   25.0s] window it=2363184 (94523 it/s) T=37.220 cur=14443 best=14231 global=14231 windows=26
+[t=   30.0s] window it=2904912 (96826 it/s) T=30.921 cur=14398 best=14213 global=14213 windows=44
+[t=   35.0s] window it=3429952 (97994 it/s) T=6.158 cur=14222 best=14213 global=14213 windows=61
+[t=   40.0s] window it=3794496 (94858 it/s) T=3.782 cur=14213 best=14213 global=14213 windows=73
+[t=   45.0s] window it=4203104 (93397 it/s) T=12.839 cur=14318 best=14213 global=14213 windows=87
+[t=   50.0s] window it=4707920 (94154 it/s) T=22.392 cur=14318 best=14213 global=14213 windows=104
+[t=   55.0s] window it=5113344 (92965 it/s) T=4.279 cur=14231 best=14213 global=14213 windows=117
+final best 14213  iters=5521696 (92028 it/s total)  written to /tmp/claude-1000/-home-ddscosta--rea-de-trabalho-Faculdade-APA-APA-Project--claude-code-/5aab076d-8aac-4e11-afe9-0cef821c0125/scratchpad/work/solvers/sisr/runs/w1_1_n700m12E.txt

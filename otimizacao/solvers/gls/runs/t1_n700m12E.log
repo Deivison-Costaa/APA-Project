@@ -1,0 +1,9 @@
+instance n700m12E n=700 m=12  init=greedy cost=54819  (setup 0.03s)
+[t=0.0s] after initial LS: 27068 (evals 798315, moves 96)
+[t=5.0s tid=0] it=14691 it/s=2938 evals/s=85.70M acc=59.2% T=10.78 cur=13451 best=13399
+[t=10.0s tid=0] it=30641 it/s=3190 evals/s=92.94M acc=59.0% T=5.82 cur=13106 best=13090
+[t=15.0s tid=0] it=46591 it/s=3190 evals/s=92.92M acc=58.7% T=3.14 cur=13090 best=13090
+[t=20.0s tid=0] it=62672 it/s=3216 evals/s=92.98M acc=58.5% T=1.70 cur=13090 best=13090
+[t=25.0s tid=0] it=78688 it/s=3203 evals/s=92.88M acc=58.4% T=0.92 cur=13090 best=13090
+[tid=0] done: iters=94318 (3152/s) evals=2744784904 best=13090
+FINAL cost=13090 reference=13090 time=30.0s out=runs/t1_n700m12E.txt

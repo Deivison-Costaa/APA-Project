@@ -1,0 +1,26 @@
+instance n1000m15E n=1000 m=15 start cost 21663 (greedy) mode=ils
+[n1000m15E] t=5.1 iter=2336 acc=1595 impr=53 cur=5644 best=5514 T=23.79 evals=91345927
+[n1000m15E] t=10.1 iter=4588 acc=3082 impr=64 cur=5371 best=5280 T=20.99 evals=179307067
+[n1000m15E] t=15.1 iter=6721 acc=4500 impr=64 cur=5322 best=5280 T=18.53 evals=260743417
+[n1000m15E] t=20.1 iter=8773 acc=5855 impr=64 cur=5310 best=5280 T=16.35 evals=341470142
+[n1000m15E] t=25.1 iter=10831 acc=7211 impr=71 cur=5148 best=5134 T=14.43 evals=421126704
+[n1000m15E] t=30.1 iter=12907 acc=8612 impr=71 cur=5157 best=5134 T=12.74 evals=500336129
+[n1000m15E] t=35.1 iter=15043 acc=10023 impr=73 cur=5131 best=5121 T=11.24 evals=582511018
+[n1000m15E] t=40.1 iter=17060 acc=11365 impr=73 cur=5168 best=5121 T=9.92 evals=659982860
+[n1000m15E] t=45.1 iter=19177 acc=12735 impr=75 cur=5115 best=5095 T=8.76 evals=740899284
+[n1000m15E] t=50.1 iter=21343 acc=14142 impr=75 cur=5141 best=5095 T=7.73 evals=823205899
+[n1000m15E] t=55.1 iter=23455 acc=15493 impr=75 cur=5160 best=5095 T=6.82 evals=905119390
+[n1000m15E] t=60.1 iter=25548 acc=16822 impr=75 cur=5152 best=5095 T=6.02 evals=985585088
+[n1000m15E] t=65.1 iter=27614 acc=18109 impr=75 cur=5116 best=5095 T=5.31 evals=1066770168
+[n1000m15E] t=70.1 iter=29729 acc=19482 impr=75 cur=5117 best=5095 T=4.69 evals=1147371180
+[n1000m15E] t=75.1 iter=31824 acc=20838 impr=75 cur=5095 best=5095 T=4.14 evals=1227880200
+[n1000m15E] t=80.1 iter=33880 acc=22179 impr=75 cur=5095 best=5095 T=3.65 evals=1307980647
+[n1000m15E] t=85.1 iter=35971 acc=23557 impr=75 cur=5097 best=5095 T=3.22 evals=1388559425
+[n1000m15E] t=90.1 iter=38063 acc=24870 impr=75 cur=5095 best=5095 T=2.85 evals=1469562786
+[n1000m15E] t=95.1 iter=40200 acc=26248 impr=75 cur=5095 best=5095 T=2.51 evals=1550480370
+[n1000m15E] t=100.1 iter=42376 acc=27671 impr=75 cur=5095 best=5095 T=2.22 evals=1631257398
+[n1000m15E] t=105.1 iter=44444 acc=29034 impr=75 cur=5095 best=5095 T=1.96 evals=1709629945
+[n1000m15E] t=110.1 iter=47074 acc=30718 impr=75 cur=5095 best=5095 T=1.73 evals=1811185286
+[n1000m15E] t=115.1 iter=49713 acc=32434 impr=75 cur=5095 best=5095 T=1.52 evals=1911456698
+[n1000m15E] ILS done iter=51481 best=5095 (429.2 it/s)
+FINAL n1000m15E cost 5095 time 120.0

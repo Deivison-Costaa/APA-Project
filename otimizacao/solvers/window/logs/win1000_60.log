@@ -1,0 +1,8 @@
+instance n1000m15E n=1000 m=15 start cost 5095 (../../pool/n1000m15E/n1000m15E_5095_window.txt) mode=window
+after LS: 5095
+sweep 1 delta 0 cost 5095
+[n1000m15E] t=53.0 windows=35 improved=0 gain=0 optimal=23 timeouts=12 skipped=0 avgFree=57.1 avgStates=753 avgArcs=21472 mipTime=52.9s (1.512s/win)
+sweep 2 delta 0 cost 5095
+[n1000m15E] t=90.0 windows=57 improved=0 gain=0 optimal=38 timeouts=19 skipped=0 avgFree=57.4 avgStates=813 avgArcs=23134 mipTime=89.9s (1.577s/win)
+[n1000m15E] t=90.0 windows=57 improved=0 gain=0 optimal=38 timeouts=19 skipped=0 avgFree=57.4 avgStates=813 avgArcs=23134 mipTime=89.9s (1.577s/win)
+FINAL n1000m15E cost 5095 time 90.0

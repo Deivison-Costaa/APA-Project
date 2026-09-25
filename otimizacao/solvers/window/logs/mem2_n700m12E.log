@@ -1,0 +1,2 @@
+instance n700m12E n=700 m=12 start cost 50658 (greedy) mode=hybrid
+[n700m12E] t=5.0 iter=5937 acc=3840 impr=73 cur=13827 best=13704 T=39.26 evals=166219835

@@ -1,0 +1,4 @@
+instance ../../instances/n1000m15E.txt incumbent 5095, 5 windows, windows cover 5095 of the cost
+window 3 [2661,3311) ub 1212 | home 189 early 75 states 26915 arcs 1289588 | LP 937.000 (160.1s) | status 7 primal 937 dual 937.00 | 1128.9s | open
+   pulled-in: 661   pushed-out:
+SUMMARY: incumbent 5095, certified windows 0/5, lower bound 937

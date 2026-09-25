@@ -1,0 +1,5 @@
+instance ../../instances/n700m12E.txt n=700 m=12 time=60s seed=6 threads=1 sp=0 out=ttt/n700m12E_s6.txt
+greedy cost 54819
+round 1 [t=43]: ils 54819 -> 13090 |
+final 13090 | best at 42.80s (target) | time 42.8s | threads 1 | iters 111488 (2605/s) acc 88658 | evals 1143507157 (26.72M/s) | pool 0 | SP solves 0 improved 0 avg 0.00s max 0.00s maxcols 0
+wrote ttt/n700m12E_s6.txt cost 13090

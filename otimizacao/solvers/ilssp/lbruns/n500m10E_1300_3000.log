@@ -1,0 +1,14 @@
+instance ../../instances/n500m10E.txt incumbent 18435, 1 windows, windows cover 12169 of the cost
+WARNING: windows do not cover all delay; outside part counted as LB 0
+Running HiGHS 1.15.1 (git hash: 04024d7): Copyright (c) 2026 under MIT licence terms
+Includes third-party software components, see THIRD_PARTY_NOTICES.md for full details
+LP has 168951 rows; 17355929 cols; 51569747 nonzeros
+Coefficient ranges:
+  Matrix  [1e+00, 1e+00]
+  Cost    [1e+00, 1e+04]
+  Bound   [1e+00, 1e+01]
+  RHS     [1e+00, 1e+01]
+Presolving model
+terminate called after throwing an instance of 'std::bad_alloc'
+  what():  std::bad_alloc
+timeout: o comando monitorado despejou núcleo

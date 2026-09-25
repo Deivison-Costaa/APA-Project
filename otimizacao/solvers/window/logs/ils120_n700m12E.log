@@ -1,0 +1,29 @@
+instance n700m12E n=700 m=12 start cost 50658 (greedy)
+[n700m12E] t=5.0 iter=5453 acc=3457 impr=69 cur=14423 best=14255 T=41.96 evals=197435425
+PUBLISHED ../../pool/n700m12E/n700m12E_13524_window.txt
+[n700m12E] t=10.0 iter=10901 acc=7003 impr=90 cur=13483 best=13424 T=37.04 evals=391517879
+[n700m12E] t=15.0 iter=16285 acc=10413 impr=96 cur=13526 best=13355 T=32.69 evals=584543445
+[n700m12E] t=20.0 iter=21530 acc=13747 impr=99 cur=13409 best=13290 T=28.85 evals=773146461
+[n700m12E] t=25.0 iter=26761 acc=17032 impr=99 cur=13372 best=13290 T=25.47 evals=961758579
+[n700m12E] t=30.0 iter=31979 acc=20200 impr=105 cur=13365 best=13111 T=22.48 evals=1150277935
+[n700m12E] t=35.0 iter=37181 acc=23298 impr=105 cur=13211 best=13111 T=19.84 evals=1340348533
+[n700m12E] t=40.0 iter=42409 acc=26485 impr=105 cur=13116 best=13111 T=17.51 evals=1529737893
+PUBLISHED ../../pool/n700m12E/n700m12E_13108_window.txt
+[n700m12E] t=45.0 iter=47736 acc=29752 impr=107 cur=13186 best=13098 T=15.45 evals=1721186212
+[n700m12E] t=50.0 iter=53221 acc=33052 impr=107 cur=13224 best=13098 T=13.64 evals=1919750407
+[n700m12E] t=55.0 iter=58706 acc=36348 impr=108 cur=13141 best=13090 T=12.04 evals=2117588412
+[n700m12E] t=60.0 iter=64147 acc=39610 impr=108 cur=13108 best=13090 T=10.63 evals=2315251617
+[n700m12E] t=65.0 iter=69638 acc=42927 impr=108 cur=13126 best=13090 T=9.38 evals=2511239314
+[n700m12E] t=70.0 iter=75136 acc=46307 impr=108 cur=13116 best=13090 T=8.28 evals=2708499564
+[n700m12E] t=75.0 iter=80541 acc=49533 impr=108 cur=13090 best=13090 T=7.31 evals=2900936800
+[n700m12E] t=80.0 iter=85810 acc=52668 impr=108 cur=13098 best=13090 T=6.45 evals=3089944176
+[n700m12E] t=85.0 iter=90635 acc=55610 impr=108 cur=13102 best=13090 T=5.69 evals=3262759442
+[n700m12E] t=90.0 iter=95936 acc=58773 impr=108 cur=13090 best=13090 T=5.02 evals=3452900554
+[n700m12E] t=95.0 iter=101250 acc=61956 impr=108 cur=13090 best=13090 T=4.43 evals=3642489919
+[n700m12E] t=100.0 iter=106505 acc=65106 impr=108 cur=13090 best=13090 T=3.91 evals=3832001170
+[n700m12E] t=105.0 iter=111813 acc=68242 impr=108 cur=13090 best=13090 T=3.45 evals=4021756812
+[n700m12E] t=110.0 iter=117171 acc=71459 impr=108 cur=13096 best=13090 T=3.05 evals=4212592725
+[n700m12E] t=115.0 iter=122481 acc=74639 impr=108 cur=13090 best=13090 T=2.69 evals=4400247780
+[n700m12E] ILS done iter=127389 best=13090 (1061.7 it/s)
+PUBLISHED ../../pool/n700m12E/n700m12E_13090_window.txt
+FINAL n700m12E cost 13090 time 120.0

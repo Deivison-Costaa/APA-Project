@@ -1,0 +1,7 @@
+sp_2_n1000m15E: --init ../../pool/n1000m15E/n1000m15E_5095_window.txt
+instance n1000m15E n=1000 m=15 time=20.0s threads=1 seed=1
+initial cost 5095 (warm start) after 0.06s
+[t=    5.0s] window it=484832 (96955 it/s) T=37.543 cur=5444 best=5095 global=5095 windows=4
+[t=   10.0s] window it=982016 (98193 it/s) T=40.847 cur=5129 best=5095 global=5095 windows=9
+[t=   15.0s] window it=1474080 (98263 it/s) T=51.810 cur=5129 best=5095 global=5095 windows=14
+final best 5095  iters=2001088 (100053 it/s total)  written to /tmp/claude-1000/-home-ddscosta--rea-de-trabalho-Faculdade-APA-APA-Project--claude-code-/5aab076d-8aac-4e11-afe9-0cef821c0125/scratchpad/work/solvers/sisr/runs/sp_2_n1000m15E.txt

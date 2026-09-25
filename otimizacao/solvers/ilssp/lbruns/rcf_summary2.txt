@@ -1,0 +1,1 @@
+n700m12E [0,1330) exit=0    rcfix: Lagrangian bound 8114.000, kept 20720 of 4059064 columns (1257.9s) ub=8240 LP 8114.000 dual 8240.00 CERTIFIED (MIP)

@@ -1,0 +1,27 @@
+t3_0_n500m10E: --T0 100 --Tf 1 --tail 0
+instance n500m10E n=500 m=10 time=120.0s threads=1 seed=1
+initial cost 48501 (greedy) after 0.02s
+[t=    5.0s] it=711424 (142274 it/s) T=82.539 cur=21729 best=20959 global=20959
+[t=   10.0s] it=1433152 (143306 it/s) T=68.128 cur=20680 best=20203 global=20203
+[t=   15.0s] it=1959936 (130652 it/s) T=56.231 cur=20440 best=19406 global=19406
+[t=   20.0s] it=2488832 (124432 it/s) T=46.413 cur=19631 best=19406 global=19406
+[t=   25.0s] it=3017216 (120679 it/s) T=38.309 cur=19536 best=19199 global=19199
+[t=   30.0s] it=3547200 (118230 it/s) T=31.620 cur=19527 best=19199 global=19199
+[t=   35.0s] it=4076736 (116469 it/s) T=26.099 cur=19329 best=19124 global=19124
+[t=   40.0s] it=4609152 (115220 it/s) T=21.542 cur=19345 best=19091 global=19091
+[t=   45.0s] it=5134336 (114088 it/s) T=17.780 cur=19161 best=19091 global=19091
+[t=   50.0s] it=5762240 (115236 it/s) T=14.676 cur=19070 best=19054 global=19054
+[t=   55.0s] it=6545216 (118996 it/s) T=12.114 cur=19112 best=19054 global=19054
+[t=   60.0s] it=7325632 (122086 it/s) T=9.999 cur=19131 best=19054 global=19054
+[t=   65.0s] it=8104000 (124669 it/s) T=8.253 cur=19106 best=19054 global=19054
+[t=   70.0s] it=8877248 (126810 it/s) T=6.812 cur=19105 best=19054 global=19054
+[t=   75.0s] it=9645440 (128598 it/s) T=5.622 cur=19114 best=19054 global=19054
+[t=   80.0s] it=10392768 (129902 it/s) T=4.641 cur=19099 best=19054 global=19054
+[t=   85.0s] it=11138432 (131033 it/s) T=3.831 cur=19099 best=19054 global=19054
+[t=   90.0s] it=11888896 (132092 it/s) T=3.162 cur=19060 best=19054 global=19054
+[t=   95.0s] it=12609408 (132724 it/s) T=2.610 cur=19062 best=19054 global=19054
+[t=  100.0s] it=13225216 (132245 it/s) T=2.154 cur=19054 best=19054 global=19054
+[t=  105.0s] it=13861760 (132010 it/s) T=1.778 cur=19054 best=19054 global=19054
+[t=  110.0s] it=14504704 (131854 it/s) T=1.467 cur=19054 best=19054 global=19054
+[t=  115.0s] it=15151936 (131749 it/s) T=1.211 cur=19057 best=19054 global=19054
+final best 19054  iters=15799168 (131660 it/s total)  written to /tmp/claude-1000/-home-ddscosta--rea-de-trabalho-Faculdade-APA-APA-Project--claude-code-/5aab076d-8aac-4e11-afe9-0cef821c0125/scratchpad/work/solvers/sisr/runs/t3_0_n500m10E.txt

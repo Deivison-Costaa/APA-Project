@@ -1,0 +1,14 @@
+instance ../../instances/n700m12E.txt n=700 m=12 time=30s seed=1 threads=1 sp=0 out=bench/n700m12E_t30_s1.txt
+greedy cost 54819
+  t=    0.0 best 27010
+  t=    0.5 best 14845
+  t=    1.0 best 14171
+  t=    1.8 best 13875
+  t=    2.4 best 13742
+  t=   10.3 best 13395
+  t=   11.0 best 13356
+  t=   12.1 best 13340
+  t=   19.4 best 13232
+round 1 [t=30]: ils 54819 -> 13154 |
+final 13154 | time 30.0s | threads 1 | iters 63680 (2122/s) acc 50650 | evals 647144140 (21.57M/s) | pool 0 | SP solves 0 improved 0 avg 0.00s max 0.00s maxcols 0
+wrote bench/n700m12E_t30_s1.txt cost 13154

@@ -1,0 +1,9 @@
+instance n500m10E n=500 m=10  init=greedy cost=69151  (setup 0.02s)
+[t=0.0s] after initial LS: 35211 (evals 609676, moves 102)
+[t=10.0s tid=0] it=20977 it/s=2098 evals/s=62.60M acc=57.0% T=10.80 cur=18465 best=18435
+[t=20.0s tid=0] it=38552 it/s=1757 evals/s=51.88M acc=56.7% T=5.83 cur=18438 best=18435
+[t=30.0s tid=0] it=56236 it/s=1768 evals/s=52.37M acc=56.4% T=3.15 cur=18457 best=18435
+[t=40.0s tid=0] it=74911 it/s=1867 evals/s=54.80M acc=56.4% T=1.70 cur=18435 best=18435
+[t=50.0s tid=0] it=93548 it/s=1863 evals/s=54.82M acc=56.5% T=0.92 cur=18435 best=18435
+[tid=0] done: iters=115361 (1925/s) evals=3409151732 best=18435
+FINAL cost=18435 reference=18435 time=60.0s out=runs/base_n500m10E_s1.txt

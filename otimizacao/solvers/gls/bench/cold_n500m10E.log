@@ -1,0 +1,24 @@
+instance n500m10E n=500 m=10  init=greedy cost=69151  (setup 0.02s)
+[t=0.0s] after initial LS: 35211 (evals 588191, moves 102)
+[t=30.0s tid=0] it=56361 it/s=1879 evals/s=61.54M acc=71.7% T=87.76 cur=19258 best=18507
+[t=60.0s tid=0] it=119102 it/s=2091 evals/s=66.84M acc=68.6% T=25.69 cur=18477 best=18435
+[t=90.0s tid=0] it=166971 it/s=1596 evals/s=50.81M acc=67.1% T=7.52 cur=18464 best=18435
+[t=120.0s tid=0] it=209788 it/s=1427 evals/s=46.53M acc=67.5% T=132.04 cur=19432 best=18435
+[t=150.0s tid=0] it=254737 it/s=1498 evals/s=48.24M acc=67.5% T=38.65 cur=18538 best=18435
+[t=180.0s tid=0] it=306212 it/s=1716 evals/s=54.76M acc=66.9% T=11.31 cur=18475 best=18435
+[t=210.0s tid=0] it=353945 it/s=1591 evals/s=51.22M acc=66.8% T=198.67 cur=20160 best=18435
+[t=240.0s tid=0] it=393099 it/s=1305 evals/s=42.32M acc=67.1% T=58.15 cur=18793 best=18435
+[t=270.0s tid=0] it=432518 it/s=1314 evals/s=41.88M acc=66.9% T=17.02 cur=18475 best=18435
+[tid=0] done: iters=472553 (1576/s) evals=15197234343 best=18435 (at 53.9s) assignHits=132434 flights/iter=38.5 moves/iter=5.27
+   LS: flights examined 18180818, pruned candidates 56700317
+   time: perturb 10.5s  LS 239.2s  assign+LS 49.5s
+   delta hist: <0 15702 | 0 284892 | 1-10 3513 | 11-50 9880 | 51-100 7333 | 101-500 67116 | >500 84117
+   relocP  evals=  8.89% applied=140196
+   crossP  evals= 33.24% applied=734515
+   2optP   evals=  5.74% applied=418560
+   relocS  evals=  9.08% applied=56166
+   crossS  evals= 34.38% applied=551181
+   2optS   evals=  5.74% applied=561637
+   intra   evals=  2.19% applied=24615
+   starts  evals=  0.03% applied=1256
+FINAL cost=18435 reference=18435 time=300.0s out=bench/cold_n500m10E.txt

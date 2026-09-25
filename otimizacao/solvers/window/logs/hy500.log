@@ -1,0 +1,14 @@
+instance n500m10E n=500 m=10 start cost 65653 (greedy) mode=hybrid
+[n500m10E] t=5.0 iter=3679 acc=2338 impr=49 cur=19696 best=19487 T=36.54 evals=127736565
+[n500m10E] t=10.0 iter=6763 acc=4208 impr=70 cur=18681 best=18569 T=23.04 evals=233886027
+[n500m10E] t=15.0 iter=9797 acc=5981 impr=72 cur=18558 best=18558 T=14.52 evals=338369098
+[n500m10E] t=20.0 iter=12843 acc=7822 impr=74 cur=18485 best=18477 T=9.16 evals=442925341
+[n500m10E] t=25.0 iter=15788 acc=9536 impr=76 cur=18466 best=18466 T=5.77 evals=545109147
+[n500m10E] t=30.0 iter=18733 acc=11303 impr=76 cur=18477 best=18466 T=3.64 evals=646403903
+[n500m10E] ILS done iter=20181 best=18466 (621.3 it/s)
+[n500m10E] t=68.6 windows=41 improved=1 gain=11 optimal=31 timeouts=10 skipped=0 avgFree=24.2 avgStates=706 avgArcs=10583 mipTime=36.1s (0.880s/win)
+[n500m10E] t=73.7 iter=2956 acc=1773 impr=0 cur=18464 best=18455 T=6.28 evals=799048063
+[n500m10E] ILS done iter=5099 best=18455 (602.7 it/s)
+[n500m10E] t=90.4 windows=51 improved=1 gain=11 optimal=36 timeouts=15 skipped=0 avgFree=24.7 avgStates=767 avgArcs=11231 mipTime=49.4s (0.969s/win)
+[n500m10E] t=90.4 windows=51 improved=1 gain=11 optimal=36 timeouts=15 skipped=0 avgFree=24.7 avgStates=767 avgArcs=11231 mipTime=49.4s (0.969s/win)
+FINAL n500m10E cost 18455 time 90.4

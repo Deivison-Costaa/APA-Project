@@ -1,0 +1,61 @@
+instance n500m10E n=500 m=10 start cost 18435 (../../pool/n500m10E/n500m10E_18435_gls.txt) mode=window
+after LS: 18435
+    win T0=-17 T1=192 R=10 F=47 S=1805/2184 A=24802 ubw=18435 gap=2019 obj=18435 bound=-inf nodes=0 opt=0 t=3.003
+    win T0=87 T1=296 R=10 F=45 S=2253/2589 A=48224 ubw=17847 gap=1849 obj=17847 bound=-inf nodes=0 opt=0 t=3.737
+    win T0=191 T1=400 R=10 F=41 S=1085/1189 A=15979 ubw=15519 gap=1136 obj=15519 bound=-inf nodes=0 opt=0 t=2.251
+    win T0=295 T1=504 R=10 F=40 S=153/178 A=1962 ubw=14354 gap=246 obj=14354 bound=14354.0 nodes=1 opt=1 t=0.145
+    win T0=399 T1=608 R=10 F=36 S=127/163 A=1906 ubw=13514 gap=162 obj=13514 bound=13514.0 nodes=1 opt=1 t=0.183
+    win T0=503 T1=712 R=10 F=46 S=410/492 A=5173 ubw=13514 gap=304 obj=13514 bound=13514.0 nodes=1 opt=1 t=0.391
+    win T0=607 T1=816 R=10 F=44 S=71/77 A=594 ubw=13137 gap=39 obj=13137 bound=13137.0 nodes=1 opt=1 t=0.016
+    win T0=919 T1=1128 R=10 F=35 S=51/51 A=655 ubw=12625 gap=32 obj=12625 bound=12625.0 nodes=1 opt=1 t=0.036
+    win T0=1023 T1=1232 R=10 F=37 S=50/50 A=776 ubw=12625 gap=32 obj=12625 bound=12625.0 nodes=1 opt=1 t=0.051
+    win T0=1335 T1=1544 R=10 F=39 S=138/165 A=2234 ubw=12169 gap=339 obj=12169 bound=12169.0 nodes=1 opt=1 t=0.132
+    win T0=1439 T1=1648 R=10 F=51 S=1773/2221 A=33522 ubw=12169 gap=2363 obj=12169 bound=-inf nodes=0 opt=0 t=2.128
+    win T0=1543 T1=1752 R=10 F=50 S=3834/4047 A=89456 ubw=11771 gap=3682 obj=11771 bound=-inf nodes=0 opt=0 t=9.936
+    win T0=1647 T1=1856 R=10 F=38 S=1716/1733 A=34060 ubw=9578 gap=2359 obj=9578 bound=-inf nodes=0 opt=0 t=2.035
+    win T0=1855 T1=2064 R=10 F=41 S=95/98 A=1432 ubw=4671 gap=90 obj=4671 bound=4671.0 nodes=1 opt=1 t=0.053
+    win T0=1959 T1=2168 R=10 F=39 S=657/806 A=9167 ubw=3976 gap=763 obj=3976 bound=3976.0 nodes=1 opt=1 t=1.108
+    win T0=2063 T1=2272 R=10 F=45 S=1301/1717 A=21466 ubw=3976 gap=1240 obj=3976 bound=-inf nodes=0 opt=0 t=2.132
+    win T0=2167 T1=2376 R=10 F=48 S=2229/2476 A=42928 ubw=2509 gap=1519 obj=2509 bound=-inf nodes=0 opt=0 t=2.551
+    win T0=2271 T1=2480 R=10 F=43 S=1116/1140 A=21262 ubw=1140 gap=789 obj=1140 bound=-inf nodes=0 opt=0 t=2.281
+sweep 1 delta 0 cost 18435
+[n500m10E] t=32.2 windows=26 improved=0 gain=0 lbProven=8 optimal=9 timeouts=9 skipped=0 avgFree=29.4 avgStates=726 avgArcs=13677 lbTime=0.0s mipTime=32.1s (1.235s/win)
+    win T0=-36 T1=173 R=10 F=42 S=1464/1761 A=15772 ubw=18435 gap=1931 obj=18435 bound=0.0 nodes=0 opt=0 t=2.013
+    win T0=68 T1=277 R=10 F=50 S=2522/2852 A=54587 ubw=18435 gap=1862 obj=18435 bound=-inf nodes=0 opt=0 t=4.485
+    win T0=172 T1=381 R=10 F=42 S=1277/1373 A=21863 ubw=16149 gap=1180 obj=16149 bound=-inf nodes=0 opt=0 t=3.020
+    win T0=276 T1=485 R=10 F=39 S=151/173 A=1759 ubw=14354 gap=246 obj=14354 bound=14354.0 nodes=1 opt=1 t=0.079
+    win T0=380 T1=589 R=10 F=36 S=50/51 A=828 ubw=13514 gap=39 obj=13514 bound=13514.0 nodes=1 opt=1 t=0.014
+    win T0=484 T1=693 R=10 F=45 S=375/442 A=4618 ubw=13514 gap=304 obj=13514 bound=13514.0 nodes=1 opt=1 t=0.217
+    win T0=588 T1=797 R=10 F=45 S=149/168 A=2277 ubw=13297 gap=142 obj=13297 bound=13297.0 nodes=1 opt=1 t=0.129
+    win T0=900 T1=1109 R=10 F=34 S=67/67 A=1210 ubw=12625 gap=77 obj=12625 bound=12625.0 nodes=1 opt=1 t=0.062
+    win T0=1004 T1=1213 R=10 F=39 S=53/53 A=806 ubw=12625 gap=32 obj=12625 bound=12625.0 nodes=1 opt=1 t=0.045
+    win T0=1316 T1=1525 R=10 F=37 S=120/153 A=2093 ubw=12169 gap=339 obj=12169 bound=12169.0 nodes=1 opt=1 t=0.083
+    win T0=1420 T1=1629 R=10 F=47 S=567/625 A=9712 ubw=12169 gap=791 obj=12169 bound=-inf nodes=0 opt=0 t=2.190
+    win T0=1524 T1=1733 R=10 F=52 S=3759/4123 A=86376 ubw=11855 gap=3682 obj=11855 bound=-inf nodes=0 opt=0 t=7.399
+    win T0=1628 T1=1837 R=10 F=43 S=2008/2033 A=43065 ubw=11216 gap=2516 obj=11216 bound=-inf nodes=0 opt=0 t=2.931
+    win T0=1940 T1=2149 R=10 F=40 S=981/1134 A=14274 ubw=3976 gap=817 obj=3976 bound=-inf nodes=0 opt=0 t=2.787
+    win T0=2044 T1=2253 R=10 F=45 S=1247/1671 A=20887 ubw=3976 gap=1240 obj=3976 bound=3976.0 nodes=1 opt=1 t=1.702
+    win T0=2148 T1=2357 R=10 F=44 S=948/1294 A=13714 ubw=2509 gap=982 obj=2509 bound=-inf nodes=0 opt=0 t=2.365
+    win T0=2252 T1=2461 R=10 F=43 S=1277/1297 A=24111 ubw=1260 gap=909 obj=1260 bound=-inf nodes=0 opt=0 t=3.673
+    win T0=2356 T1=2565 R=10 F=37 S=313/323 A=6117 ubw=796 gap=585 obj=796 bound=796.0 nodes=1 opt=1 t=0.244
+sweep 2 delta 0 cost 18435
+[n500m10E] t=65.6 windows=52 improved=0 gain=0 lbProven=16 optimal=18 timeouts=18 skipped=0 avgFree=29.3 avgStates=696 avgArcs=13071 lbTime=0.0s mipTime=65.5s (1.260s/win)
+    win T0=-27 T1=182 R=10 F=43 S=1534/1832 A=17192 ubw=18435 gap=1931 obj=18435 bound=18435.0 nodes=1 opt=1 t=1.479
+    win T0=77 T1=286 R=10 F=47 S=2379/2698 A=50992 ubw=17847 gap=1849 obj=17847 bound=-inf nodes=0 opt=0 t=2.820
+    win T0=181 T1=390 R=10 F=43 S=1317/1412 A=22938 ubw=16149 gap=1180 obj=16149 bound=-inf nodes=0 opt=0 t=2.779
+    win T0=285 T1=494 R=10 F=38 S=150/172 A=1736 ubw=14354 gap=246 obj=14354 bound=14354.0 nodes=1 opt=1 t=0.074
+    win T0=389 T1=598 R=10 F=36 S=50/51 A=810 ubw=13514 gap=39 obj=13514 bound=13514.0 nodes=1 opt=1 t=0.014
+    win T0=493 T1=702 R=10 F=46 S=378/445 A=4811 ubw=13514 gap=304 obj=13514 bound=13514.0 nodes=1 opt=1 t=0.222
+    win T0=597 T1=806 R=10 F=47 S=153/172 A=2525 ubw=13297 gap=142 obj=13297 bound=13297.0 nodes=1 opt=1 t=0.132
+    win T0=909 T1=1118 R=10 F=35 S=51/51 A=659 ubw=12625 gap=32 obj=12625 bound=12625.0 nodes=1 opt=1 t=0.014
+    win T0=1013 T1=1222 R=10 F=36 S=49/49 A=733 ubw=12625 gap=32 obj=12625 bound=12625.0 nodes=1 opt=1 t=0.031
+    win T0=1325 T1=1534 R=10 F=36 S=122/151 A=1947 ubw=12169 gap=339 obj=12169 bound=12169.0 nodes=1 opt=1 t=0.071
+    win T0=1429 T1=1638 R=10 F=48 S=1502/1849 A=28112 ubw=12169 gap=2162 obj=12169 bound=-inf nodes=0 opt=0 t=2.257
+    win T0=1533 T1=1742 R=10 F=52 S=3904/4117 A=89920 ubw=11855 gap=3682 obj=11855 bound=-inf nodes=0 opt=0 t=10.643
+    win T0=1637 T1=1846 R=10 F=42 S=1959/1980 A=41306 ubw=11216 gap=2516 obj=11216 bound=-inf nodes=0 opt=0 t=3.352
+    win T0=1845 T1=2054 R=10 F=40 S=93/96 A=1347 ubw=4671 gap=90 obj=4671 bound=4671.0 nodes=1 opt=1 t=0.051
+    win T0=1949 T1=2158 R=10 F=40 S=987/1139 A=15133 ubw=3976 gap=817 obj=3976 bound=-inf nodes=0 opt=0 t=0.451
+sweep 3 delta 0 cost 18435
+[n500m10E] t=90.0 windows=72 improved=0 gain=0 lbProven=21 optimal=27 timeouts=24 skipped=0 avgFree=29.9 avgStates=706 avgArcs=13331 lbTime=0.0s mipTime=89.9s (1.248s/win)
+[n500m10E] t=90.0 windows=72 improved=0 gain=0 lbProven=21 optimal=27 timeouts=24 skipped=0 avgFree=29.9 avgStates=706 avgArcs=13331 lbTime=0.0s mipTime=89.9s (1.248s/win)
+FINAL n500m10E cost 18435 time 90.0

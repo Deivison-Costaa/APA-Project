@@ -1,0 +1,4 @@
+instance ../../instances/n700m12E.txt n=700 m=12 time=30s seed=1 sp=0 out=out/ns_n700m12E.txt
+greedy cost 54819
+round 1: ils 54819 -> 13090
+final 13090 | time 30.0s | iters 99392 (3313/s) acc 78165 | evals 1020824942 (34.03M/s) | pool 0 | SP solves 0 improved 0 avg 0.00s max 0.00s

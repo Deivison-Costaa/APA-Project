@@ -1,0 +1,8 @@
+instance n1000m15E n=1000 m=15  init=bench/warm_start_n1000m15E.txt cost=5095  (setup 0.07s)
+[t=0.0s] after initial LS: 5095 (evals 773224, moves 0)
+[t=60.0s tid=0] it=117231 it/s=1954 evals/s=59.71M acc=81.3% T=25.69 cur=5251 best=5095
+[t=120.0s tid=0] it=235615 it/s=1973 evals/s=59.48M acc=79.5% T=132.05 cur=5828 best=5095
+[t=180.0s tid=0] it=352899 it/s=1955 evals/s=58.61M acc=78.7% T=11.31 cur=5095 best=5095
+[t=240.0s tid=0] it=447302 it/s=1573 evals/s=47.50M acc=78.8% T=58.17 cur=5459 best=5095
+[t=300.0s tid=0] it=524982 it/s=1295 evals/s=38.33M acc=78.2% T=299.02 cur=5526 best=5095
+[t=360.0s tid=0] it=619904 it/s=1582 evals/s=48.30M acc=78.5% T=25.62 cur=5401 best=5095

@@ -1,0 +1,68 @@
+instance n700m12E n=700 m=12 start cost 50658 (greedy) mode=hybrid
+[n700m12E] t=5.0 iter=2775 acc=1833 impr=68 cur=13983 best=13858 T=41.45 evals=99907780
+[n700m12E] t=10.0 iter=5564 acc=3666 impr=80 cur=13598 best=13500 T=35.22 evals=200716256
+[n700m12E] t=15.0 iter=8368 acc=5473 impr=80 cur=13547 best=13500 T=29.92 evals=301062716
+[n700m12E] t=20.0 iter=12080 acc=7785 impr=85 cur=13465 best=13465 T=25.42 evals=435754691
+[n700m12E] t=25.0 iter=16976 acc=10939 impr=88 cur=13623 best=13433 T=21.60 evals=608789885
+[n700m12E] t=30.0 iter=21774 acc=13970 impr=91 cur=13474 best=13399 T=18.36 evals=779922730
+[n700m12E] t=35.0 iter=26328 acc=16827 impr=95 cur=13409 best=13362 T=15.60 evals=941000305
+[n700m12E] t=40.0 iter=30006 acc=19092 impr=95 cur=13436 best=13362 T=13.25 evals=1073812710
+[n700m12E] t=45.0 iter=33456 acc=21203 impr=95 cur=13390 best=13362 T=11.26 evals=1198327825
+[n700m12E] t=50.0 iter=37807 acc=23877 impr=96 cur=13359 best=13353 T=9.57 evals=1353184036
+[n700m12E] t=55.0 iter=42125 acc=26507 impr=98 cur=13369 best=13335 T=8.13 evals=1507775453
+[n700m12E] t=60.0 iter=46806 acc=29358 impr=98 cur=13353 best=13335 T=6.91 evals=1675573630
+[n700m12E] t=65.0 iter=50499 acc=31702 impr=98 cur=13335 best=13335 T=5.87 evals=1805643959
+[n700m12E] t=70.0 iter=55072 acc=34407 impr=98 cur=13335 best=13335 T=4.99 evals=1969916024
+[n700m12E] t=75.0 iter=58592 acc=36493 impr=98 cur=13335 best=13335 T=4.24 evals=2095169125
+[n700m12E] t=80.1 iter=62916 acc=39115 impr=98 cur=13335 best=13335 T=3.60 evals=2250854022
+[n700m12E] t=85.1 iter=66212 acc=41094 impr=98 cur=13343 best=13335 T=3.06 evals=2368144850
+[n700m12E] t=90.1 iter=70832 acc=43829 impr=98 cur=13335 best=13335 T=2.60 evals=2534002166
+[n700m12E] ILS done iter=72705 best=13335 (790.6 it/s)
+[n700m12E] t=97.0 epoch 0 sweep delta -245 -> 13090
+[n700m12E] t=97.0 epoch 0 result 13090 best 13090 archive 1
+[n700m12E] t=102.0 iter=3621 acc=2408 impr=66 cur=14414 best=14363 T=42.82 evals=2731935570
+[n700m12E] t=107.0 iter=6154 acc=4044 impr=85 cur=13675 best=13590 T=36.47 evals=2823166506
+[n700m12E] t=112.0 iter=8692 acc=5614 impr=85 cur=13700 best=13590 T=31.06 evals=2914663497
+[n700m12E] t=117.0 iter=11835 acc=7544 impr=95 cur=13336 best=13281 T=26.46 evals=3029132659
+[n700m12E] t=122.0 iter=16131 acc=10178 impr=101 cur=13468 best=13216 T=22.54 evals=3183786617
+[n700m12E] t=127.0 iter=20337 acc=12696 impr=101 cur=13270 best=13216 T=19.20 evals=3337632654
+[n700m12E] t=132.0 iter=24621 acc=15288 impr=102 cur=13288 best=13186 T=16.35 evals=3492014502
+[n700m12E] t=137.0 iter=28847 acc=17882 impr=102 cur=13277 best=13186 T=13.93 evals=3646731952
+[n700m12E] t=142.0 iter=33102 acc=20520 impr=102 cur=13242 best=13186 T=11.86 evals=3799830574
+[n700m12E] t=147.0 iter=37350 acc=23067 impr=102 cur=13221 best=13186 T=10.10 evals=3951666093
+[n700m12E] t=152.0 iter=41620 acc=25675 impr=102 cur=13186 best=13186 T=8.61 evals=4104981390
+[n700m12E] t=157.0 iter=45875 acc=28194 impr=102 cur=13212 best=13186 T=7.33 evals=4257839222
+[n700m12E] t=162.0 iter=50085 acc=30653 impr=102 cur=13186 best=13186 T=6.24 evals=4410314540
+[n700m12E] t=167.0 iter=54355 acc=33125 impr=102 cur=13186 best=13186 T=5.32 evals=4564144167
+[n700m12E] t=172.0 iter=58628 acc=35677 impr=102 cur=13194 best=13186 T=4.53 evals=4716707548
+[n700m12E] t=177.0 iter=62894 acc=38202 impr=102 cur=13186 best=13186 T=3.86 evals=4868916350
+[n700m12E] t=182.0 iter=67215 acc=40761 impr=102 cur=13186 best=13186 T=3.29 evals=5022749188
+[n700m12E] t=187.0 iter=71483 acc=43223 impr=102 cur=13186 best=13186 T=2.80 evals=5176928874
+[n700m12E] ILS done iter=74328 best=13186 (796.1 it/s)
+[n700m12E] t=194.7 epoch 1 sweep delta 0 -> 13186
+[n700m12E] t=194.7 epoch 1 result 13186 best 13090 archive 2
+[n700m12E] t=199.7 iter=4192 acc=2682 impr=84 cur=13754 best=13703 T=42.25 evals=5432391785
+[n700m12E] t=204.7 iter=8576 acc=5525 impr=91 cur=13824 best=13549 T=36.20 evals=5587835344
+[n700m12E] t=209.7 iter=12742 acc=8142 impr=92 cur=13638 best=13534 T=31.01 evals=5737305387
+[n700m12E] t=214.7 iter=16224 acc=10334 impr=95 cur=13601 best=13503 T=26.57 evals=5862362861
+[n700m12E] t=219.7 iter=20860 acc=13182 impr=95 cur=13592 best=13503 T=22.76 evals=6030026983
+[n700m12E] t=224.7 iter=25318 acc=15985 impr=101 cur=13563 best=13431 T=19.50 evals=6189295500
+[n700m12E] t=229.7 iter=28653 acc=18038 impr=101 cur=13564 best=13431 T=16.71 evals=6309902032
+[n700m12E] t=234.7 iter=32643 acc=20486 impr=101 cur=13513 best=13431 T=14.31 evals=6453506012
+[n700m12E] t=239.7 iter=37186 acc=23210 impr=101 cur=13526 best=13431 T=12.26 evals=6615837361
+[n700m12E] t=244.7 iter=40615 acc=25296 impr=101 cur=13552 best=13431 T=10.51 evals=6739380006
+[n700m12E] t=249.7 iter=43221 acc=26856 impr=101 cur=13517 best=13431 T=9.00 evals=6832907709
+[n700m12E] t=254.7 iter=45761 acc=28330 impr=101 cur=13495 best=13431 T=7.71 evals=6924827518
+[n700m12E] t=259.7 iter=48316 acc=29835 impr=101 cur=13431 best=13431 T=6.61 evals=7016419033
+[n700m12E] t=264.7 iter=50831 acc=31288 impr=101 cur=13431 best=13431 T=5.66 evals=7107098468
+[n700m12E] t=269.7 iter=53315 acc=32739 impr=101 cur=13447 best=13431 T=4.85 evals=7197085727
+[n700m12E] t=274.7 iter=55903 acc=34282 impr=101 cur=13431 best=13431 T=4.15 evals=7288829836
+[n700m12E] t=279.7 iter=58407 acc=35747 impr=101 cur=13431 best=13431 T=3.56 evals=7378961527
+[n700m12E] t=284.7 iter=60964 acc=37281 impr=101 cur=13435 best=13431 T=3.05 evals=7470294413
+[n700m12E] t=289.7 iter=63527 acc=38811 impr=101 cur=13431 best=13431 T=2.61 evals=7561629145
+[n700m12E] ILS done iter=64468 best=13431 (665.4 it/s)
+[n700m12E] t=299.1 epoch 2 sweep delta -245 -> 13186
+[n700m12E] t=299.1 epoch 2 result 13186 best 13090 archive 3
+[n700m12E] crossovers=6 improvedChildren=0 newBestFromChildren=0
+[n700m12E] t=299.1 windows=145 improved=2 gain=490 lbProven=77 optimal=62 timeouts=6 skipped=0 avgFree=15.1 avgStates=149 avgArcs=2170 lbTime=0.0s mipTime=16.7s (0.115s/win)
+FINAL n700m12E cost 13090 time 299.1

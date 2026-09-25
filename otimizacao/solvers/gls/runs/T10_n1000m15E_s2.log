@@ -1,0 +1,12 @@
+instance n1000m15E n=1000 m=15  init=greedy cost=24288  (setup 0.06s)
+[t=0.0s] after initial LS: 13325 (evals 984310, moves 50)
+[tid=0] done: iters=105859 (2654/s) evals=2960606233 best=5095 flights/iter=32.1 moves/iter=3.92
+   relocP  evals=  9.37% applied=20899
+   crossP  evals= 34.00% applied=147644
+   2optP   evals=  5.43% applied=60089
+   relocS  evals=  9.48% applied=7023
+   crossS  evals= 34.46% applied=84607
+   2optS   evals=  5.28% applied=92864
+   intra   evals=  1.28% applied=1683
+   starts  evals=  0.02% applied=13
+FINAL cost=5095 reference=5095 time=40.0s out=runs/T10_n1000m15E_s2.txt

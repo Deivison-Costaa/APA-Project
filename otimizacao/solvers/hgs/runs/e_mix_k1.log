@@ -1,0 +1,143 @@
+instance n500m10E n=500 m=10 horizon=2731 | time 120.0s seed 2 threads 1 xover mix mu 25 lambda 40
+[    0.03s] T0 new best 37325
+[    0.05s] T0 new best 32260
+[    0.12s] T0 new best 31108
+[    1.17s] T0 gen 0 pop 50 best 31108 avg 38054.4 div 0.191 | global 31108 | moves 9155 evals 30495153
+[    1.18s] T0 new best 29668
+[    1.29s] T0 new best 28415
+[    1.36s] T0 new best 28151
+[    1.51s] T0 new best 27551
+[    1.63s] T0 new best 27477
+[    1.68s] T0 new best 27376
+[    1.73s] T0 new best 26388
+[    1.85s] T0 new best 26123
+[    1.88s] T0 new best 25432
+[    1.89s] T0 new best 24465
+[    1.96s] T0 new best 24337
+[    2.15s] T0 new best 24241
+[    2.17s] T0 new best 23862
+[    2.27s] T0 new best 23659
+[    2.32s] T0 new best 23534
+[    2.36s] T0 new best 23484
+[    2.38s] T0 new best 22933
+[    2.53s] T0 new best 22714
+[    2.55s] T0 new best 22664
+[    2.57s] T0 new best 22460
+[    2.59s] T0 new best 22408
+[    2.61s] T0 new best 22367
+[    2.63s] T0 new best 21906
+[    2.70s] T0 new best 21866
+[    2.71s] T0 new best 21505
+[    2.74s] T0 new best 21466
+[    2.91s] T0 new best 21233
+[    2.97s] T0 new best 21205
+[    3.05s] T0 new best 21007
+[    3.27s] T0 new best 20937
+[    3.64s] T0 new best 20864
+[    3.65s] T0 new best 20706
+[    3.76s] T0 new best 20615
+[    3.81s] T0 new best 20606
+[    3.88s] T0 new best 20506
+[    4.06s] T0 new best 20260
+[    4.14s] T0 new best 20210
+[    4.18s] T0 new best 20022
+[    4.33s] T0 new best 20009
+[    4.43s] T0 new best 19975
+[    4.48s] T0 new best 19925
+[    4.59s] T0 new best 19852
+[    4.78s] T0 new best 19765
+[    4.79s] T0 new best 19694
+[    4.80s] T0 new best 19599
+[    4.87s] T0 new best 19597
+[    4.91s] T0 new best 19563
+[    5.06s] T0 new best 19538
+[    5.12s] T0 new best 19482
+[    5.28s] T0 new best 19476
+[    5.28s] T0 new best 19434
+[    5.37s] T0 new best 19404
+[    5.40s] T0 new best 19393
+[    5.50s] T0 new best 19378
+[    5.57s] T0 new best 19223
+[    5.62s] T0 new best 19221
+[    5.63s] T0 new best 19208
+[    5.64s] T0 new best 19152
+[    5.73s] T0 new best 19109
+[    5.80s] T0 new best 19060
+[    5.92s] T0 new best 18989
+[    6.17s] T0 gen 2354 pop 26 best 18989 avg 19366.7 div 0.033 | global 18989 | moves 38988 evals 166886279
+[    6.20s] T0 new best 18959
+[    6.26s] T0 new best 18878
+[    6.54s] T0 new best 18870
+[    6.62s] T0 new best 18867
+[    6.83s] T0 new best 18846
+[    6.97s] T0 new best 18802
+[    7.11s] T0 new best 18778
+[    7.16s] T0 new best 18753
+[    7.22s] T0 new best 18746
+[    7.38s] T0 new best 18740
+[    7.39s] T0 new best 18702
+[    7.43s] T0 new best 18665
+[    7.45s] T0 new best 18662
+[    7.65s] T0 new best 18621
+[    7.66s] T0 new best 18561
+[    7.72s] T0 new best 18548
+[    9.69s] T0 new best 18529
+[   11.01s] T0 new best 18500
+[   11.07s] T0 new best 18492
+[   11.17s] T0 gen 5744 pop 54 best 18492 avg 18967.0 div 0.019 | global 18492 | moves 82139 evals 349361461
+[   11.19s] T0 new best 18479
+[   12.74s] T0 new best 18460
+[   12.76s] T0 new best 18455
+[   16.17s] T0 gen 9722 pop 55 best 18455 avg 18852.9 div 0.009 | global 18455 | moves 132904 evals 566225587
+[   17.78s] T0 restart #1 (pop best 18455)
+[   18.45s] T0 gen 11086 pop 51 best 18455 avg 37381.1 div 0.195 | global 18455 | moves 159531 evals 671955008
+[   21.17s] T0 gen 13290 pop 41 best 18455 avg 18703.2 div 0.013 | global 18455 | moves 187890 evals 796205768
+[   23.27s] T0 restart #2 (pop best 18455)
+[   23.92s] T0 gen 15087 pop 51 best 18455 avg 38289.9 div 0.196 | global 18455 | moves 219902 evals 923239628
+[   26.17s] T0 gen 17066 pop 62 best 18455 avg 18918.6 div 0.013 | global 18455 | moves 244947 evals 1031898507
+[   28.39s] T0 restart #3 (pop best 18455)
+[   28.99s] T0 gen 19088 pop 51 best 18455 avg 38491.8 div 0.193 | global 18455 | moves 279549 evals 1171848997
+[   31.17s] T0 gen 20956 pop 33 best 18455 avg 18790.0 div 0.018 | global 18455 | moves 304474 evals 1278958454
+[   33.54s] T0 restart #4 (pop best 18455)
+[   34.15s] T0 gen 23089 pop 51 best 18455 avg 38296.7 div 0.194 | global 18455 | moves 341323 evals 1427148627
+[   36.17s] T0 gen 24835 pop 34 best 18455 avg 18785.5 div 0.014 | global 18455 | moves 362130 evals 1521401277
+[   38.75s] T0 restart #5 (pop best 18455)
+[   39.41s] T0 gen 27090 pop 51 best 18455 avg 38227.2 div 0.192 | global 18455 | moves 397987 evals 1671013732
+[   41.17s] T0 gen 28145 pop 40 best 18455 avg 19082.5 div 0.014 | global 18455 | moves 412755 evals 1732911181
+[   45.10s] T0 restart #6 (pop best 18455)
+[   45.79s] T0 gen 31091 pop 51 best 18455 avg 37529.4 div 0.191 | global 18455 | moves 459282 evals 1922993494
+[   46.17s] T0 gen 31359 pop 32 best 18455 avg 20954.0 div 0.036 | global 18455 | moves 462880 evals 1939286632
+[   51.17s] T0 gen 34066 pop 33 best 18455 avg 18833.3 div 0.020 | global 18455 | moves 497216 evals 2084988955
+[   53.10s] T0 restart #7 (pop best 18455)
+[   54.19s] T0 gen 35092 pop 51 best 18455 avg 37967.6 div 0.194 | global 18455 | moves 519176 evals 2171891361
+[   56.17s] T0 gen 36117 pop 51 best 18455 avg 18945.5 div 0.010 | global 18455 | moves 532239 evals 2229178827
+[   61.17s] T0 gen 38786 pop 55 best 18455 avg 18862.7 div 0.010 | global 18455 | moves 565095 evals 2370566886
+[   61.74s] T0 restart #8 (pop best 18455)
+[   62.84s] T0 gen 39093 pop 51 best 18455 avg 37638.0 div 0.192 | global 18455 | moves 578338 evals 2418003266
+[   66.17s] T0 gen 40718 pop 36 best 18455 avg 18750.0 div 0.013 | global 18455 | moves 600002 evals 2511667112
+[   70.82s] T0 restart #9 (pop best 18455)
+[   71.98s] T0 gen 43094 pop 51 best 18455 avg 37971.7 div 0.194 | global 18455 | moves 638054 evals 2668576965
+[   71.98s] T0 gen 43094 pop 51 best 18455 avg 37971.7 div 0.194 | global 18455 | moves 638054 evals 2668576965
+[   76.17s] T0 gen 46223 pop 64 best 18455 avg 18850.5 div 0.008 | global 18455 | moves 677131 evals 2837844337
+[   77.51s] T0 restart #10 (pop best 18455)
+[   78.35s] T0 gen 47095 pop 51 best 18455 avg 38795.7 div 0.193 | global 18455 | moves 697298 evals 2915384489
+[   81.17s] T0 gen 49224 pop 48 best 18455 avg 19076.6 div 0.016 | global 18455 | moves 723602 evals 3032876634
+[   84.59s] T0 restart #11 (pop best 18455)
+[   85.68s] T0 gen 51096 pop 51 best 18455 avg 37688.9 div 0.190 | global 18455 | moves 756775 evals 3165770178
+[   86.17s] T0 gen 51313 pop 63 best 18455 avg 21726.5 div 0.032 | global 18455 | moves 759627 evals 3179480537
+[   91.17s] T0 gen 53932 pop 58 best 18455 avg 19167.9 div 0.012 | global 18455 | moves 793922 evals 3322281089
+[   93.44s] T0 restart #12 (pop best 18455)
+[   94.53s] T0 gen 55097 pop 51 best 18455 avg 37310.0 div 0.193 | global 18455 | moves 818778 evals 3418287612
+[   96.17s] T0 gen 55875 pop 50 best 18455 avg 19246.2 div 0.015 | global 18455 | moves 829282 evals 3462286657
+[  101.17s] T0 gen 58408 pop 41 best 18455 avg 18862.9 div 0.013 | global 18455 | moves 862090 evals 3600299816
+[  102.45s] T0 restart #13 (pop best 18455)
+[  103.18s] T0 gen 59098 pop 51 best 18455 avg 37485.6 div 0.192 | global 18455 | moves 880066 evals 3667728156
+[  106.17s] T0 gen 61251 pop 31 best 18455 avg 18840.3 div 0.015 | global 18455 | moves 909106 evals 3790771818
+[  109.08s] T0 restart #14 (pop best 18455)
+[  109.83s] T0 gen 63099 pop 51 best 18455 avg 37963.3 div 0.194 | global 18455 | moves 941622 evals 3921548235
+[  111.17s] T0 gen 64054 pop 63 best 18455 avg 19237.8 div 0.013 | global 18455 | moves 954349 evals 3976745630
+[  115.21s] T0 restart #15 (pop best 18455)
+[  115.93s] T0 gen 67100 pop 51 best 18455 avg 37989.1 div 0.195 | global 18455 | moves 1003204 evals 4174870344
+[  116.17s] T0 gen 67239 pop 26 best 18455 avg 25825.0 div 0.087 | global 18455 | moves 1004922 evals 4183460452
+generations 69093 (575.8/s) | LS moves 1027292 | evals 4283653476 (35.70M/s) | restarts 15
+FINAL 18455 ./runs/e_mix_k1.txt

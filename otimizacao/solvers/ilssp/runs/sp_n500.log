@@ -1,0 +1,6 @@
+instance ../../instances/n500m10E.txt n=500 m=10 time=50s seed=4 sp=1 out=out/sp_n500.txt
+greedy cost 71890
+round 1: ils 71890 -> 18466 | SP cols 25008/25008 -> feas 18466 (bound 0, 10.2s)
+round 2: ils 18466 -> 18466 | SP cols 30000/36721 -> feas 18466 (bound 0, 10.1s)
+round 3: ils 18466 -> 18435 | SP cols 30000/49807 -> feas 18435 (bound 0, 2.9s)
+final 18435 | time 50.0s | iters 76128 (1523/s) acc 58632 | evals 647756402 (12.96M/s) | pool 49807 | SP solves 3 improved 0 avg 7.73s max 10.20s

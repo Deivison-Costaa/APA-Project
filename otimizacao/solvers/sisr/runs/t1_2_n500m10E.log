@@ -1,0 +1,9 @@
+t1_2_n500m10E: --cbar 20 --T0 100 --Tf 1
+instance n500m10E n=500 m=10 time=30.0s threads=1 seed=1
+initial cost 48501 (greedy) after 0.01s
+[t=    5.0s] it=413120 (82615 it/s) T=46.412 cur=19791 best=19762 global=19762
+[t=   10.0s] it=829696 (82963 it/s) T=21.542 cur=19689 best=19506 global=19506
+[t=   15.0s] it=1246080 (83067 it/s) T=9.999 cur=19357 best=19352 global=19352
+[t=   20.0s] it=1662720 (83132 it/s) T=4.641 cur=19326 best=19326 global=19326
+[t=   25.0s] it=2073408 (82931 it/s) T=2.154 cur=19326 best=19326 global=19326
+final best 19326  iters=2491584 (83052 it/s total)  written to /tmp/claude-1000/-home-ddscosta--rea-de-trabalho-Faculdade-APA-APA-Project--claude-code-/5aab076d-8aac-4e11-afe9-0cef821c0125/scratchpad/work/solvers/sisr/runs/t1_2_n500m10E.txt

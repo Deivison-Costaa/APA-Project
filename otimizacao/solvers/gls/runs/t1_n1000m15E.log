@@ -1,0 +1,9 @@
+instance n1000m15E n=1000 m=15  init=greedy cost=24288  (setup 0.06s)
+[t=0.0s] after initial LS: 13325 (evals 984310, moves 50)
+[t=5.0s tid=0] it=12933 it/s=2586 evals/s=73.62M acc=63.5% T=10.77 cur=5129 best=5120
+[t=10.0s tid=0] it=24750 it/s=2363 evals/s=66.25M acc=63.1% T=5.81 cur=5103 best=5095
+[t=15.0s tid=0] it=36442 it/s=2338 evals/s=66.02M acc=62.9% T=3.13 cur=5095 best=5095
+[t=20.0s tid=0] it=48267 it/s=2365 evals/s=66.44M acc=62.5% T=1.69 cur=5095 best=5095
+[t=25.0s tid=0] it=60109 it/s=2368 evals/s=66.18M acc=62.6% T=0.91 cur=5095 best=5095
+[tid=0] done: iters=71624 (2396/s) evals=2017273253 best=5095
+FINAL cost=5095 reference=5095 time=30.0s out=runs/t1_n1000m15E.txt

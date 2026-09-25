@@ -1,0 +1,9 @@
+f1_1_n700m12E: --tail 0.3 --slice 0.2 --bias 0.5 --slicew 100 --global 0 --wfix 880,1080 --init runs/init700_13518.txt --report 10 --wT0 30 --wTf 2
+instance n700m12E n=700 m=12 time=60.0s threads=1 seed=1
+initial cost 13518 (warm start) after 0.03s
+[t=   10.0s] window it=841728 (84168 it/s) T=9.691 cur=13590 best=13518 global=13518 windows=9
+[t=   20.0s] window it=1568928 (78443 it/s) T=4.640 cur=13593 best=13518 global=13518 windows=16
+[t=   30.0s] window it=2484416 (82811 it/s) T=3.050 cur=13536 best=13518 global=13518 windows=25
+[t=   40.0s] window it=3440320 (86006 it/s) T=10.068 cur=13571 best=13518 global=13518 windows=35
+[t=   50.0s] window it=4355680 (87111 it/s) T=6.642 cur=13572 best=13518 global=13518 windows=44
+final best 13518  iters=5033344 (83889 it/s total)  written to /tmp/claude-1000/-home-ddscosta--rea-de-trabalho-Faculdade-APA-APA-Project--claude-code-/5aab076d-8aac-4e11-afe9-0cef821c0125/scratchpad/work/solvers/sisr/runs/f1_1_n700m12E.txt

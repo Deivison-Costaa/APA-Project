@@ -1,0 +1,109 @@
+instance ../../instances/n1000m15E.txt incumbent 5095, 1 windows, windows cover 840 of the cost
+WARNING: windows do not cover all delay; outside part counted as LB 0
+Running HiGHS 1.15.1 (git hash: 04024d7): Copyright (c) 2026 under MIT licence terms
+Includes third-party software components, see THIRD_PARTY_NOTICES.md for full details
+LP has 9416 rows; 193682 cols; 555519 nonzeros
+Coefficient ranges:
+  Matrix  [1e+00, 1e+00]
+  Cost    [1e+00, 8e+02]
+  Bound   [1e+00, 2e+01]
+  RHS     [1e+00, 2e+01]
+Presolving model
+9022 rows, 185004 cols, 530833 nonzeros 0s
+Dependent equations search running on 8509 equations with time limit of 40.00s
+Dependent equations search removed 0 rows and 0 nonzeros in 0.01s (limit = 40.00s)
+8529 rows, 179495 cols, 514982 nonzeros 0s
+Presolve reductions: rows 8529(-887); columns 179495(-14187); nonzeros 514982(-40537) 
+Solving the presolved LP
+IPX model has 8529 rows, 179515 columns and 515002 nonzeros
+Input
+    Number of variables:                                179515
+    Number of free variables:                           0
+    Number of constraints:                              8529
+    Number of equality constraints:                     8529
+    Number of matrix entries:                           515002
+    Matrix range:                                       [1e+00, 1e+00]
+    RHS range:                                          [1e+00, 2e+00]
+    Objective range:                                    [1e+00, 8e+02]
+    Bounds range:                                       [1e+00, 2e+01]
+Preprocessing
+    Dualized model:                                     no
+    Number of dense columns:                            0
+    Range of scaling factors:                           [1.00e+00, 1.00e+00]
+    Scaled cost norm:                                   838
+    Scaled bounds norm:                                 15
+IPX version 1.0
+Interior point solve
+ Iter       primal obj         dual obj       pinf       dinf       gap      time
+   0    5.91684832e+04  -2.04886449e+08   1.50e-01   2.71e-16  2.00e+00       0.5
+   1   -3.08046504e+05  -1.30428672e+08   3.12e-02   4.74e-16  1.99e+00       0.5
+   2   -1.15876084e+05  -4.56347811e+07   1.27e-02   6.78e-16  1.99e+00       0.6
+   3    2.16546654e+04  -8.79574073e+06   2.41e-03   8.13e-16  2.01e+00       0.6
+   4    4.28979785e+04  -4.38094188e+06   5.95e-04   1.08e-15  2.04e+00       0.7
+   5    4.38579770e+04  -2.71892545e+06   2.43e-04   1.08e-15  2.07e+00       0.9
+   6    4.16415597e+04  -1.61678100e+06   1.30e-04   1.08e-15  2.11e+00       1.1
+   7    4.12049969e+04  -1.30714640e+06   1.09e-04   2.17e-15  2.13e+00       1.3
+   8    3.94421886e+04  -8.95801986e+05   7.08e-05   2.17e-15  2.18e+00       1.6
+   9    3.88138528e+04  -6.61788100e+05   6.19e-05   2.17e-15  2.25e+00       1.8
+  10    3.76059333e+04  -6.09863989e+05   5.03e-05   4.34e-15  2.26e+00       2.1
+  11    3.52382097e+04  -4.13337888e+05   3.26e-05   4.34e-15  2.37e+00       2.4
+  12    3.37464845e+04  -3.21021781e+05   2.45e-05   3.25e-15  2.47e+00       2.7
+  13    3.03545491e+04  -2.28087806e+05   1.46e-05   4.34e-15  2.61e+00       3.0
+  14    2.77971356e+04  -1.77759197e+05   8.68e-06   4.34e-15  2.74e+00       3.4
+ Constructing starting basis...
+ Iter       primal obj         dual obj       pinf       dinf       gap      time
+  15    2.42155932e+04  -1.42669759e+05   5.22e-06   3.25e-15  2.82e+00       3.8
+  16    2.28209695e+04  -1.12731421e+05   3.47e-06   2.17e-15  3.02e+00       3.9
+  17    2.10158337e+04  -8.58651092e+04   2.66e-06   2.71e-15  3.30e+00       4.0
+  18    2.08226627e+04  -8.48385187e+04   2.53e-06   2.71e-15  3.30e+00       4.2
+  19    1.91144463e+04  -5.78819530e+04   1.97e-06   2.17e-15  3.97e+00       4.3
+  20    1.77974151e+04  -5.41808929e+04   1.55e-06   2.44e-15  3.96e+00       4.4
+  21    1.69180802e+04  -4.34092306e+04   1.26e-06   1.63e-15  4.55e+00       4.5
+  22    1.58906039e+04  -3.88253974e+04   1.00e-06   1.36e-15  4.77e+00       4.7
+  23    1.49190504e+04  -3.25579314e+04   8.31e-07   1.36e-15  5.38e+00       4.8
+  24    1.20643889e+04  -2.29489424e+04   4.76e-07   1.08e-15  6.43e+00       4.9
+  25    1.19558100e+04  -2.29430946e+04   4.65e-07   1.63e-15  6.35e+00       5.0
+  26    1.17913611e+04  -2.18136269e+04   4.44e-07   1.63e-15  6.70e+00       5.1
+  27    1.03966980e+04  -1.74225419e+04   3.28e-07   1.22e-15  7.92e+00       5.2
+  28    9.53872769e+03  -1.66886961e+04   2.33e-07   1.29e-15  7.33e+00       5.3
+  29    9.32208123e+03  -1.43916037e+04   2.16e-07   1.22e-15  9.35e+00       5.4
+  30    9.11715483e+03  -1.42998069e+04   2.02e-07   1.63e-15  9.03e+00       5.5
+  31    7.79865003e+03  -1.27415406e+04   1.08e-07   1.49e-15  8.31e+00       5.5
+  32    7.65422571e+03  -1.18816371e+04   9.71e-08   1.32e-15  9.24e+00       5.6
+  33    6.81494700e+03  -1.17154495e+04   6.35e-08   1.56e-15  7.56e+00       5.7
+  34    6.26679755e+03  -1.00315284e+04   4.24e-08   1.36e-15  8.65e+00       5.8
+  35    4.96407826e+03  -5.79520897e+03   2.49e-08   1.08e-15  2.58e+01       5.9
+  36    4.43304623e+03  -4.65621708e+03   1.69e-08   8.13e-16  8.07e+01       6.0
+  37    4.33746120e+03  -3.47510667e+03   1.56e-08   6.78e-16  1.81e+01       6.1
+  38    3.59227462e+03  -2.86961834e+03   7.93e-09   8.13e-16  1.78e+01       6.1
+  39    2.78550208e+03  -1.23777288e+03   4.20e-09   8.13e-16  5.19e+00       6.2
+  40    1.91753619e+03   4.19179661e+01   1.60e-09   8.13e-16  1.91e+00       6.3
+  41    1.12518061e+03   5.50768616e+02   3.14e-10   6.78e-16  6.85e-01       6.4
+  42    9.08007855e+02   7.99742636e+02   6.96e-11   8.13e-16  1.27e-01       6.4
+  43    8.42269983e+02   8.36406428e+02   1.99e-12   6.10e-16  6.98e-03       6.5
+  44    8.40186836e+02   8.39853005e+02   1.63e-13   8.13e-16  3.97e-04       6.6
+  45    8.40018740e+02   8.39978864e+02   1.64e-14   8.13e-16  4.74e-05       6.6
+  46    8.40000128e+02   8.39997357e+02   2.33e-16   8.13e-16  3.30e-06       6.7
+  47    8.40000004e+02   8.39999580e+02   3.40e-16   6.78e-16  5.03e-07       6.7
+  48    8.40000000e+02   8.39999932e+02   3.12e-16   5.42e-16  8.11e-08       6.8
+  49    8.40000000e+02   8.39999989e+02   7.88e-16   5.42e-16  1.25e-08       6.8
+  50*   8.40000000e+02   8.39999999e+02   4.43e-15   6.10e-16  7.83e-10       6.9
+Summary
+    Runtime:                                            6.88s
+    Status interior point solve:                        optimal
+    Status crossover:                                   not run
+    objective value:                                    8.40000000e+02
+    interior solution primal residual (abs/rel):        2.09e-13 / 1.31e-14
+    interior solution dual residual (abs/rel):          1.03e-10 / 1.23e-13
+    interior solution objective gap (abs/rel):          6.59e-07 / 7.83e-10
+Ipx: IPM       optimal
+
+Performed postsolve
+
+Model status        : Optimal
+IPM       iterations: 50
+Objective value     :  8.4000000000e+02
+P-D objective error :  1.8702735969e-11
+HiGHS run time      :          6.90
+window 0 [210,733) ub 840 | home 155 early 24 states 8713 arcs 193682 | LP 840.000 (6.9s) | status 7 primal 0 dual 840.00 | 6.9s | CERTIFIED (LP)
+SUMMARY: incumbent 5095, certified windows 1/1, lower bound 840

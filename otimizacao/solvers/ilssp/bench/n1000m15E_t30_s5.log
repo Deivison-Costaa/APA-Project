@@ -1,0 +1,15 @@
+instance ../../instances/n1000m15E.txt n=1000 m=15 time=30s seed=5 threads=1 sp=0 out=bench/n1000m15E_t30_s5.txt
+greedy cost 23429
+  t=    0.0 best 15184
+  t=    0.5 best 6251
+  t=    1.4 best 5732
+  t=    2.2 best 5489
+  t=    6.4 best 5386
+  t=    7.2 best 5369
+  t=    7.7 best 5222
+  t=    9.6 best 5175
+  t=   10.1 best 5148
+  t=   11.6 best 5095
+round 1 [t=30]: ils 23429 -> 5095 |
+final 5095 | time 30.0s | threads 1 | iters 50944 (1698/s) acc 41428 | evals 657412945 (21.91M/s) | pool 0 | SP solves 0 improved 0 avg 0.00s max 0.00s maxcols 0
+wrote bench/n1000m15E_t30_s5.txt cost 5095

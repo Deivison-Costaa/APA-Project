@@ -1,0 +1,8 @@
+instance n500m10E n=500 m=10 start cost 18435 (../../pool/n500m10E/n500m10E_18435_gls.txt) mode=window
+after LS: 18435
+sweep 1 delta 0 cost 18435
+[n500m10E] t=39.0 windows=35 improved=0 gain=0 optimal=24 timeouts=11 skipped=0 avgFree=28.6 avgStates=957 avgArcs=17688 mipTime=39.0s (1.114s/win)
+sweep 2 delta 0 cost 18435
+[n500m10E] t=60.2 windows=55 improved=0 gain=0 optimal=37 timeouts=18 skipped=0 avgFree=28.8 avgStates=877 avgArcs=15733 mipTime=60.1s (1.093s/win)
+[n500m10E] t=60.2 windows=55 improved=0 gain=0 optimal=37 timeouts=18 skipped=0 avgFree=28.8 avgStates=877 avgArcs=15733 mipTime=60.1s (1.093s/win)
+FINAL n500m10E cost 18435 time 60.2

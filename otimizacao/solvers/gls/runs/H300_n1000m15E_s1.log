@@ -1,0 +1,13 @@
+instance n1000m15E n=1000 m=15  init=greedy cost=24288  (setup 0.05s)
+[t=0.0s] after initial LS: 13325 (evals 984310, moves 50)
+[tid=0] done: iters=142352 (2376/s) evals=4816001131 best=5095 (at 29.7s) assignHits=43180 flights/iter=38.9 moves/iter=4.13
+   delta hist: <0 6480 | 0 99506 | 1-10 1132 | 11-50 5123 | 51-100 5310 | 101-500 16112 | >500 8689
+   relocP  evals=  9.37% applied=30208
+   crossP  evals= 33.96% applied=206448
+   2optP   evals=  5.44% applied=84875
+   relocS  evals=  9.49% applied=9893
+   crossS  evals= 34.47% applied=119539
+   2optS   evals=  5.29% applied=135064
+   intra   evals=  1.28% applied=2377
+   starts  evals=  0.02% applied=31
+FINAL cost=5095 reference=5095 time=60.0s out=runs/H300_n1000m15E_s1.txt

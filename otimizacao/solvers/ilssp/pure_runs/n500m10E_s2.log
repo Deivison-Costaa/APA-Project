@@ -1,0 +1,13 @@
+instance ../../instances/n500m10E.txt n=500 m=10 time=300s seed=2 threads=1 sp=0 out=pure_runs/n500m10E_s2.txt
+greedy cost 71890
+  t=    0.0 best 43028
+  t=    0.5 best 19418
+  t=    1.7 best 19395
+  t=    2.8 best 18599
+  t=    3.4 best 18462
+  t=   37.6 best 18448
+  t=   72.3 best 18444
+  t=   73.9 best 18435
+round 1 [t=300]: ils 71890 -> 18435 |
+final 18435 | time 300.0s | threads 1 | iters 1094912 (3650/s) acc 837922 | evals 9290720859 (30.97M/s) | pool 0 | SP solves 0 improved 0 avg 0.00s max 0.00s maxcols 0
+wrote pure_runs/n500m10E_s2.txt cost 18435

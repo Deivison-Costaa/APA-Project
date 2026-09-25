@@ -1,0 +1,166 @@
+instance n1000m15E n=1000 m=15 start cost 5095 (../../pool/n1000m15E/n1000m15E_5095_window.txt) mode=window
+after LS: 5095
+sweep 1 delta 0 cost 5095
+[n1000m15E] t=3.1 windows=3 improved=0 gain=0 optimal=2 timeouts=1 skipped=18 avgFree=62.3 avgStates=376 avgArcs=10054 mipTime=3.0s (1.001s/win)
+sweep 2 delta 0 cost 5095
+[n1000m15E] t=4.7 windows=5 improved=0 gain=0 optimal=4 timeouts=1 skipped=37 avgFree=58.4 avgStates=367 avgArcs=9687 mipTime=4.7s (0.934s/win)
+sweep 3 delta 0 cost 5095
+[n1000m15E] t=6.4 windows=7 improved=0 gain=0 optimal=6 timeouts=1 skipped=56 avgFree=56.6 avgStates=363 avgArcs=9522 mipTime=6.4s (0.910s/win)
+sweep 4 delta 0 cost 5095
+[n1000m15E] t=8.6 windows=9 improved=0 gain=0 optimal=7 timeouts=2 skipped=75 avgFree=53.7 avgStates=371 avgArcs=9635 mipTime=8.6s (0.950s/win)
+sweep 5 delta 0 cost 5095
+[n1000m15E] t=9.7 windows=11 improved=0 gain=0 optimal=9 timeouts=2 skipped=94 avgFree=53.8 avgStates=349 avgArcs=9039 mipTime=9.7s (0.878s/win)
+sweep 6 delta 0 cost 5095
+[n1000m15E] t=10.8 windows=13 improved=0 gain=0 optimal=11 timeouts=2 skipped=113 avgFree=53.8 avgStates=348 avgArcs=8981 mipTime=10.8s (0.828s/win)
+sweep 7 delta 0 cost 5095
+[n1000m15E] t=12.4 windows=16 improved=0 gain=0 optimal=14 timeouts=2 skipped=131 avgFree=55.3 avgStates=351 avgArcs=9151 mipTime=12.3s (0.770s/win)
+sweep 8 delta 0 cost 5095
+[n1000m15E] t=13.6 windows=18 improved=0 gain=0 optimal=16 timeouts=2 skipped=150 avgFree=54.6 avgStates=360 avgArcs=9354 mipTime=13.5s (0.749s/win)
+sweep 9 delta 0 cost 5095
+[n1000m15E] t=14.8 windows=20 improved=0 gain=0 optimal=18 timeouts=2 skipped=169 avgFree=54.0 avgStates=366 avgArcs=9491 mipTime=14.7s (0.734s/win)
+sweep 10 delta 0 cost 5095
+[n1000m15E] t=16.2 windows=22 improved=0 gain=0 optimal=20 timeouts=2 skipped=188 avgFree=54.0 avgStates=364 avgArcs=9432 mipTime=16.2s (0.735s/win)
+sweep 11 delta 0 cost 5095
+[n1000m15E] t=17.4 windows=24 improved=0 gain=0 optimal=22 timeouts=2 skipped=207 avgFree=52.5 avgStates=364 avgArcs=9413 mipTime=17.4s (0.723s/win)
+sweep 12 delta 0 cost 5095
+[n1000m15E] t=18.3 windows=26 improved=0 gain=0 optimal=24 timeouts=2 skipped=226 avgFree=52.5 avgStates=363 avgArcs=9392 mipTime=18.2s (0.701s/win)
+sweep 13 delta 0 cost 5095
+[n1000m15E] t=19.5 windows=28 improved=0 gain=0 optimal=26 timeouts=2 skipped=245 avgFree=51.1 avgStates=362 avgArcs=9336 mipTime=19.4s (0.692s/win)
+sweep 14 delta 0 cost 5095
+[n1000m15E] t=20.5 windows=30 improved=0 gain=0 optimal=28 timeouts=2 skipped=264 avgFree=50.6 avgStates=364 avgArcs=9378 mipTime=20.5s (0.682s/win)
+sweep 15 delta 0 cost 5095
+[n1000m15E] t=21.9 windows=32 improved=0 gain=0 optimal=30 timeouts=2 skipped=283 avgFree=50.0 avgStates=365 avgArcs=9401 mipTime=21.8s (0.681s/win)
+sweep 16 delta 0 cost 5095
+[n1000m15E] t=22.9 windows=35 improved=0 gain=0 optimal=33 timeouts=2 skipped=301 avgFree=50.0 avgStates=357 avgArcs=9253 mipTime=22.8s (0.652s/win)
+sweep 17 delta 0 cost 5095
+[n1000m15E] t=24.1 windows=37 improved=0 gain=0 optimal=35 timeouts=2 skipped=320 avgFree=49.5 avgStates=359 avgArcs=9278 mipTime=24.0s (0.650s/win)
+sweep 18 delta 0 cost 5095
+[n1000m15E] t=25.5 windows=39 improved=0 gain=0 optimal=37 timeouts=2 skipped=339 avgFree=49.3 avgStates=361 avgArcs=9339 mipTime=25.4s (0.651s/win)
+sweep 19 delta 0 cost 5095
+[n1000m15E] t=27.2 windows=43 improved=0 gain=0 optimal=41 timeouts=2 skipped=356 avgFree=50.8 avgStates=356 avgArcs=9276 mipTime=27.1s (0.631s/win)
+sweep 20 delta 0 cost 5095
+[n1000m15E] t=28.7 windows=45 improved=0 gain=0 optimal=43 timeouts=2 skipped=375 avgFree=50.9 avgStates=362 avgArcs=9412 mipTime=28.6s (0.635s/win)
+sweep 21 delta 0 cost 5095
+[n1000m15E] t=29.7 windows=47 improved=0 gain=0 optimal=45 timeouts=2 skipped=394 avgFree=51.0 avgStates=361 avgArcs=9387 mipTime=29.6s (0.629s/win)
+sweep 22 delta 0 cost 5095
+[n1000m15E] t=30.8 windows=49 improved=0 gain=0 optimal=47 timeouts=2 skipped=413 avgFree=50.4 avgStates=362 avgArcs=9383 mipTime=30.7s (0.626s/win)
+sweep 23 delta 0 cost 5095
+[n1000m15E] t=32.2 windows=51 improved=0 gain=0 optimal=49 timeouts=2 skipped=432 avgFree=50.5 avgStates=367 avgArcs=9493 mipTime=32.1s (0.630s/win)
+sweep 24 delta 0 cost 5095
+[n1000m15E] t=33.8 windows=54 improved=0 gain=0 optimal=52 timeouts=2 skipped=450 avgFree=51.1 avgStates=367 avgArcs=9515 mipTime=33.7s (0.625s/win)
+sweep 25 delta 0 cost 5095
+[n1000m15E] t=34.9 windows=56 improved=0 gain=0 optimal=54 timeouts=2 skipped=469 avgFree=50.6 avgStates=367 avgArcs=9507 mipTime=34.8s (0.621s/win)
+sweep 26 delta 0 cost 5095
+[n1000m15E] t=35.8 windows=58 improved=0 gain=0 optimal=56 timeouts=2 skipped=488 avgFree=50.7 avgStates=366 avgArcs=9452 mipTime=35.7s (0.615s/win)
+sweep 27 delta 0 cost 5095
+[n1000m15E] t=36.3 windows=60 improved=0 gain=0 optimal=58 timeouts=2 skipped=507 avgFree=50.8 avgStates=360 avgArcs=9314 mipTime=36.2s (0.603s/win)
+sweep 28 delta 0 cost 5095
+[n1000m15E] t=38.2 windows=63 improved=0 gain=0 optimal=61 timeouts=2 skipped=525 avgFree=51.3 avgStates=361 avgArcs=9347 mipTime=38.1s (0.604s/win)
+sweep 29 delta 0 cost 5095
+[n1000m15E] t=39.8 windows=66 improved=0 gain=0 optimal=64 timeouts=2 skipped=543 avgFree=51.3 avgStates=356 avgArcs=9257 mipTime=39.7s (0.602s/win)
+sweep 30 delta 0 cost 5095
+[n1000m15E] t=41.4 windows=68 improved=0 gain=0 optimal=66 timeouts=2 skipped=562 avgFree=51.3 avgStates=356 avgArcs=9244 mipTime=41.3s (0.607s/win)
+sweep 31 delta 0 cost 5095
+[n1000m15E] t=42.6 windows=70 improved=0 gain=0 optimal=68 timeouts=2 skipped=581 avgFree=51.1 avgStates=357 avgArcs=9264 mipTime=42.5s (0.607s/win)
+sweep 32 delta 0 cost 5095
+[n1000m15E] t=43.8 windows=72 improved=0 gain=0 optimal=70 timeouts=2 skipped=600 avgFree=51.0 avgStates=359 avgArcs=9301 mipTime=43.7s (0.607s/win)
+sweep 33 delta 0 cost 5095
+[n1000m15E] t=44.4 windows=74 improved=0 gain=0 optimal=72 timeouts=2 skipped=619 avgFree=51.1 avgStates=356 avgArcs=9221 mipTime=44.3s (0.598s/win)
+sweep 34 delta 0 cost 5095
+[n1000m15E] t=44.9 windows=76 improved=0 gain=0 optimal=74 timeouts=2 skipped=638 avgFree=51.2 avgStates=353 avgArcs=9145 mipTime=44.8s (0.590s/win)
+sweep 35 delta 0 cost 5095
+[n1000m15E] t=45.9 windows=78 improved=0 gain=0 optimal=76 timeouts=2 skipped=657 avgFree=51.3 avgStates=353 avgArcs=9146 mipTime=45.8s (0.587s/win)
+sweep 36 delta 0 cost 5095
+[n1000m15E] t=46.5 windows=80 improved=0 gain=0 optimal=78 timeouts=2 skipped=676 avgFree=51.4 avgStates=350 avgArcs=9076 mipTime=46.4s (0.579s/win)
+sweep 37 delta 0 cost 5095
+[n1000m15E] t=47.3 windows=82 improved=0 gain=0 optimal=80 timeouts=2 skipped=695 avgFree=51.5 avgStates=350 avgArcs=9048 mipTime=47.2s (0.576s/win)
+sweep 38 delta 0 cost 5095
+[n1000m15E] t=48.7 windows=84 improved=0 gain=0 optimal=82 timeouts=2 skipped=714 avgFree=51.5 avgStates=353 avgArcs=9124 mipTime=48.5s (0.578s/win)
+sweep 39 delta 0 cost 5095
+[n1000m15E] t=49.5 windows=86 improved=0 gain=0 optimal=84 timeouts=2 skipped=733 avgFree=51.5 avgStates=353 avgArcs=9116 mipTime=49.4s (0.574s/win)
+sweep 40 delta 0 cost 5095
+[n1000m15E] t=50.7 windows=88 improved=0 gain=0 optimal=86 timeouts=2 skipped=752 avgFree=51.5 avgStates=355 avgArcs=9155 mipTime=50.6s (0.575s/win)
+sweep 41 delta 0 cost 5095
+[n1000m15E] t=51.3 windows=90 improved=0 gain=0 optimal=88 timeouts=2 skipped=771 avgFree=51.5 avgStates=352 avgArcs=9093 mipTime=51.2s (0.569s/win)
+sweep 42 delta 0 cost 5095
+[n1000m15E] t=51.8 windows=92 improved=0 gain=0 optimal=90 timeouts=2 skipped=790 avgFree=51.6 avgStates=350 avgArcs=9032 mipTime=51.7s (0.562s/win)
+sweep 43 delta 0 cost 5095
+[n1000m15E] t=53.1 windows=94 improved=0 gain=0 optimal=92 timeouts=2 skipped=809 avgFree=51.6 avgStates=352 avgArcs=9068 mipTime=52.9s (0.563s/win)
+sweep 44 delta 0 cost 5095
+[n1000m15E] t=53.9 windows=96 improved=0 gain=0 optimal=94 timeouts=2 skipped=828 avgFree=51.6 avgStates=351 avgArcs=9044 mipTime=53.8s (0.561s/win)
+sweep 45 delta 0 cost 5095
+[n1000m15E] t=55.5 windows=98 improved=0 gain=0 optimal=96 timeouts=2 skipped=847 avgFree=51.4 avgStates=352 avgArcs=9057 mipTime=55.4s (0.566s/win)
+sweep 46 delta 0 cost 5095
+[n1000m15E] t=57.3 windows=102 improved=0 gain=0 optimal=100 timeouts=2 skipped=864 avgFree=52.0 avgStates=350 avgArcs=9042 mipTime=57.2s (0.561s/win)
+sweep 47 delta 0 cost 5095
+[n1000m15E] t=58.2 windows=104 improved=0 gain=0 optimal=102 timeouts=2 skipped=883 avgFree=52.1 avgStates=349 avgArcs=9033 mipTime=58.1s (0.558s/win)
+sweep 48 delta 0 cost 5095
+[n1000m15E] t=59.4 windows=106 improved=0 gain=0 optimal=104 timeouts=2 skipped=902 avgFree=51.9 avgStates=351 avgArcs=9060 mipTime=59.3s (0.559s/win)
+sweep 49 delta 0 cost 5095
+[n1000m15E] t=60.3 windows=108 improved=0 gain=0 optimal=106 timeouts=2 skipped=921 avgFree=51.9 avgStates=351 avgArcs=9061 mipTime=60.2s (0.557s/win)
+sweep 50 delta 0 cost 5095
+[n1000m15E] t=61.4 windows=110 improved=0 gain=0 optimal=108 timeouts=2 skipped=940 avgFree=51.8 avgStates=352 avgArcs=9089 mipTime=61.3s (0.557s/win)
+sweep 51 delta 0 cost 5095
+[n1000m15E] t=62.3 windows=112 improved=0 gain=0 optimal=110 timeouts=2 skipped=959 avgFree=51.9 avgStates=352 avgArcs=9083 mipTime=62.2s (0.555s/win)
+sweep 52 delta 0 cost 5095
+[n1000m15E] t=63.2 windows=114 improved=0 gain=0 optimal=112 timeouts=2 skipped=978 avgFree=51.9 avgStates=351 avgArcs=9063 mipTime=63.0s (0.553s/win)
+sweep 53 delta 0 cost 5095
+[n1000m15E] t=64.3 windows=116 improved=0 gain=0 optimal=114 timeouts=2 skipped=997 avgFree=51.8 avgStates=352 avgArcs=9079 mipTime=64.2s (0.553s/win)
+sweep 54 delta 0 cost 5095
+[n1000m15E] t=65.2 windows=119 improved=0 gain=0 optimal=117 timeouts=2 skipped=1016 avgFree=51.3 avgStates=349 avgArcs=9006 mipTime=65.0s (0.547s/win)
+sweep 55 delta 0 cost 5095
+[n1000m15E] t=66.5 windows=121 improved=0 gain=0 optimal=119 timeouts=2 skipped=1035 avgFree=51.3 avgStates=352 avgArcs=9059 mipTime=66.3s (0.548s/win)
+sweep 56 delta 0 cost 5095
+[n1000m15E] t=67.3 windows=123 improved=0 gain=0 optimal=121 timeouts=2 skipped=1054 avgFree=51.4 avgStates=352 avgArcs=9061 mipTime=67.2s (0.546s/win)
+sweep 57 delta 0 cost 5095
+[n1000m15E] t=68.8 windows=127 improved=0 gain=0 optimal=125 timeouts=2 skipped=1071 avgFree=51.8 avgStates=350 avgArcs=9049 mipTime=68.7s (0.541s/win)
+sweep 58 delta 0 cost 5095
+[n1000m15E] t=70.1 windows=129 improved=0 gain=0 optimal=127 timeouts=2 skipped=1090 avgFree=51.7 avgStates=351 avgArcs=9060 mipTime=70.0s (0.543s/win)
+sweep 59 delta 0 cost 5095
+[n1000m15E] t=71.6 windows=133 improved=0 gain=0 optimal=131 timeouts=2 skipped=1107 avgFree=52.1 avgStates=349 avgArcs=9045 mipTime=71.5s (0.537s/win)
+sweep 60 delta 0 cost 5095
+[n1000m15E] t=72.1 windows=135 improved=0 gain=0 optimal=133 timeouts=2 skipped=1126 avgFree=52.1 avgStates=347 avgArcs=9005 mipTime=72.0s (0.533s/win)
+sweep 61 delta 0 cost 5095
+[n1000m15E] t=73.0 windows=137 improved=0 gain=0 optimal=135 timeouts=2 skipped=1145 avgFree=52.2 avgStates=347 avgArcs=8999 mipTime=72.8s (0.532s/win)
+sweep 62 delta 0 cost 5095
+[n1000m15E] t=73.5 windows=139 improved=0 gain=0 optimal=137 timeouts=2 skipped=1164 avgFree=52.2 avgStates=346 avgArcs=8960 mipTime=73.4s (0.528s/win)
+sweep 63 delta 0 cost 5095
+[n1000m15E] t=74.5 windows=142 improved=0 gain=0 optimal=140 timeouts=2 skipped=1182 avgFree=52.2 avgStates=344 avgArcs=8933 mipTime=74.4s (0.524s/win)
+sweep 64 delta 0 cost 5095
+[n1000m15E] t=75.1 windows=144 improved=0 gain=0 optimal=142 timeouts=2 skipped=1201 avgFree=52.2 avgStates=343 avgArcs=8898 mipTime=74.9s (0.520s/win)
+sweep 65 delta 0 cost 5095
+[n1000m15E] t=76.3 windows=146 improved=0 gain=0 optimal=144 timeouts=2 skipped=1220 avgFree=52.2 avgStates=344 avgArcs=8924 mipTime=76.1s (0.521s/win)
+sweep 66 delta 0 cost 5095
+[n1000m15E] t=77.0 windows=148 improved=0 gain=0 optimal=146 timeouts=2 skipped=1239 avgFree=52.2 avgStates=344 avgArcs=8922 mipTime=76.9s (0.519s/win)
+sweep 67 delta 0 cost 5095
+[n1000m15E] t=78.4 windows=151 improved=0 gain=0 optimal=149 timeouts=2 skipped=1257 avgFree=52.4 avgStates=344 avgArcs=8941 mipTime=78.3s (0.518s/win)
+sweep 68 delta 0 cost 5095
+[n1000m15E] t=78.9 windows=153 improved=0 gain=0 optimal=151 timeouts=2 skipped=1276 avgFree=52.4 avgStates=343 avgArcs=8892 mipTime=78.8s (0.515s/win)
+sweep 69 delta 0 cost 5095
+[n1000m15E] t=79.4 windows=155 improved=0 gain=0 optimal=153 timeouts=2 skipped=1295 avgFree=52.4 avgStates=341 avgArcs=8844 mipTime=79.3s (0.512s/win)
+sweep 70 delta 0 cost 5095
+[n1000m15E] t=80.3 windows=157 improved=0 gain=0 optimal=155 timeouts=2 skipped=1314 avgFree=52.2 avgStates=341 avgArcs=8841 mipTime=80.2s (0.511s/win)
+sweep 71 delta 0 cost 5095
+[n1000m15E] t=80.9 windows=159 improved=0 gain=0 optimal=157 timeouts=2 skipped=1333 avgFree=52.2 avgStates=340 avgArcs=8810 mipTime=80.7s (0.508s/win)
+sweep 72 delta 0 cost 5095
+[n1000m15E] t=81.8 windows=162 improved=0 gain=0 optimal=160 timeouts=2 skipped=1352 avgFree=51.9 avgStates=338 avgArcs=8763 mipTime=81.7s (0.504s/win)
+sweep 73 delta 0 cost 5095
+[n1000m15E] t=83.2 windows=165 improved=0 gain=0 optimal=163 timeouts=2 skipped=1370 avgFree=52.1 avgStates=338 avgArcs=8784 mipTime=83.1s (0.503s/win)
+sweep 74 delta 0 cost 5095
+[n1000m15E] t=84.0 windows=167 improved=0 gain=0 optimal=165 timeouts=2 skipped=1389 avgFree=52.1 avgStates=338 avgArcs=8773 mipTime=83.9s (0.502s/win)
+sweep 75 delta 0 cost 5095
+[n1000m15E] t=85.0 windows=170 improved=0 gain=0 optimal=168 timeouts=2 skipped=1407 avgFree=52.1 avgStates=337 avgArcs=8749 mipTime=84.8s (0.499s/win)
+sweep 76 delta 0 cost 5095
+[n1000m15E] t=85.9 windows=172 improved=0 gain=0 optimal=170 timeouts=2 skipped=1426 avgFree=52.1 avgStates=337 avgArcs=8750 mipTime=85.7s (0.499s/win)
+sweep 77 delta 0 cost 5095
+[n1000m15E] t=86.8 windows=174 improved=0 gain=0 optimal=172 timeouts=2 skipped=1445 avgFree=52.2 avgStates=337 avgArcs=8746 mipTime=86.6s (0.498s/win)
+sweep 78 delta 0 cost 5095
+[n1000m15E] t=87.7 windows=176 improved=0 gain=0 optimal=174 timeouts=2 skipped=1464 avgFree=52.0 avgStates=337 avgArcs=8744 mipTime=87.5s (0.497s/win)
+sweep 79 delta 0 cost 5095
+[n1000m15E] t=88.6 windows=178 improved=0 gain=0 optimal=176 timeouts=2 skipped=1483 avgFree=52.0 avgStates=337 avgArcs=8746 mipTime=88.4s (0.497s/win)
+sweep 80 delta 0 cost 5095
+[n1000m15E] t=89.3 windows=180 improved=0 gain=0 optimal=178 timeouts=2 skipped=1502 avgFree=52.0 avgStates=337 avgArcs=8746 mipTime=89.2s (0.495s/win)
+sweep 81 delta 0 cost 5095
+[n1000m15E] t=90.0 windows=182 improved=0 gain=0 optimal=179 timeouts=3 skipped=1521 avgFree=52.1 avgStates=337 avgArcs=8746 mipTime=89.9s (0.494s/win)
+[n1000m15E] t=90.0 windows=182 improved=0 gain=0 optimal=179 timeouts=3 skipped=1521 avgFree=52.1 avgStates=337 avgArcs=8746 mipTime=89.9s (0.494s/win)
+FINAL n1000m15E cost 5095 time 90.0

@@ -1,0 +1,8 @@
+instance n1000m15E n=1000 m=15 time=30.0s threads=1 seed=1
+initial cost 20362 (greedy) after 0.03s
+[t=    5.0s] it=513536 (102705 it/s) T=15.162 cur=5633 best=5507 global=5507
+[t=   10.0s] it=1033472 (103342 it/s) T=7.663 cur=5365 best=5328 global=5328
+[t=   15.0s] it=1553792 (103582 it/s) T=3.873 cur=5213 best=5203 global=5203
+[t=   20.0s] it=2075456 (103769 it/s) T=1.957 cur=5182 best=5182 global=5182
+[t=   25.0s] it=2598144 (103922 it/s) T=0.989 cur=5184 best=5182 global=5182
+final best 5182  iters=3120896 (104030 it/s total)  written to runs/b0_n1000m15E.txt

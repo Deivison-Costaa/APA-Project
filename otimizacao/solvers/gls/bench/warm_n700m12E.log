@@ -1,0 +1,8 @@
+instance n700m12E n=700 m=12  init=bench/warm_start_n700m12E.txt cost=13090  (setup 0.04s)
+[t=0.0s] after initial LS: 13090 (evals 559255, moves 0)
+[t=60.0s tid=0] it=102220 it/s=1704 evals/s=54.76M acc=76.0% T=25.69 cur=13210 best=13090
+[t=120.0s tid=0] it=189951 it/s=1462 evals/s=46.52M acc=74.4% T=132.10 cur=14425 best=13090
+[t=180.0s tid=0] it=265381 it/s=1257 evals/s=39.90M acc=73.8% T=11.32 cur=13108 best=13090
+[t=240.0s tid=0] it=342758 it/s=1290 evals/s=41.37M acc=74.1% T=58.20 cur=13233 best=13090
+[t=300.0s tid=0] it=421849 it/s=1318 evals/s=41.75M acc=73.3% T=299.26 cur=14736 best=13090
+[t=360.0s tid=0] it=501853 it/s=1333 evals/s=42.78M acc=73.7% T=25.64 cur=13161 best=13090

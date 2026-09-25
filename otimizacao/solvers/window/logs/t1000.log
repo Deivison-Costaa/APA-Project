@@ -1,0 +1,8 @@
+instance n1000m15E n=1000 m=15 start cost 21663 (greedy)
+[n1000m15E] t=5.0 iter=5468 acc=3707 impr=65 cur=5266 best=5240 T=14.18 evals=205867575
+[n1000m15E] t=10.0 iter=10968 acc=7334 impr=71 cur=5105 best=5105 T=8.61 evals=412622894
+[n1000m15E] t=15.0 iter=16398 acc=10802 impr=72 cur=5095 best=5095 T=5.22 evals=618378977
+[n1000m15E] t=20.0 iter=21823 acc=14308 impr=72 cur=5095 best=5095 T=3.17 evals=823813711
+[n1000m15E] t=25.0 iter=27235 acc=17836 impr=72 cur=5095 best=5095 T=1.92 evals=1027170438
+[n1000m15E] ILS done iter=32765 best=5095 (1093.0 it/s)
+FINAL n1000m15E cost 5095 time 30.0

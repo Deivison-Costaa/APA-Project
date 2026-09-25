@@ -1,0 +1,3 @@
+n500m10E [1300,1800) exit=0 ub=7498 LP=7498.000 Model status        : Optimal
+n500m10E [1800,3000) exit=0 ub=4671 LP=4605.500 Model status        : Optimal
+n1000m15E [2200,3554) exit=0 ub=1410 LP=1410.000 Model status        : Optimal

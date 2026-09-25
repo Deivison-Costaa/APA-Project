@@ -1,0 +1,3 @@
+n1000m15E [210,733) exit=0  ub=840 LP 840.000 dual 840.00 CERTIFIED (LP)
+n1000m15E [1471,1988) exit=0  ub=760 LP 760.000 dual 760.00 CERTIFIED (LP)
+n500m10E [1800,3000) exit=0    rcfix: Lagrangian bound 4605.500, kept 22533 of 4903448 columns (1199.6s) ub=4671 LP 4605.500 dual 4671.00 CERTIFIED (MIP)

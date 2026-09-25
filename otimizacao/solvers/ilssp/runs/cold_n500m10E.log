@@ -1,0 +1,26 @@
+instance /tmp/claude-1000/-home-ddscosta--rea-de-trabalho-Faculdade-APA-APA-Project--claude-code-/5aab076d-8aac-4e11-afe9-0cef821c0125/scratchpad/work/instances/n500m10E.txt n=500 m=10 time=300s seed=1 threads=1 sp=1 out=out/cold_n500m10E.txt
+greedy cost 71890
+  t=    0.0 best 39859
+  t=    0.5 best 20635
+  t=    1.2 best 20101
+  t=    2.5 best 19600
+  t=    4.6 best 19592
+  t=    5.7 best 19562
+  t=    6.7 best 18935
+  t=    7.4 best 18534
+  t=   12.4 best 18457
+  t=   13.0 best 18444
+  t=   20.3 best 18435
+round 1 [t=30]: ils 71890 -> 18435 | SP cols 5000/49825 -> feasible 18435 optimal (bound 18435, 2.5s)
+round 2 [t=63]: ils 18435 -> 18435 | SP cols 5000/95263 -> feasible 18435 optimal (bound 18435, 1.9s)
+round 3 [t=95]: ils 18435 -> 18435 | SP cols 5000/139586 -> feasible 18435 optimal (bound 18435, 1.3s)
+round 4 [t=126]: ils 18435 -> 18435 | SP cols 5000/196584 -> feasible 18435 optimal (bound 18435, 2.1s)
+round 5 [t=158]: ils 18435 -> 18435 | SP cols 5000/206100 -> feasible 18435 optimal (bound 18435, 1.3s)
+round 6 [t=189]: ils 18435 -> 18435 | SP cols 5000/232888 -> feasible 18435 optimal (bound 18435, 2.0s)
+round 7 [t=221]: ils 18435 -> 18435 | SP cols 5000/279044 -> feasible 18435 optimal (bound 18435, 1.1s)
+round 8 [t=252]: ils 18435 -> 18435 | SP cols 5000/315059 -> feasible 18435 optimal (bound 18435, 1.2s)
+round 9 [t=284]: ils 18435 -> 18435 | SP cols 5000/356911 -> feasible 18435 optimal (bound 18435, 1.0s)
+round 10 [t=295]: ils 18435 -> 18435 | SP cols 5000/359371 -> feasible 18435 optimal (bound 18435, 1.6s)
+round 11 [t=300]: ils 18435 -> 18435 |
+final 18435 | time 300.0s | threads 1 | iters 845504 (2818/s) acc 646656 | evals 7180624682 (23.93M/s) | pool 359371 | SP solves 10 improved 0 avg 1.59s max 2.54s maxcols 5000
+wrote out/cold_n500m10E.txt cost 18435

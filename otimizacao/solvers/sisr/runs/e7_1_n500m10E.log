@@ -1,0 +1,15 @@
+e7_1_n500m10E: --T0 60 --Tf 10 --tail 0.3 --slice 0.2 --bias 0.5 --slicew 100 --seed 2
+instance n500m10E n=500 m=10 time=60.0s threads=1 seed=2
+initial cost 49761 (greedy) after 0.02s
+[t=    5.0s] it=556224 (111235 it/s) T=51.677 cur=19995 best=19759 global=19759
+[t=   10.0s] it=1135424 (113533 it/s) T=44.509 cur=20439 best=19748 global=19748
+[t=   15.0s] it=1733888 (115583 it/s) T=38.335 cur=19849 best=19639 global=19639
+[t=   20.0s] it=2288832 (114434 it/s) T=33.018 cur=19986 best=19636 global=19636
+[t=   25.0s] it=2836608 (113457 it/s) T=28.438 cur=19871 best=19576 global=19576
+[t=   30.0s] it=3388288 (112935 it/s) T=24.493 cur=19579 best=19433 global=19433
+[t=   35.0s] it=4015808 (114730 it/s) T=21.096 cur=19555 best=19350 global=19350
+[t=   40.0s] it=4661952 (116541 it/s) T=18.170 cur=19471 best=19342 global=19342
+[t=   45.0s] it=5306240 (117908 it/s) T=15.649 cur=19495 best=19342 global=19342
+[t=   50.0s] it=5954304 (119078 it/s) T=13.479 cur=19416 best=19342 global=19342
+[t=   55.0s] it=6576448 (119564 it/s) T=11.609 cur=19460 best=19342 global=19342
+final best 19342  iters=7176512 (119608 it/s total)  written to /tmp/claude-1000/-home-ddscosta--rea-de-trabalho-Faculdade-APA-APA-Project--claude-code-/5aab076d-8aac-4e11-afe9-0cef821c0125/scratchpad/work/solvers/sisr/runs/e7_1_n500m10E.txt

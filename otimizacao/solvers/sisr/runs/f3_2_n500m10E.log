@@ -1,0 +1,9 @@
+f3_2_n500m10E: --tail 0.3 --slice 0.2 --bias 0.5 --slicew 100 --global 0 --wfix 1440,1720 --init runs/init500_18889.txt --report 10 --wT0 100 --wTf 5 --opt 0.5 --witers 400000
+instance n500m10E n=500 m=10 time=60.0s threads=1 seed=1
+initial cost 18889 (warm start) after 0.02s
+[t=   10.0s] window it=1996928 (199687 it/s) T=5.116 cur=18941 best=18889 global=18889 windows=5
+[t=   20.0s] window it=3992512 (199622 it/s) T=5.288 cur=19032 best=18889 global=18889 windows=10
+[t=   30.0s] window it=5914752 (197155 it/s) T=9.468 cur=18889 best=18889 global=18889 windows=15
+[t=   40.0s] window it=8054336 (201355 it/s) T=66.569 cur=19119 best=18889 global=18889 windows=21
+[t=   50.0s] window it=10213760 (204272 it/s) T=20.171 cur=18894 best=18889 global=18889 windows=26
+final best 18817  iters=11815936 (196931 it/s total)  written to /tmp/claude-1000/-home-ddscosta--rea-de-trabalho-Faculdade-APA-APA-Project--claude-code-/5aab076d-8aac-4e11-afe9-0cef821c0125/scratchpad/work/solvers/sisr/runs/f3_2_n500m10E.txt

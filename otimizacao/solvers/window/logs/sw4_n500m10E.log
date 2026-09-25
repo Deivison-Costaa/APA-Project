@@ -1,0 +1,16 @@
+instance n500m10E n=500 m=10 start cost 18435 (../../pool/n500m10E/n500m10E_18435_gls.txt) mode=window
+after LS: 18435
+sweep 1 delta 0 cost 18435
+[n500m10E] t=66.8 windows=26 improved=0 gain=0 lbProven=8 optimal=10 timeouts=8 skipped=0 avgFree=29.4 avgStates=803 avgArcs=14523 lbTime=0.0s mipTime=66.7s (2.566s/win)
+sweep 2 delta 0 cost 18435
+[n500m10E] t=119.8 windows=52 improved=0 gain=0 lbProven=16 optimal=23 timeouts=13 skipped=0 avgFree=29.3 avgStates=767 avgArcs=13837 lbTime=0.0s mipTime=119.7s (2.301s/win)
+sweep 3 delta 0 cost 18435
+[n500m10E] t=171.8 windows=78 improved=0 gain=0 lbProven=23 optimal=36 timeouts=19 skipped=0 avgFree=29.8 avgStates=772 avgArcs=13899 lbTime=0.0s mipTime=171.6s (2.199s/win)
+sweep 4 delta 0 cost 18435
+[n500m10E] t=227.0 windows=104 improved=0 gain=0 lbProven=31 optimal=47 timeouts=26 skipped=0 avgFree=29.7 avgStates=763 avgArcs=13820 lbTime=0.0s mipTime=226.7s (2.180s/win)
+sweep 5 delta 0 cost 18435
+[n500m10E] t=283.8 windows=130 improved=0 gain=0 lbProven=40 optimal=58 timeouts=32 skipped=0 avgFree=29.3 avgStates=761 avgArcs=13748 lbTime=0.0s mipTime=283.4s (2.180s/win)
+sweep 6 delta 0 cost 18435
+[n500m10E] t=300.5 windows=145 improved=0 gain=0 lbProven=44 optimal=66 timeouts=35 skipped=0 avgFree=29.4 avgStates=732 avgArcs=13156 lbTime=0.0s mipTime=300.1s (2.070s/win)
+[n500m10E] t=300.5 windows=145 improved=0 gain=0 lbProven=44 optimal=66 timeouts=35 skipped=0 avgFree=29.4 avgStates=732 avgArcs=13156 lbTime=0.0s mipTime=300.1s (2.070s/win)
+FINAL n500m10E cost 18435 time 300.5

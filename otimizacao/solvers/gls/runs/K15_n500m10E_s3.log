@@ -1,0 +1,15 @@
+instance n500m10E n=500 m=10  init=greedy cost=69151  (setup 0.01s)
+[t=0.0s] after initial LS: 38479 (evals 290985, moves 82)
+[tid=0] done: iters=292487 (3252/s) evals=5010146026 best=18435 (at 34.4s) assignHits=85251 flights/iter=39.0 moves/iter=5.20
+   LS: flights examined 11406997, pruned candidates 16272323
+   time: perturb 4.3s  LS 67.1s  assign+LS 18.2s
+   delta hist: <0 9924 | 0 172361 | 1-10 1966 | 11-50 5248 | 51-100 5069 | 101-500 42928 | >500 54991
+   relocP  evals=  8.38% applied=80523
+   crossP  evals= 34.00% applied=448350
+   2optP   evals=  5.42% applied=246662
+   relocS  evals=  8.62% applied=41585
+   crossS  evals= 35.09% applied=349739
+   2optS   evals=  5.41% applied=341120
+   intra   evals=  1.67% applied=13454
+   starts  evals=  0.05% applied=857
+FINAL cost=18435 reference=18435 time=90.0s out=runs/K15_n500m10E_s3.txt

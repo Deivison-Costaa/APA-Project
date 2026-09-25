@@ -1,0 +1,13 @@
+instance n700m12E n=700 m=12  init=greedy cost=54819  (setup 0.03s)
+[t=0.0s] after initial LS: 27068 (evals 798315, moves 96)
+[tid=0] done: iters=136229 (2273/s) evals=4628052533 best=13090 (at 26.2s) assignHits=41966 flights/iter=38.8 moves/iter=4.71
+   delta hist: <0 5356 | 0 89599 | 1-10 1065 | 11-50 3711 | 51-100 2783 | 101-500 18504 | >500 15211
+   relocP  evals=  9.17% applied=30614
+   crossP  evals= 33.60% applied=212327
+   2optP   evals=  5.71% applied=103598
+   relocS  evals=  9.25% applied=11776
+   crossS  evals= 34.27% applied=126855
+   2optS   evals=  5.58% applied=151066
+   intra   evals=  1.70% applied=4446
+   starts  evals=  0.03% applied=280
+FINAL cost=13090 reference=13090 time=60.0s out=runs/H300_n700m12E_s1.txt

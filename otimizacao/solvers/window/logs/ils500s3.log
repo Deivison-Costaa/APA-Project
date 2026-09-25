@@ -1,0 +1,20 @@
+instance n500m10E n=500 m=10 start cost 65653 (greedy) mode=ils
+[n500m10E] t=5.0 iter=4779 acc=3054 impr=61 cur=19748 best=19494 T=50.58 evals=163438143
+[n500m10E] t=10.0 iter=9645 acc=5995 impr=81 cur=18763 best=18490 T=42.82 evals=333945397
+[n500m10E] t=15.0 iter=14400 acc=8899 impr=81 cur=18575 best=18490 T=36.25 evals=496595241
+[n500m10E] t=20.0 iter=19188 acc=11808 impr=81 cur=18523 best=18490 T=30.69 evals=661691581
+[n500m10E] t=25.0 iter=24013 acc=14754 impr=81 cur=18541 best=18490 T=25.99 evals=826685577
+[n500m10E] t=30.0 iter=28786 acc=17629 impr=82 cur=18709 best=18481 T=22.00 evals=990431928
+[n500m10E] t=35.0 iter=33483 acc=20469 impr=85 cur=18500 best=18468 T=18.63 evals=1151602026
+[n500m10E] t=40.0 iter=38202 acc=23267 impr=85 cur=18468 best=18468 T=15.77 evals=1314554255
+[n500m10E] t=45.0 iter=41346 acc=25117 impr=86 cur=18574 best=18466 T=13.35 evals=1423626097
+[n500m10E] t=50.0 iter=44478 acc=26949 impr=86 cur=18536 best=18466 T=11.30 evals=1532177544
+[n500m10E] t=55.0 iter=47439 acc=28723 impr=86 cur=18473 best=18466 T=9.57 evals=1633636111
+[n500m10E] t=60.0 iter=50410 acc=30521 impr=86 cur=18468 best=18466 T=8.10 evals=1735313113
+[n500m10E] t=65.0 iter=53253 acc=32142 impr=86 cur=18508 best=18466 T=6.86 evals=1834694186
+[n500m10E] t=70.0 iter=57721 acc=34774 impr=86 cur=18481 best=18466 T=5.81 evals=1987905736
+[n500m10E] t=75.0 iter=61799 acc=37133 impr=86 cur=18474 best=18466 T=4.92 evals=2129178366
+[n500m10E] t=80.0 iter=64744 acc=38901 impr=86 cur=18466 best=18466 T=4.16 evals=2229286163
+[n500m10E] t=85.0 iter=67430 acc=40490 impr=86 cur=18466 best=18466 T=3.52 evals=2321393345
+[n500m10E] ILS done iter=70458 best=18466 (783.1 it/s)
+FINAL n500m10E cost 18466 time 90.0

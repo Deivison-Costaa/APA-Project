@@ -1,0 +1,8 @@
+instance n700m12E n=700 m=12 time=30.0s threads=1 seed=1
+initial cost 35893 (greedy) after 0.02s
+[t=    5.0s] it=641600 (128313 it/s) T=15.162 cur=13880 best=13859 global=13859
+[t=   10.0s] it=1285440 (128538 it/s) T=7.663 cur=13773 best=13691 global=13691
+[t=   15.0s] it=1931520 (128763 it/s) T=3.873 cur=13707 best=13680 global=13680
+[t=   20.0s] it=2572608 (128626 it/s) T=1.957 cur=13660 best=13654 global=13654
+[t=   25.0s] it=3214976 (128593 it/s) T=0.989 cur=13640 best=13640 global=13640
+final best 13640  iters=3856576 (128551 it/s total)  written to runs/b0_n700m12E.txt

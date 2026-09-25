@@ -1,0 +1,27 @@
+t3_1_n500m10E: --T0 100 --Tf 1 --tail 0.3
+instance n500m10E n=500 m=10 time=120.0s threads=1 seed=1
+initial cost 48501 (greedy) after 0.02s
+[t=    5.0s] it=545152 (109023 it/s) T=82.539 cur=22094 best=20696 global=20696
+[t=   10.0s] it=1250816 (125077 it/s) T=68.128 cur=20720 best=19639 global=19639
+[t=   15.0s] it=1928896 (128587 it/s) T=56.233 cur=21052 best=19639 global=19639
+[t=   20.0s] it=2616064 (130797 it/s) T=46.414 cur=19679 best=19547 global=19547
+[t=   25.0s] it=3143808 (125746 it/s) T=38.310 cur=19248 best=19046 global=19046
+[t=   30.0s] it=3773376 (125773 it/s) T=31.621 cur=19216 best=18906 global=18906
+[t=   35.0s] it=4346432 (124178 it/s) T=26.100 cur=19124 best=18868 global=18868
+[t=   40.0s] it=4917376 (122929 it/s) T=21.543 cur=18978 best=18813 global=18813
+[t=   45.0s] it=5628544 (125074 it/s) T=17.782 cur=18854 best=18687 global=18687
+[t=   50.0s] it=6354560 (127086 it/s) T=14.677 cur=18761 best=18687 global=18687
+[t=   55.0s] it=7117504 (129404 it/s) T=12.114 cur=18735 best=18687 global=18687
+[t=   60.0s] it=7877952 (131294 it/s) T=9.999 cur=18694 best=18687 global=18687
+[t=   65.0s] it=8638208 (132890 it/s) T=8.253 cur=18711 best=18687 global=18687
+[t=   70.0s] it=9396032 (134224 it/s) T=6.812 cur=18707 best=18687 global=18687
+[t=   75.0s] it=10147648 (135297 it/s) T=5.623 cur=18711 best=18687 global=18687
+[t=   80.0s] it=10880640 (136003 it/s) T=4.641 cur=18725 best=18687 global=18687
+[t=   85.0s] it=11614208 (136632 it/s) T=3.831 cur=18709 best=18687 global=18687
+[t=   90.0s] it=12347456 (137189 it/s) T=3.162 cur=18705 best=18687 global=18687
+[t=   95.0s] it=13054400 (137410 it/s) T=2.610 cur=18705 best=18687 global=18687
+[t=  100.0s] it=13686464 (136859 it/s) T=2.154 cur=18705 best=18687 global=18687
+[t=  105.0s] it=14316992 (136347 it/s) T=1.778 cur=18708 best=18687 global=18687
+[t=  110.0s] it=14945344 (135861 it/s) T=1.468 cur=18705 best=18687 global=18687
+[t=  115.0s] it=15548864 (135202 it/s) T=1.211 cur=18702 best=18687 global=18687
+final best 18687  iters=16175168 (134793 it/s total)  written to /tmp/claude-1000/-home-ddscosta--rea-de-trabalho-Faculdade-APA-APA-Project--claude-code-/5aab076d-8aac-4e11-afe9-0cef821c0125/scratchpad/work/solvers/sisr/runs/t3_1_n500m10E.txt

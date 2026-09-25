@@ -1,0 +1,12 @@
+instance n500m10E n=500 m=10  init=greedy cost=69151  (setup 0.02s)
+[t=0.0s] after initial LS: 35211 (evals 609676, moves 102)
+[tid=0] done: iters=85636 (2144/s) evals=2857837178 best=18455 (at 14.6s) assignHits=22781 flights/iter=38.2 moves/iter=5.25
+   relocP  evals=  9.14% applied=25272
+   crossP  evals= 33.61% applied=131947
+   2optP   evals=  5.72% applied=75502
+   relocS  evals=  9.08% applied=10420
+   crossS  evals= 34.03% applied=98701
+   2optS   evals=  5.62% applied=103134
+   intra   evals=  2.09% applied=4709
+   starts  evals=  0.03% applied=219
+FINAL cost=18455 reference=18455 time=40.0s out=runs/A1_n500m10E_s1.txt

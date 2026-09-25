@@ -1,0 +1,3 @@
+x1_0_n500m10E | --init ../../pool/n500m10E/n500m10E_18435_gls.txt --global 0 --cgap 150 --margin 50,300 --wT0 200 --wTf 5 --witers 300000 | OK cost=18435 | iters=54310496 (181035 it/s
+x1_1_n700m12E | --init ../../pool/n700m12E/n700m12E_13090_window.txt --global 0 --cgap 150 --margin 50,300 --wT0 200 --wTf 5 --witers 300000 | OK cost=13090 | iters=46487232 (154957 it/s
+x1_2_n1000m15E | --init ../../pool/n1000m15E/n1000m15E_5095_window.txt --global 0 --cgap 150 --margin 50,300 --wT0 200 --wTf 5 --witers 300000 | OK cost=5095 | iters=41880864 (139603 it/s

@@ -1,0 +1,10 @@
+instance n700m12E n=700 m=12 start cost 50658 (greedy) mode=ils
+[n700m12E] t=5.0 iter=4364 acc=2828 impr=61 cur=13634 best=13634 T=28.82 evals=158581622
+[n700m12E] t=10.0 iter=8708 acc=5559 impr=76 cur=13444 best=13335 T=19.81 evals=316715807
+[n700m12E] t=15.0 iter=13051 acc=8250 impr=79 cur=13330 best=13303 T=13.62 evals=475166404
+[n700m12E] t=20.0 iter=16501 acc=10353 impr=85 cur=13159 best=13106 T=9.36 evals=602215653
+[n700m12E] t=25.0 iter=19130 acc=11961 impr=85 cur=13122 best=13106 T=6.44 evals=698206119
+[n700m12E] t=30.0 iter=21808 acc=13585 impr=87 cur=13108 best=13090 T=4.42 evals=795318090
+[n700m12E] t=35.0 iter=25735 acc=15946 impr=87 cur=13090 best=13090 T=3.04 evals=937133205
+[n700m12E] ILS done iter=29986 best=13090 (750.1 it/s) evals=1090503665 moves: empty=0 inRelocate=566 inSwap=24 relocate=10173 swap=19049 2opt*uv=43967 2opt*vu=39475 orOptHead=455 segSwap=9009 orOptTail=452
+FINAL n700m12E cost 13090 time 40.0

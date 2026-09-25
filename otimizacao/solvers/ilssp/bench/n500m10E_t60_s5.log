@@ -1,0 +1,19 @@
+instance ../../instances/n500m10E.txt n=500 m=10 time=60s seed=5 threads=1 sp=0 out=bench/n500m10E_t60_s5.txt
+greedy cost 71890
+  t=    0.0 best 40376
+  t=    0.6 best 19786
+  t=    1.2 best 19373
+  t=    1.9 best 19369
+  t=    3.0 best 19348
+  t=    3.6 best 19308
+  t=    4.2 best 18647
+  t=    6.2 best 18540
+  t=    6.9 best 18522
+  t=    7.4 best 18485
+  t=   14.0 best 18464
+  t=   15.7 best 18455
+  t=   31.9 best 18444
+  t=   32.8 best 18435
+round 1 [t=60]: ils 71890 -> 18435 |
+final 18435 | time 60.0s | threads 1 | iters 209088 (3485/s) acc 159961 | evals 1772684054 (29.54M/s) | pool 0 | SP solves 0 improved 0 avg 0.00s max 0.00s maxcols 0
+wrote bench/n500m10E_t60_s5.txt cost 18435

@@ -1,0 +1,10 @@
+instance n700m12E n=700 m=12 start cost 13090 (../../pool/n700m12E/n700m12E_13090_window.txt) mode=window
+after LS: 13090
+sweep 1 delta 0 cost 13090
+[n700m12E] t=34.6 windows=48 improved=0 gain=0 optimal=43 timeouts=5 skipped=0 avgFree=29.3 avgStates=533 avgArcs=9119 mipTime=34.6s (0.720s/win)
+sweep 2 delta 0 cost 13090
+[n700m12E] t=70.9 windows=96 improved=0 gain=0 optimal=86 timeouts=10 skipped=0 avgFree=29.2 avgStates=525 avgArcs=8976 mipTime=70.8s (0.737s/win)
+sweep 3 delta 0 cost 13090
+[n700m12E] t=90.7 windows=112 improved=0 gain=0 optimal=100 timeouts=12 skipped=0 avgFree=29.4 avgStates=559 avgArcs=10176 mipTime=90.6s (0.809s/win)
+[n700m12E] t=90.7 windows=112 improved=0 gain=0 optimal=100 timeouts=12 skipped=0 avgFree=29.4 avgStates=559 avgArcs=10176 mipTime=90.6s (0.809s/win)
+FINAL n700m12E cost 13090 time 90.7

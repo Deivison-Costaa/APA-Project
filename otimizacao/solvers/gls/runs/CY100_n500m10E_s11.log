@@ -1,0 +1,15 @@
+instance n500m10E n=500 m=10  init=greedy cost=69151  (setup 0.02s)
+[t=0.0s] after initial LS: 35211 (evals 588191, moves 102)
+[tid=0] done: iters=575078 (1917/s) evals=18502624378 best=18435 (at 59.3s) assignHits=160271 flights/iter=38.4 moves/iter=5.27
+   LS: flights examined 22105239, pruned candidates 67432337
+   time: perturb 9.4s  LS 239.7s  assign+LS 50.2s
+   delta hist: <0 18647 | 0 347162 | 1-10 4139 | 11-50 11236 | 51-100 9524 | 101-500 81704 | >500 102666
+   relocP  evals=  8.89% applied=171976
+   crossP  evals= 33.25% applied=896037
+   2optP   evals=  5.74% applied=509677
+   relocS  evals=  9.08% applied=67971
+   crossS  evals= 34.37% applied=669600
+   2optS   evals=  5.74% applied=683024
+   intra   evals=  2.18% applied=30429
+   starts  evals=  0.03% applied=1513
+FINAL cost=18435 reference=18435 time=300.0s out=runs/CY100_n500m10E_s11.txt

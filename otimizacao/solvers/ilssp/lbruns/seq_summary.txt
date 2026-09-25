@@ -1,0 +1,6 @@
+n500m10E [0,1300) exit=0 ub=6266 LP=6266.000 Model status        : Optimal
+lbruns/run_seq.sh, linha 10: 400372 Abortado                   timeout 2700 stdbuf -oL -eL ./winlb $W/instances/$inst.txt $W/pool/$inst/$sol --window $a:$b --time 2400 --no-mip --verbose > $log 2>&1
+n500m10E [1300,3000) exit=134  
+n700m12E [0,1330) exit=0 ub=8240 LP=8114.000 Model status        : Optimal
+n700m12E [1330,2600) exit=0 ub=3824 LP=3824.000 Model status        : Optimal
+n700m12E [2600,3700) exit=0 ub=1026 LP=1026.000 Model status        : Optimal

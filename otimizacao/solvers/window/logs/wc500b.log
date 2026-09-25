@@ -1,0 +1,12 @@
+instance n500m10E n=500 m=10 start cost 65653 (greedy) mode=window
+after LS: 28974
+sweep 1 delta -5938 cost 23036
+[n500m10E] t=41.1 windows=52 improved=9 gain=5415 optimal=40 timeouts=12 skipped=0 avgFree=19.1 avgStates=645 avgArcs=8130 mipTime=41.0s (0.788s/win)
+sweep 2 delta -1297 cost 21739
+[n500m10E] t=72.4 windows=103 improved=15 gain=6712 optimal=82 timeouts=21 skipped=0 avgFree=19.3 avgStates=628 avgArcs=8087 mipTime=72.2s (0.701s/win)
+sweep 3 delta -1052 cost 20687
+[n500m10E] t=101.3 windows=154 improved=18 gain=7761 optimal=125 timeouts=29 skipped=0 avgFree=19.3 avgStates=600 avgArcs=7765 mipTime=101.1s (0.657s/win)
+sweep 4 delta 0 cost 20687
+[n500m10E] t=120.0 windows=194 improved=18 gain=7761 optimal=159 timeouts=35 skipped=0 avgFree=19.4 avgStates=587 avgArcs=7671 mipTime=119.9s (0.618s/win)
+[n500m10E] t=120.0 windows=194 improved=18 gain=7761 optimal=159 timeouts=35 skipped=0 avgFree=19.4 avgStates=587 avgArcs=7671 mipTime=119.9s (0.618s/win)
+FINAL n500m10E cost 20687 time 120.0
