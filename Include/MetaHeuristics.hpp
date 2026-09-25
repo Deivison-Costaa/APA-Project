@@ -2,56 +2,56 @@
 #define METAHEURISTICS_HPP
 
 #include "Instance.hpp"
-#include "GreedyAlgorithm.hpp"
-#include "VariableNeighborhoodDescent.hpp"
-#include <vector>
 #include <random>
-#include <string>
-#include <cstddef>
+#include <vector>
+
+struct IlsParameters
+{
+    int maxIter = 16;        // número de reinícios (construção GRASP + ILS)
+    int maxIterIls = -1;     // iterações sem melhora por reinício (-1: 10n se n < 150, senão n/2)
+    int maxStrength = 5;     // número máximo de movimentos aleatórios na perturbação
+    double timeLimit = 0.0;  // segundos (0: sem limite)
+    int threads = 0;         // 0: usa o padrão do OpenMP
+    unsigned seed = 0;
+    bool verbose = false;
+};
+
+struct LnsParameters
+{
+    int maxIterations = 1000;
+    int minDestroy = 10;     // voos removidos por iteração no início
+    int maxDestroy = 125;    // ao ultrapassar, reinicia a partir de uma nova solução GRASP
+    int destroyStep = 5;     // aumento da destruição após `patience` iterações sem melhora
+    int patience = 100;
+    double timeLimit = 0.0;
+    unsigned seed = 0;
+    bool verbose = false;
+};
 
 class MetaHeuristics
 {
 public:
-    // Construtor
-    MetaHeuristics(const Instance &inst);
+    explicit MetaHeuristics(const Instance &inst);
 
-    // Executa o ILS
-    std::vector<std::vector<int>> ils(int maxIterations, const std::vector<int> &perturbationStrengths, std::vector<std::vector<int>> &initialSolution, const std::string &outputBaseName);
+    // Iterated Local Search com RVND como busca local. Os reinícios são
+    // distribuídos entre as threads; cada thread tem seu próprio gerador.
+    Schedule ils(const IlsParameters &params, const Schedule &initialSolution = {});
 
-    // Executa o LNS
-    std::vector<std::vector<int>> lns(int maxIterations, int destructionSize, const std::string &initialSolutionPath, const std::string &outputBaseName);
+    // Large Neighborhood Search: remove voos aleatórios e os reinsere na
+    // posição mais barata, seguido de RVND.
+    Schedule lns(const LnsParameters &params, const Schedule &initialSolution = {});
 
-    std::vector<std::vector<int>> lns_parallel(int maxIterations,
-                                                           const std::vector<int> &kValues,
-                                                           std::vector<std::vector<int>> &initialSolution,
-                                                           const std::string &outputBaseName);
+private:
+    const Instance &instance;
 
-    private : const Instance &instance;
+    void perturb(Schedule &solution, int strength, std::mt19937 &gen) const;
 
-    // Perturba a solução no ILS
-    void perturb(const std::vector<std::vector<int>> &solution, int perturbationStrength, std::mt19937 &gen, std::vector<std::vector<int>> &perturbedSolution);
+    // Movimentos aleatórios usados na perturbação; retornam false se não se aplicam
+    bool doubleBridgeIntra(Schedule &solution, std::mt19937 &gen) const;
+    bool swapSegmentsInter(Schedule &solution, std::mt19937 &gen) const;
+    bool relocateSegmentInter(Schedule &solution, std::mt19937 &gen) const;
 
-    // Valida o número de threads para o ILS
-    std::size_t validateNumThreads(const std::vector<int> &strengths) const;
-
-    // Remove voos no LNS
-    std::vector<int> destroy(std::vector<std::vector<int>> &solution, int k);
-
-    // Reinseri voos no LNS
-    std::vector<std::vector<int>> repair(const std::vector<std::vector<int>> &partialSolution, const std::vector<int> &removedFlights);
-
-    // Calcula custo com inserção temporária no LNS
-    int calculateCostWithInsertion(std::vector<int> &runway, int flight, size_t pos);
-
-    void swapWithinRunway(std::vector<std::vector<int>> &sol, std::mt19937 &gen);
-    void moveWithinRunway(std::vector<std::vector<int>> &sol, std::mt19937 &gen);
-    void removeAndReinsert(std::vector<std::vector<int>> &sol, std::mt19937 &gen);
-    void swapBetweenRunways(std::vector<std::vector<int>> &sol, std::mt19937 &gen);
-
-    std::vector<std::vector<int>> repair_grasp(const std::vector<std::vector<int>> &part,
-                                                               const std::vector<int> &rem,
-                                                               double alpha);
+    std::vector<int> destroy(Schedule &solution, int k, std::mt19937 &gen) const;
 };
-
 
 #endif // METAHEURISTICS_HPP

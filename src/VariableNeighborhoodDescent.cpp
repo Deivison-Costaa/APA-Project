@@ -1,339 +1,419 @@
 #include "VariableNeighborhoodDescent.hpp"
-#include "Instance.hpp"
 
-#include <vector>
+#include <algorithm>
+#include <limits>
 #include <utility>
-#include <algorithm> // Para std::sort
+#include <vector>
 
-std::pair<bool, int> VariableNeighborhoodDescent::swapWithinRunway(
-    const Instance &instance,
-    std::vector<std::vector<int>> &solution,
-    int currentBestCost)
+namespace
 {
-    int bestCost = currentBestCost;
-    bool improvementFound = false;
-    unsigned int bestRunway = 0, bestI = 0, bestJ = 0;
+    constexpr long long INF = std::numeric_limits<long long>::max();
+}
 
-    for (unsigned int r = 0; r < solution.size(); ++r)
+VariableNeighborhoodDescent::VariableNeighborhoodDescent(const Instance &inst, unsigned seed)
+    : instance(inst), gen(seed) {}
+
+void VariableNeighborhoodDescent::load(Schedule &s)
+{
+    solution = &s;
+    states.resize(s.size());
+    cost = 0;
+    for (int r = 0; r < static_cast<int>(s.size()); ++r)
     {
-        auto &runway = solution[r];
-        if (runway.size() < 2)
-            continue;
+        rebuild(r);
+        cost += states[r].total;
+    }
+}
 
-        auto [startTimes, accumulatedCosts] = instance.calculateRunwayDetails(runway);
+void VariableNeighborhoodDescent::rebuild(int r)
+{
+    const auto &runway = (*solution)[r];
+    auto &st = states[r];
+    const int len = static_cast<int>(runway.size());
+    st.start.resize(len);
+    st.prefix.resize(len);
 
-        for (unsigned int i = 0; i < runway.size(); ++i)
+    int prevEnd = 0, prev = -1;
+    long long acc = 0;
+    for (int k = 0; k < len; ++k)
+    {
+        const int f = runway[k];
+        const int release = instance.landingTakeoffTime[f];
+        const int s = (prev < 0) ? release : std::max(release, prevEnd + instance.separation(prev, f));
+        acc += static_cast<long long>(s - release) * instance.penalties[f];
+        st.start[k] = s;
+        st.prefix[k] = acc;
+        prevEnd = s + instance.waitingTime[f];
+        prev = f;
+    }
+    st.total = acc;
+}
+
+long long VariableNeighborhoodDescent::evaluate(int r, int prefixLength, const Piece *pieces, int numPieces,
+                                                int tailStart, long long limit) const
+{
+    const auto &runway = (*solution)[r];
+    const auto &st = states[r];
+    const auto &release = instance.landingTakeoffTime;
+    const auto &duration = instance.waitingTime;
+    const auto &penalty = instance.penalties;
+
+    int prev = -1, prevEnd = 0;
+    long long c = 0;
+    if (prefixLength > 0)
+    {
+        prev = runway[prefixLength - 1];
+        prevEnd = st.start[prefixLength - 1] + duration[prev];
+        c = st.prefix[prefixLength - 1];
+        if (c >= limit)
+            return limit;
+    }
+
+    // Trechos que mudaram de posição
+    for (int p = 0; p < numPieces; ++p)
+    {
+        const int *flights = pieces[p].flights;
+        for (int k = 0; k < pieces[p].length; ++k)
         {
-            for (unsigned int j = i + 1; j < runway.size(); ++j)
+            const int f = flights[k];
+            const int s = (prev < 0) ? release[f] : std::max(release[f], prevEnd + instance.separation(prev, f));
+            c += static_cast<long long>(s - release[f]) * penalty[f];
+            if (c >= limit)
+                return limit;
+            prevEnd = s + duration[f];
+            prev = f;
+        }
+    }
+
+    // Sufixo original da pista
+    const int len = static_cast<int>(runway.size());
+    for (int q = tailStart; q < len; ++q)
+    {
+        const int f = runway[q];
+        const int s = (prev < 0) ? release[f] : std::max(release[f], prevEnd + instance.separation(prev, f));
+
+        // Mesmo antecessor e mesmo horário de início: daqui em diante nada muda
+        const int originalPrev = (q > 0) ? runway[q - 1] : -1;
+        if (prev == originalPrev && s == st.start[q])
+            return std::min(limit, c + st.total - prefixCost(r, q));
+
+        c += static_cast<long long>(s - release[f]) * penalty[f];
+        if (c >= limit)
+            return limit;
+        prevEnd = s + duration[f];
+        prev = f;
+    }
+    return c;
+}
+
+bool VariableNeighborhoodDescent::swapIntra()
+{
+    long long bestDelta = 0;
+    int bestR = -1, bestI = 0, bestJ = 0;
+
+    for (int r = 0; r < static_cast<int>(solution->size()); ++r)
+    {
+        const auto &runway = (*solution)[r];
+        const int len = static_cast<int>(runway.size());
+        const long long total = states[r].total;
+
+        for (int i = 0; i + 1 < len; ++i)
+        {
+            // Nenhuma troca a partir da posição i pode ficar abaixo do custo do prefixo
+            if (prefixCost(r, i) >= total + bestDelta)
+                break;
+
+            for (int j = i + 1; j < len; ++j)
             {
-                int impactPos = std::min(i, j);
-                int costBefore = (impactPos > 0) ? accumulatedCosts[impactPos - 1] : 0;
-
-                std::vector<int> newRunway = runway;
-                std::swap(newRunway[i], newRunway[j]);
-
-                int prevEndTimeForPartial = (impactPos > 0) ? startTimes[impactPos - 1] + instance.waitingTime[newRunway[impactPos - 1]] : 0;
-                int prevFlightForPartial = (impactPos > 0) ? newRunway[impactPos - 1] : -1;
-                int costAfter = instance.calculatePartialRunwayCost(newRunway, impactPos, prevEndTimeForPartial, prevFlightForPartial);
-
-                int newCostR = costBefore + costAfter;
-                int deltaR = newCostR - accumulatedCosts.back();
-                int newCost = currentBestCost + deltaR;
-
-                if (newCost < bestCost)
+                const Piece pieces[3] = {{&runway[j], 1}, {runway.data() + i + 1, j - i - 1}, {&runway[i], 1}};
+                const long long limit = total + bestDelta;
+                const long long c = evaluate(r, i, pieces, 3, j + 1, limit);
+                if (c < limit)
                 {
-                    bestCost = newCost;
-                    improvementFound = true;
-                    bestRunway = r;
-                    bestI = i;
-                    bestJ = j;
+                    bestDelta = c - total;
+                    bestR = r, bestI = i, bestJ = j;
                 }
             }
         }
     }
 
-    if (improvementFound)
-    {
-        std::swap(solution[bestRunway][bestI], solution[bestRunway][bestJ]);
-    }
+    if (bestR < 0)
+        return false;
 
-    return {improvementFound, bestCost};
+    std::swap((*solution)[bestR][bestI], (*solution)[bestR][bestJ]);
+    rebuild(bestR);
+    cost += bestDelta;
+    return true;
 }
 
-std::pair<bool, int> VariableNeighborhoodDescent::swapBetweenRunways(
-    const Instance &instance,
-    std::vector<std::vector<int>> &solution,
-    int currentBestCost)
+bool VariableNeighborhoodDescent::swapInter()
 {
-    int bestCost = currentBestCost;
-    bool improvementFound = false;
-    unsigned int bestR1 = 0, bestI = 0, bestR2 = 0, bestJ = 0;
+    long long bestDelta = 0;
+    int bestR1 = -1, bestI = 0, bestR2 = 0, bestJ = 0;
+    const int m = static_cast<int>(solution->size());
 
-    for (unsigned int r1 = 0; r1 < solution.size(); ++r1)
+    for (int r1 = 0; r1 < m; ++r1)
     {
-        auto &runway1 = solution[r1];
-        auto [startTimes1, accumulatedCosts1] = instance.calculateRunwayDetails(runway1);
-
-        for (unsigned int r2 = r1 + 1; r2 < solution.size(); ++r2)
+        const auto &a = (*solution)[r1];
+        for (int r2 = r1 + 1; r2 < m; ++r2)
         {
-            auto &runway2 = solution[r2];
-            auto [startTimes2, accumulatedCosts2] = instance.calculateRunwayDetails(runway2);
+            const auto &b = (*solution)[r2];
+            const long long totalAB = states[r1].total + states[r2].total;
 
-            for (unsigned int i = 0; i < runway1.size(); ++i)
+            for (int i = 0; i < static_cast<int>(a.size()); ++i)
             {
-                for (unsigned int j = 0; j < runway2.size(); ++j)
+                const long long prefixA = prefixCost(r1, i);
+                if (prefixA >= totalAB + bestDelta)
+                    break;
+
+                const Piece intoB{&a[i], 1};
+                for (int j = 0; j < static_cast<int>(b.size()); ++j)
                 {
-                    int impactPos1 = i;
-                    int impactPos2 = j;
+                    const long long bound = totalAB + bestDelta;
+                    const long long prefixB = prefixCost(r2, j);
+                    if (prefixA + prefixB >= bound)
+                        break;
 
-                    int costBefore1 = (impactPos1 > 0) ? accumulatedCosts1[impactPos1 - 1] : 0;
-                    int costBefore2 = (impactPos2 > 0) ? accumulatedCosts2[impactPos2 - 1] : 0;
+                    const Piece intoA{&b[j], 1};
+                    const long long limitA = bound - prefixB;
+                    const long long costA = evaluate(r1, i, &intoA, 1, i + 1, limitA);
+                    if (costA >= limitA)
+                        continue;
 
-                    std::vector<int> newRunway1 = runway1;
-                    std::vector<int> newRunway2 = runway2;
-                    std::swap(newRunway1[i], newRunway2[j]);
+                    const long long limitB = bound - costA;
+                    const long long costB = evaluate(r2, j, &intoB, 1, j + 1, limitB);
+                    if (costB >= limitB)
+                        continue;
 
-                    int prevEndTimeForPartial1 = (impactPos1 > 0) ? startTimes1[impactPos1 - 1] + instance.waitingTime[newRunway1[impactPos1 - 1]] : 0;
-                    int prevFlightForPartial1 = (impactPos1 > 0) ? newRunway1[impactPos1 - 1] : -1;
-                    int costAfter1 = instance.calculatePartialRunwayCost(newRunway1, impactPos1, prevEndTimeForPartial1, prevFlightForPartial1);
+                    bestDelta = costA + costB - totalAB;
+                    bestR1 = r1, bestI = i, bestR2 = r2, bestJ = j;
+                }
+            }
+        }
+    }
 
-                    int prevEndTimeForPartial2 = (impactPos2 > 0) ? startTimes2[impactPos2 - 1] + instance.waitingTime[newRunway2[impactPos2 - 1]] : 0;
-                    int prevFlightForPartial2 = (impactPos2 > 0) ? newRunway2[impactPos2 - 1] : -1;
-                    int costAfter2 = instance.calculatePartialRunwayCost(newRunway2, impactPos2, prevEndTimeForPartial2, prevFlightForPartial2);
+    if (bestR1 < 0)
+        return false;
 
-                    int newCostR1 = costBefore1 + costAfter1;
-                    int newCostR2 = costBefore2 + costAfter2;
-                    int deltaR1 = newCostR1 - accumulatedCosts1.back();
-                    int deltaR2 = newCostR2 - accumulatedCosts2.back();
-                    int newCost = currentBestCost + deltaR1 + deltaR2;
+    std::swap((*solution)[bestR1][bestI], (*solution)[bestR2][bestJ]);
+    rebuild(bestR1);
+    rebuild(bestR2);
+    cost += bestDelta;
+    return true;
+}
 
-                    if (newCost < bestCost)
+bool VariableNeighborhoodDescent::orOptIntra(int k)
+{
+    long long bestDelta = 0;
+    int bestR = -1, bestI = 0, bestP = 0;
+
+    for (int r = 0; r < static_cast<int>(solution->size()); ++r)
+    {
+        const auto &runway = (*solution)[r];
+        const int len = static_cast<int>(runway.size());
+        const long long total = states[r].total;
+        if (len <= k)
+            continue;
+
+        for (int i = 0; i + k <= len; ++i)
+        {
+            const Piece block{runway.data() + i, k};
+
+            // Bloco movido para antes da posição p < i
+            for (int p = 0; p < i; ++p)
+            {
+                const long long limit = total + bestDelta;
+                if (prefixCost(r, p) >= limit)
+                    break;
+                const Piece pieces[2] = {block, {runway.data() + p, i - p}};
+                const long long c = evaluate(r, p, pieces, 2, i + k, limit);
+                if (c < limit)
+                {
+                    bestDelta = c - total;
+                    bestR = r, bestI = i, bestP = p;
+                }
+            }
+
+            // Bloco movido para antes da posição p > i + k (p == len: fim da pista)
+            if (prefixCost(r, i) >= total + bestDelta)
+                continue;
+            for (int p = i + k + 1; p <= len; ++p)
+            {
+                const long long limit = total + bestDelta;
+                const Piece pieces[2] = {{runway.data() + i + k, p - i - k}, block};
+                const long long c = evaluate(r, i, pieces, 2, p, limit);
+                if (c < limit)
+                {
+                    bestDelta = c - total;
+                    bestR = r, bestI = i, bestP = p;
+                }
+            }
+        }
+    }
+
+    if (bestR < 0)
+        return false;
+
+    auto &runway = (*solution)[bestR];
+    std::vector<int> block(runway.begin() + bestI, runway.begin() + bestI + k);
+    runway.erase(runway.begin() + bestI, runway.begin() + bestI + k);
+    const int insertAt = (bestP < bestI) ? bestP : bestP - k;
+    runway.insert(runway.begin() + insertAt, block.begin(), block.end());
+    rebuild(bestR);
+    cost += bestDelta;
+    return true;
+}
+
+bool VariableNeighborhoodDescent::orOptInter(int k)
+{
+    long long bestDelta = 0;
+    int bestSrc = -1, bestI = 0, bestTgt = 0, bestP = 0;
+    const int m = static_cast<int>(solution->size());
+
+    for (int src = 0; src < m; ++src)
+    {
+        const auto &source = (*solution)[src];
+        const int lenS = static_cast<int>(source.size());
+
+        for (int i = 0; i + k <= lenS; ++i)
+        {
+            // Custo da pista de origem sem o bloco: calculado uma única vez por bloco
+            const long long costSource = evaluate(src, i, nullptr, 0, i + k, INF);
+            const Piece block{source.data() + i, k};
+
+            for (int tgt = 0; tgt < m; ++tgt)
+            {
+                if (tgt == src)
+                    continue;
+                const long long totalST = states[src].total + states[tgt].total;
+                const int lenT = static_cast<int>((*solution)[tgt].size());
+
+                for (int p = 0; p <= lenT; ++p)
+                {
+                    const long long bound = totalST + bestDelta - costSource;
+                    if (prefixCost(tgt, p) >= bound)
+                        break;
+                    const long long c = evaluate(tgt, p, &block, 1, p, bound);
+                    if (c < bound)
                     {
-                        bestCost = newCost;
-                        improvementFound = true;
-                        bestR1 = r1;
-                        bestI = i;
-                        bestR2 = r2;
-                        bestJ = j;
+                        bestDelta = costSource + c - totalST;
+                        bestSrc = src, bestI = i, bestTgt = tgt, bestP = p;
                     }
                 }
             }
         }
     }
 
-    if (improvementFound)
-    {
-        std::swap(solution[bestR1][bestI], solution[bestR2][bestJ]);
-    }
+    if (bestSrc < 0)
+        return false;
 
-    return {improvementFound, bestCost};
+    auto &source = (*solution)[bestSrc];
+    auto &target = (*solution)[bestTgt];
+    std::vector<int> block(source.begin() + bestI, source.begin() + bestI + k);
+    source.erase(source.begin() + bestI, source.begin() + bestI + k);
+    target.insert(target.begin() + bestP, block.begin(), block.end());
+    rebuild(bestSrc);
+    rebuild(bestTgt);
+    cost += bestDelta;
+    return true;
 }
 
-std::pair<bool, int> VariableNeighborhoodDescent::reinsertWithinRunway(
-    const Instance &instance,
-    std::vector<std::vector<int>> &solution,
-    int currentBestCost)
+std::vector<VariableNeighborhoodDescent::Neighborhood> VariableNeighborhoodDescent::availableNeighborhoods() const
 {
-    int bestCost = currentBestCost;
-    bool improvementFound = false;
-    unsigned int bestR = 0, bestFrom = 0, bestTo = 0;
+    std::vector<Neighborhood> list = {SwapIntra, OrOpt1Intra, OrOpt2Intra, OrOpt3Intra};
+    if (solution->size() > 1)
+        list.insert(list.end(), {SwapInter, OrOpt1Inter, OrOpt2Inter, OrOpt3Inter});
+    return list;
+}
 
-    for (unsigned int r = 0; r < solution.size(); ++r)
+bool VariableNeighborhoodDescent::explore(Neighborhood n)
+{
+    switch (n)
     {
-        auto &runway = solution[r];
-        if (runway.size() < 2)
-            continue;
+    case SwapIntra:
+        return swapIntra();
+    case SwapInter:
+        return swapInter();
+    case OrOpt1Intra:
+        return orOptIntra(1);
+    case OrOpt2Intra:
+        return orOptIntra(2);
+    case OrOpt3Intra:
+        return orOptIntra(3);
+    case OrOpt1Inter:
+        return orOptInter(1);
+    case OrOpt2Inter:
+        return orOptInter(2);
+    case OrOpt3Inter:
+        return orOptInter(3);
+    default:
+        return false;
+    }
+}
 
-        auto [startTimes, accumulatedCosts] = instance.calculateRunwayDetails(runway);
+long long VariableNeighborhoodDescent::vnd(Schedule &s)
+{
+    load(s);
+    const auto neighborhoods = availableNeighborhoods();
 
-        for (unsigned int i = 0; i < runway.size(); ++i)
+    std::size_t k = 0;
+    while (k < neighborhoods.size())
+    {
+        if (explore(neighborhoods[k]))
+            k = 0;
+        else
+            ++k;
+    }
+    return cost;
+}
+
+long long VariableNeighborhoodDescent::rvnd(Schedule &s)
+{
+    load(s);
+    const auto all = availableNeighborhoods();
+    auto list = all;
+
+    while (!list.empty())
+    {
+        std::uniform_int_distribution<std::size_t> dist(0, list.size() - 1);
+        const std::size_t idx = dist(gen);
+        if (explore(list[idx]))
+            list = all;
+        else
+            list.erase(list.begin() + idx);
+    }
+    return cost;
+}
+
+void VariableNeighborhoodDescent::insertCheapest(Schedule &s, const std::vector<int> &flights)
+{
+    load(s);
+    for (int f : flights)
+    {
+        const Piece piece{&f, 1};
+        long long bestIncrease = INF;
+        int bestR = 0, bestP = 0;
+
+        for (int r = 0; r < static_cast<int>(s.size()); ++r)
         {
-            int flight = runway[i];
-            std::vector<int> tempRunway = runway;
-            tempRunway.erase(tempRunway.begin() + i);
-
-            for (unsigned int pos = 0; pos <= tempRunway.size(); ++pos)
+            const long long total = states[r].total;
+            const int len = static_cast<int>(s[r].size());
+            for (int p = 0; p <= len; ++p)
             {
-                std::vector<int> newRunway = tempRunway;
-                newRunway.insert(newRunway.begin() + pos, flight);
-
-                int impactPos = std::min(i, pos);
-                int costBefore = (impactPos > 0) ? accumulatedCosts[impactPos - 1] : 0;
-
-                int prevEndTimeForPartial = (impactPos > 0) ? startTimes[impactPos - 1] + instance.waitingTime[newRunway[impactPos - 1]] : 0;
-                int prevFlightForPartial = (impactPos > 0) ? newRunway[impactPos - 1] : -1;
-                int costAfter = instance.calculatePartialRunwayCost(newRunway, impactPos, prevEndTimeForPartial, prevFlightForPartial);
-
-                int newCostR = costBefore + costAfter;
-                int deltaR = newCostR - accumulatedCosts.back();
-                int newCost = currentBestCost + deltaR;
-
-                if (newCost < bestCost)
+                const long long limit = (bestIncrease == INF) ? INF : total + bestIncrease;
+                if (prefixCost(r, p) >= limit)
+                    break;
+                const long long c = evaluate(r, p, &piece, 1, p, limit);
+                if (c < limit)
                 {
-                    bestCost = newCost;
-                    improvementFound = true;
-                    bestR = r;
-                    bestFrom = i;
-                    bestTo = pos;
+                    bestIncrease = c - total;
+                    bestR = r, bestP = p;
                 }
             }
         }
-    }
 
-    if (improvementFound)
-    {
-        int flight = solution[bestR][bestFrom];
-        solution[bestR].erase(solution[bestR].begin() + bestFrom);
-        solution[bestR].insert(solution[bestR].begin() + bestTo, flight);
-    }
-
-    return {improvementFound, bestCost};
-}
-
-std::pair<bool, int> VariableNeighborhoodDescent::reinsertBetweenRunways(
-    const Instance &instance,
-    std::vector<std::vector<int>> &solution,
-    int currentBestCost)
-{
-    int bestCost = currentBestCost; // Custo atual da solução
-    bool improvementFound = false;  // Indica se houve melhoria
-    unsigned int bestRSource = 0, bestI = 0, bestRTarget = 0, bestPos = 0;
-    int bestFlight = -1; // Armazena o voo e posições ótimas
-
-    // Iterar sobre todas as pistas de origem
-    for (unsigned int rSource = 0; rSource < solution.size(); ++rSource)
-    {
-        auto &runwaySource = solution[rSource];
-        if (runwaySource.empty())
-            continue; // Pular pistas vazias
-
-        // Calcular detalhes da pista de origem uma vez
-        auto [startTimesSource, accumulatedCostsSource] = instance.calculateRunwayDetails(runwaySource);
-
-        // Testar a remoção de cada voo da pista de origem
-        for (unsigned int i = 0; i < runwaySource.size(); ++i)
-        {
-            int flight = runwaySource[i];
-            std::vector<int> tempRunwaySource = runwaySource;
-            tempRunwaySource.erase(tempRunwaySource.begin() + i);
-
-            // Calcular custo após remoção usando cálculo parcial
-            int costBeforeSource = (i > 0) ? accumulatedCostsSource[i - 1] : 0;
-            int prevEndTimeSource = (i > 0) ? startTimesSource[i - 1] + instance.waitingTime[tempRunwaySource[i - 1]] : 0;
-            int prevFlightSource = (i > 0) ? tempRunwaySource[i - 1] : -1;
-            int costAfterSource = instance.calculatePartialRunwayCost(tempRunwaySource, i, prevEndTimeSource, prevFlightSource);
-            int newCostSource = costBeforeSource + costAfterSource;
-            int deltaSource = newCostSource - accumulatedCostsSource.back();
-
-            // Iterar sobre todas as pistas de destino
-            for (unsigned int rTarget = 0; rTarget < solution.size(); ++rTarget)
-            {
-                if (rTarget == rSource)
-                    continue; // Não inserir na mesma pista
-                auto &runwayTarget = solution[rTarget];
-
-                // Calcular detalhes da pista de destino uma vez
-                auto [startTimesTarget, accumulatedCostsTarget] = instance.calculateRunwayDetails(runwayTarget);
-
-                // Testar todas as posições de inserção na pista de destino
-                for (unsigned int pos = 0; pos <= runwayTarget.size(); ++pos)
-                {
-                    std::vector<int> newRunwayTarget = runwayTarget;
-                    newRunwayTarget.insert(newRunwayTarget.begin() + pos, flight);
-
-                    // Calcular custo após inserção usando cálculo parcial
-                    int costBeforeTarget = (pos > 0) ? accumulatedCostsTarget[pos - 1] : 0;
-                    int prevEndTimeTarget = (pos > 0) ? startTimesTarget[pos - 1] + instance.waitingTime[newRunwayTarget[pos - 1]] : 0;
-                    int prevFlightTarget = (pos > 0) ? newRunwayTarget[pos - 1] : -1;
-                    int costAfterTarget = instance.calculatePartialRunwayCost(newRunwayTarget, pos, prevEndTimeTarget, prevFlightTarget);
-                    int newCostTarget = costBeforeTarget + costAfterTarget;
-                    int deltaTarget = newCostTarget - (runwayTarget.empty() ? 0 : accumulatedCostsTarget.back());
-
-                    // Calcular o novo custo total
-                    int newCost = currentBestCost + deltaSource + deltaTarget;
-
-                    // Atualizar se encontrar uma solução melhor
-                    if (newCost < bestCost)
-                    {
-                        bestCost = newCost;
-                        improvementFound = true;
-                        bestRSource = rSource;
-                        bestI = i;
-                        bestRTarget = rTarget;
-                        bestPos = pos;
-                        bestFlight = flight;
-                    }
-                }
-            }
-        }
-    }
-
-    // Aplicar a melhor mudança encontrada
-    if (improvementFound)
-    {
-        solution[bestRSource].erase(solution[bestRSource].begin() + bestI);
-        solution[bestRTarget].insert(solution[bestRTarget].begin() + bestPos, bestFlight);
-    }
-
-    return {improvementFound, bestCost};
-}
-
-void VariableNeighborhoodDescent::vnd(
-    const Instance &instance,
-    std::vector<std::vector<int>> &initialSolution)
-{
-    // Custo inicial da solução
-    int currentCost = instance.calculateTotalCost(initialSolution);
-    bool improved = true;
-
-    // Contadores de sucesso para cada vizinhança (4 vizinhanças, inicializadas em 0)
-    std::vector<int> successCounts(4, 0);
-
-    // Enquanto houver melhorias
-    while (improved)
-    {
-        improved = false;
-
-        // Ordem das vizinhanças (1 a 4)
-        std::vector<int> neighborhoodOrder = {1, 2, 3, 4};
-        // Ordenar com base no sucesso (decrescente)
-        std::sort(neighborhoodOrder.begin(), neighborhoodOrder.end(),
-                  [&successCounts](int a, int b)
-                  {
-                      return successCounts[a - 1] > successCounts[b - 1];
-                  });
-
-        // Tentar cada vizinhança na ordem definida
-        for (int neighborhood : neighborhoodOrder)
-        {
-            std::pair<bool, int> result; // {houve melhoria?, novo custo}
-            switch (neighborhood)
-            {
-            case 1:
-                result = swapWithinRunway(instance, initialSolution, currentCost);
-                break;
-            case 2:
-                result = swapBetweenRunways(instance, initialSolution, currentCost);
-                break;
-            case 3:
-                result = reinsertWithinRunway(instance, initialSolution, currentCost);
-                break;
-            case 4:
-                result = reinsertBetweenRunways(instance, initialSolution, currentCost);
-                break;
-            default:
-                result = {false, currentCost}; // Caso inválido
-                break;
-            }
-
-            // Se houve melhoria
-            if (result.first)
-            {
-                currentCost = result.second;       // Atualizar o custo
-                improved = true;                   // Marcar que houve melhoria
-                successCounts[neighborhood - 1]++; // Incrementar contador de sucesso
-                break;                             // Reiniciar com a vizinhança mais bem-sucedida
-            }
-        }
+        s[bestR].insert(s[bestR].begin() + bestP, f);
+        rebuild(bestR);
+        cost += bestIncrease;
     }
 }

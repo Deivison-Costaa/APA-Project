@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+
+# Projeto
+apa_project
+*.d
