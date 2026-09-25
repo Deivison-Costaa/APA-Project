@@ -1,499 +1,312 @@
 #include "MetaHeuristics.hpp"
-#include "VariableNeighborhoodDescent.hpp"
 #include "GreedyAlgorithm.hpp"
-#include <climits>
-#include <omp.h>
-#include <random>
-#include <iostream>
-#include <algorithm>
-#include <vector>
-#include <string>
-#include <numeric>
-#include <limits>
-#include <utility>
-#include <stdexcept>
-#include <functional>
+#include "VariableNeighborhoodDescent.hpp"
 
-// Construtor
+#include <omp.h>
+#include <algorithm>
+#include <chrono>
+#include <iostream>
+#include <limits>
+#include <numeric>
+#include <vector>
+
+namespace
+{
+    using Clock = std::chrono::steady_clock;
+
+    class Timer
+    {
+    public:
+        explicit Timer(double limitSeconds) : begin(Clock::now()), limit(limitSeconds) {}
+        double elapsed() const { return std::chrono::duration<double>(Clock::now() - begin).count(); }
+        bool expired() const { return limit > 0.0 && elapsed() >= limit; }
+
+    private:
+        Clock::time_point begin;
+        double limit;
+    };
+
+    unsigned resolveSeed(unsigned seed)
+    {
+        return seed != 0 ? seed : std::random_device{}();
+    }
+
+    int randomInt(std::mt19937 &gen, int lo, int hi)
+    {
+        return std::uniform_int_distribution<int>(lo, hi)(gen);
+    }
+
+    // Tamanho máximo de um segmento da perturbação: ceil(|pista| / 10), como no double bridge
+    int maxSegment(int length)
+    {
+        return std::max(1, (length + 9) / 10);
+    }
+
+    // Índices das pistas que satisfazem `pred`
+    template <typename Pred>
+    std::vector<int> runwaysWhere(const Schedule &solution, Pred pred)
+    {
+        std::vector<int> result;
+        for (int r = 0; r < static_cast<int>(solution.size()); ++r)
+            if (pred(solution[r]))
+                result.push_back(r);
+        return result;
+    }
+}
+
 MetaHeuristics::MetaHeuristics(const Instance &inst) : instance(inst) {}
 
-// Iterated Local Search (ILS)
-std::vector<std::vector<int>> MetaHeuristics::ils(int maxIterations,
-                                                  const std::vector<int> &perturbationStrengths,
-                                                  std::vector<std::vector<int>> &initialSolution,
-                                                  const std::string &outputBaseName)
+// ---------------------------------------------------------------------------
+// Perturbação
+// ---------------------------------------------------------------------------
+
+bool MetaHeuristics::doubleBridgeIntra(Schedule &solution, std::mt19937 &gen) const
 {
-    size_t numThreads = validateNumThreads(perturbationStrengths);
-    if (numThreads == 0)
-        return {};
+    auto candidates = runwaysWhere(solution, [](const std::vector<int> &r)
+                                   { return r.size() >= 2; });
+    if (candidates.empty())
+        return false;
 
-    GreedyAlgorithm greedy;
-    VariableNeighborhoodDescent vnd;
+    auto &runway = solution[candidates[randomInt(gen, 0, static_cast<int>(candidates.size()) - 1)]];
+    const int len = static_cast<int>(runway.size());
+    const int maxSize = std::min(maxSegment(len), len / 2);
 
-    auto currentSolution = initialSolution.empty() && instance.numberOfFlights > 0
-                               ? greedy.graspNearestNeighbor(instance, 0.2)
-                               : initialSolution;
-    vnd.vnd(instance, currentSolution);
-    auto bestSolution = currentSolution;
-    int bestCost = instance.calculateTotalCost(bestSolution);
+    // Dois segmentos não sobrepostos trocam de posição
+    const int size1 = randomInt(gen, 1, maxSize);
+    const int size2 = randomInt(gen, 1, maxSize);
+    const int start1 = randomInt(gen, 0, len - size1 - size2);
+    const int start2 = randomInt(gen, start1 + size1, len - size2);
 
-    std::vector<std::vector<std::vector<int>>> solutionsPerThread(numThreads);
-    std::vector<int> costsPerThread(numThreads);
-    std::vector<std::mt19937> generators(numThreads);
-    std::random_device rd;
-    for (size_t i = 0; i < numThreads; ++i)
-        generators[i].seed(rd() + i);
+    std::vector<int> middle;
+    middle.reserve(start2 + size2 - start1);
+    middle.insert(middle.end(), runway.begin() + start2, runway.begin() + start2 + size2);
+    middle.insert(middle.end(), runway.begin() + start1 + size1, runway.begin() + start2);
+    middle.insert(middle.end(), runway.begin() + start1, runway.begin() + start1 + size1);
+    std::copy(middle.begin(), middle.end(), runway.begin() + start1);
+    return true;
+}
 
-    for (int iter = 0; iter < maxIterations; ++iter)
+bool MetaHeuristics::swapSegmentsInter(Schedule &solution, std::mt19937 &gen) const
+{
+    auto candidates = runwaysWhere(solution, [](const std::vector<int> &r)
+                                   { return !r.empty(); });
+    if (candidates.size() < 2)
+        return false;
+
+    std::shuffle(candidates.begin(), candidates.end(), gen);
+    auto &a = solution[candidates[0]];
+    auto &b = solution[candidates[1]];
+
+    const int sizeA = randomInt(gen, 1, maxSegment(static_cast<int>(a.size())));
+    const int sizeB = randomInt(gen, 1, maxSegment(static_cast<int>(b.size())));
+    const int startA = randomInt(gen, 0, static_cast<int>(a.size()) - sizeA);
+    const int startB = randomInt(gen, 0, static_cast<int>(b.size()) - sizeB);
+
+    std::vector<int> segA(a.begin() + startA, a.begin() + startA + sizeA);
+    std::vector<int> segB(b.begin() + startB, b.begin() + startB + sizeB);
+    a.erase(a.begin() + startA, a.begin() + startA + sizeA);
+    a.insert(a.begin() + startA, segB.begin(), segB.end());
+    b.erase(b.begin() + startB, b.begin() + startB + sizeB);
+    b.insert(b.begin() + startB, segA.begin(), segA.end());
+    return true;
+}
+
+bool MetaHeuristics::relocateSegmentInter(Schedule &solution, std::mt19937 &gen) const
+{
+    const int m = static_cast<int>(solution.size());
+    auto sources = runwaysWhere(solution, [](const std::vector<int> &r)
+                                { return !r.empty(); });
+    if (m < 2 || sources.empty())
+        return false;
+
+    const int src = sources[randomInt(gen, 0, static_cast<int>(sources.size()) - 1)];
+    int tgt = randomInt(gen, 0, m - 2);
+    if (tgt >= src)
+        ++tgt;
+
+    auto &source = solution[src];
+    auto &target = solution[tgt];
+    const int size = randomInt(gen, 1, maxSegment(static_cast<int>(source.size())));
+    const int from = randomInt(gen, 0, static_cast<int>(source.size()) - size);
+    const int to = randomInt(gen, 0, static_cast<int>(target.size()));
+
+    target.insert(target.begin() + to, source.begin() + from, source.begin() + from + size);
+    source.erase(source.begin() + from, source.begin() + from + size);
+    return true;
+}
+
+void MetaHeuristics::perturb(Schedule &solution, int strength, std::mt19937 &gen) const
+{
+    for (int s = 0; s < strength; ++s)
     {
-#pragma omp parallel num_threads(numThreads)
+        int order[3] = {0, 1, 2};
+        std::shuffle(order, order + 3, gen);
+        for (int move : order)
         {
-            int t = omp_get_thread_num();
-            perturb(bestSolution, perturbationStrengths[t], generators[t], solutionsPerThread[t]);
-            vnd.vnd(instance, solutionsPerThread[t]);
-            costsPerThread[t] = instance.calculateTotalCost(solutionsPerThread[t]);
-        }
-
-        int minCost = std::numeric_limits<int>::max();
-        int bestThread = 0;
-        for (size_t i = 0; i < numThreads; ++i)
-        {
-            if (costsPerThread[i] < minCost)
-            {
-                minCost = costsPerThread[i];
-                bestThread = i;
-            }
-        }
-
-        if (minCost < bestCost)
-        {
-            bestSolution = solutionsPerThread[bestThread];
-            bestCost = minCost;
-            std::cout << "Iter " << iter
-                      << ": novo melhor custo ILS = " << bestCost
-                      << " (thread " << bestThread << ")" << std::endl;
-            if(minCost < 18700)
-                instance.writeFlightList(outputBaseName, solutionsPerThread[bestThread]);
-        }else{
-            std::cout << "Iter: " << iter << " | best: " << bestCost << std::endl;
+            bool applied = (move == 0)   ? doubleBridgeIntra(solution, gen)
+                           : (move == 1) ? swapSegmentsInter(solution, gen)
+                                         : relocateSegmentInter(solution, gen);
+            if (applied)
+                break;
         }
     }
-
-    return bestSolution;
 }
 
-// Perturba solução
-void MetaHeuristics::perturb(const std::vector<std::vector<int>> &solution,
-                             int strength,
-                             std::mt19937 &gen,
-                             std::vector<std::vector<int>> &out)
+// ---------------------------------------------------------------------------
+// ILS
+// ---------------------------------------------------------------------------
+
+Schedule MetaHeuristics::ils(const IlsParameters &params, const Schedule &initialSolution)
 {
-    out = solution;
-    int R = instance.numberOfRunways;
-    if (R < 2)
-        return;
+    const int n = instance.numberOfFlights;
+    const int maxIterIls = params.maxIterIls >= 0 ? params.maxIterIls : (n >= 150 ? n / 2 : 10 * n);
+    const int maxStrength = std::max(1, params.maxStrength);
+    const int threads = params.threads > 0 ? params.threads : omp_get_max_threads();
+    const unsigned baseSeed = resolveSeed(params.seed);
+    const Timer timer(params.timeLimit);
 
-    std::vector<std::function<void(std::vector<std::vector<int>> &, std::mt19937 &)>> perturbations = {
-        [this](std::vector<std::vector<int>> &sol, std::mt19937 &g)
-        { swapBetweenRunways(sol, g); },
-        [this](std::vector<std::vector<int>> &sol, std::mt19937 &g)
-        { swapWithinRunway(sol, g); },
-        [this](std::vector<std::vector<int>> &sol, std::mt19937 &g)
-        { moveWithinRunway(sol, g); },
-        [this](std::vector<std::vector<int>> &sol, std::mt19937 &g)
-        { removeAndReinsert(sol, g); }};
+    Schedule bestOfAll;
+    long long bestOfAllCost = std::numeric_limits<long long>::max();
 
-    std::uniform_int_distribution<int> pertDist(0, perturbations.size() - 1);
-    int selectedPert = pertDist(gen);
-
-    for (int i = 0; i < strength; ++i)
+#pragma omp parallel num_threads(threads)
     {
-        perturbations[selectedPert](out, gen);
-    }
-}
+        std::mt19937 gen(baseSeed + 7919u * static_cast<unsigned>(omp_get_thread_num()));
+        VariableNeighborhoodDescent localSearch(instance, gen());
+        GreedyAlgorithm greedy;
+        std::uniform_real_distribution<double> alphaDist(0.0, 0.25);
 
-// Valida número de threads
-std::size_t MetaHeuristics::validateNumThreads(const std::vector<int> &strengths) const
-{
-    if (strengths.empty())
-        return 0;
-    size_t maxT = static_cast<size_t>(omp_get_max_threads());
-    size_t n = std::min(strengths.size(), maxT);
-    return n > 0 ? n : 0;
-}
-
-// Large Neighborhood Search (LNS)
-std::vector<std::vector<int>> MetaHeuristics::lns(int maxIterations,
-                                                  int k,
-                                                  const std::string &initialPath,
-                                                  const std::string &outputBaseName)
-{
-    GreedyAlgorithm greedy;
-    VariableNeighborhoodDescent vnd;
-
-    auto sol = initialPath.empty()
-                   ? greedy.graspNearestNeighbor(instance, 0.01)
-                   : instance.readSolution(initialPath);
-    int curCost = instance.calculateTotalCost(sol);
-    auto bestSol = sol;
-    int bestCost = curCost;
-
-    std::mt19937 gen(std::random_device{}());
-    int iterationsWithoutImprovement = 0;
-    int currentK = k;
-
-    for (int iter = 0; iter < maxIterations; ++iter)
-    {
-        auto s = sol;
-        auto removed = destroy(s, currentK);
-        if (removed.empty() && currentK > 0)
-            continue;
-        auto repaired = repair(s, removed);
-        vnd.vnd(instance, repaired);
-        int c = instance.calculateTotalCost(repaired);
-        if (c < curCost)
+#pragma omp for schedule(dynamic)
+        for (int iter = 0; iter < params.maxIter; ++iter)
         {
-            sol = repaired;
-            curCost = c;
-            iterationsWithoutImprovement = 0;
-            currentK = k;
-            if (c < bestCost)
+            if (timer.expired())
+                continue;
+
+            Schedule s = (iter == 0 && !initialSolution.empty())
+                             ? initialSolution
+                             : greedy.graspNearestNeighbor(instance, alphaDist(gen), gen);
+            long long cost = localSearch.rvnd(s);
+            Schedule best = s;
+            long long bestCost = cost;
+
+            int iterIls = 0;
+            while (iterIls < maxIterIls && !timer.expired())
             {
-                bestSol = sol;
-                bestCost = c;
-                std::cout << "Iter " << iter
-                          << ": novo melhor LNS = " << bestCost << std::endl;
-                std::cout << "Solução melhor encontrada, resetando k para " << k << std::endl;
-                currentK = k;
-                if(bestCost < 18528) instance.writeFlightList(outputBaseName, bestSol);
-            }
-        }
-        else
-        {
-            std::cout << "Iter: " << iter
-                      << ": | custo: " << c << " | melhor: " << bestCost << std::endl;
-            iterationsWithoutImprovement++;
-            if (iterationsWithoutImprovement >= 100)
-            {
-                if (currentK < 125) {
-                    currentK += 5;
-                    std::cout << "Aumentando nível de perturbação para " << currentK << std::endl;
-                }else{
-                    sol = greedy.graspNearestNeighbor(instance, 0.01);
-                    vnd.vnd(instance, sol);
-                    currentK = k;
+                // A força da perturbação cresce com a estagnação
+                const int strength = randomInt(gen, 1, 1 + (maxStrength - 1) * iterIls / std::max(1, maxIterIls));
+                s = best;
+                perturb(s, strength, gen);
+                cost = localSearch.rvnd(s);
+
+                if (cost < bestCost)
+                {
+                    best = s;
+                    bestCost = cost;
+                    iterIls = 0;
                 }
-                iterationsWithoutImprovement = 0;
+                else
+                {
+                    ++iterIls;
+                }
+            }
+
+#pragma omp critical(ils_best)
+            {
+                if (bestCost < bestOfAllCost)
+                {
+                    bestOfAllCost = bestCost;
+                    bestOfAll = best;
+                    if (params.verbose)
+                        std::cout << "  [ILS] reinicio " << iter << ": melhor custo = " << bestOfAllCost
+                                  << " (" << timer.elapsed() << " s)\n";
+                }
             }
         }
     }
-    if (!bestSol.empty())
-        instance.writeFlightList(outputBaseName, bestSol);
-    return bestSol;
+
+    return bestOfAll;
 }
 
-// Remove k voos
-std::vector<int> MetaHeuristics::destroy(std::vector<std::vector<int>> &sol, int k)
+// ---------------------------------------------------------------------------
+// LNS
+// ---------------------------------------------------------------------------
+
+std::vector<int> MetaHeuristics::destroy(Schedule &solution, int k, std::mt19937 &gen) const
 {
     std::vector<int> all;
-    for (auto &r : sol)
-        all.insert(all.end(), r.begin(), r.end());
-    if (all.empty() || k <= 0)
-        return {};
+    all.reserve(instance.numberOfFlights);
+    for (const auto &runway : solution)
+        all.insert(all.end(), runway.begin(), runway.end());
+
     k = std::min(k, static_cast<int>(all.size()));
-    std::shuffle(all.begin(), all.end(), std::mt19937(std::random_device{}()));
-    std::vector<int> rem(all.begin(), all.begin() + k);
-    std::vector<bool> mark(instance.numberOfFlights);
-    for (int f : rem)
-        if (f >= 0 && f < instance.numberOfFlights)
-            mark[f] = true;
-    for (auto &r : sol)
-        r.erase(std::remove_if(r.begin(), r.end(), [&](int f)
-                               { return f >= 0 && f < instance.numberOfFlights && mark[f]; }),
-                r.end());
-    return rem;
-}
-
-// Reinsere voos
-std::vector<std::vector<int>> MetaHeuristics::repair(const std::vector<std::vector<int>> &part,
-                                                     const std::vector<int> &rem)
-{
-    auto sol = part;
-    std::vector<int> cost(sol.size());
-    for (size_t i = 0; i < sol.size(); ++i)
-        cost[i] = instance.calculateRunwayCost(sol[i]);
-
-    for (int f : rem)
-    {
-        int bestInc = INT_MAX, br = -1, bp = -1, newC;
-        for (size_t r = 0; r < sol.size(); ++r)
-        {
-            for (size_t p = 0; p <= sol[r].size(); ++p)
-            {
-                std::vector<int> tmp = sol[r];
-                tmp.insert(tmp.begin() + p, f);
-                int c = instance.calculateRunwayCost(tmp);
-                int inc = c - cost[r];
-                if (inc < bestInc)
-                {
-                    bestInc = inc;
-                    br = r;
-                    bp = p;
-                    newC = c;
-                }
-            }
-        }
-        if (br >= 0)
-        {
-            sol[br].insert(sol[br].begin() + bp, f);
-            cost[br] = newC;
-        }
-    }
-    return sol;
-}
-
-// Custo com inserção temporária
-int MetaHeuristics::calculateCostWithInsertion(std::vector<int> &runway, int flight, size_t pos)
-{
-    if (pos > runway.size())
-        return INT_MAX;
-    auto it = runway.insert(runway.begin() + pos, flight);
-    int c = instance.calculateRunwayCost(runway);
-    runway.erase(it);
-    return c;
-}
-
-// Troca dentro da mesma pista
-void MetaHeuristics::swapWithinRunway(std::vector<std::vector<int>> &sol, std::mt19937 &gen)
-{
-    int R = instance.numberOfRunways;
-    std::uniform_int_distribution<int> dR(0, R - 1);
-    int r = dR(gen);
-    while (sol[r].size() < 2)
-    {
-        r = dR(gen);
-    }
-    std::uniform_int_distribution<int> dP1(0, sol[r].size() - 1);
-    std::uniform_int_distribution<int> dP2(0, sol[r].size() - 1);
-    int p1, p2;
-    do
-    {
-        p1 = dP1(gen);
-        p2 = dP2(gen);
-    } while (p1 == p2);
-    std::swap(sol[r][p1], sol[r][p2]);
-}
-
-// Movimento dentro da mesma pista
-void MetaHeuristics::moveWithinRunway(std::vector<std::vector<int>> &sol, std::mt19937 &gen)
-{
-    int R = instance.numberOfRunways;
-    std::uniform_int_distribution<int> dR(0, R - 1);
-    int r = dR(gen);
-    while (sol[r].empty())
-    {
-        r = dR(gen);
-    }
-    std::uniform_int_distribution<int> dP(0, sol[r].size() - 1);
-    int from = dP(gen);
-    std::uniform_int_distribution<int> dNewP(0, sol[r].size());
-    int to = dNewP(gen);
-    if (to == from)
-        return;
-    int flight = sol[r][from];
-    sol[r].erase(sol[r].begin() + from);
-    if (to > from)
-        to--;
-    sol[r].insert(sol[r].begin() + to, flight);
-}
-
-// Remoção e reinserção
-void MetaHeuristics::removeAndReinsert(std::vector<std::vector<int>> &sol, std::mt19937 &gen)
-{
-    int R = instance.numberOfRunways;
-    std::uniform_int_distribution<int> dR(0, R - 1);
-    int rSource = dR(gen);
-    while (sol[rSource].empty())
-    {
-        rSource = dR(gen);
-    }
-    std::uniform_int_distribution<int> dP(0, sol[rSource].size() - 1);
-    int from = dP(gen);
-    int flight = sol[rSource][from];
-    sol[rSource].erase(sol[rSource].begin() + from);
-
-    int rTarget = dR(gen);
-    while (rTarget == rSource && R > 1)
-    {
-        rTarget = dR(gen);
-    }
-    std::uniform_int_distribution<int> dNewP(0, sol[rTarget].size());
-    int to = dNewP(gen);
-    sol[rTarget].insert(sol[rTarget].begin() + to, flight);
-}
-
-// Swap between runways
-void MetaHeuristics::swapBetweenRunways(std::vector<std::vector<int>> &sol, std::mt19937 &gen)
-{
-    int R = instance.numberOfRunways;
-    std::uniform_int_distribution<int> dR(0, R - 1);
-    int r1 = dR(gen), r2 = dR(gen);
-    int cnt = 0;
-    // Tenta selecionar duas pistas diferentes e não vazias, até um limite de tentativas
-    while ((r1 == r2 || sol[r1].empty() || sol[r2].empty()) && cnt < R * 2)
-    {
-        r1 = dR(gen);
-        r2 = dR(gen);
-        ++cnt;
-    }
-    // Se não encontrar pistas válidas, retorna sem fazer nada
-    if (r1 == r2 || sol[r1].empty() || sol[r2].empty())
-        return;
-    // Escolhe posições aleatórias nas pistas selecionadas
-    std::uniform_int_distribution<int> dP1(0, sol[r1].size() - 1);
-    std::uniform_int_distribution<int> dP2(0, sol[r2].size() - 1);
-    int p1 = dP1(gen);
-    int p2 = dP2(gen);
-    // Realiza a troca dos voos
-    std::swap(sol[r1][p1], sol[r2][p2]);
-}
-
-std::vector<std::vector<int>> MetaHeuristics::lns_parallel(int maxIterations,
-                                                           const std::vector<int> &kValues,
-                                                           std::vector<std::vector<int>> &initialSolution,
-                                                           const std::string &outputBaseName)
-{
-    size_t numThreads = validateNumThreads(kValues);
-    if (numThreads == 0)
+    if (k <= 0)
         return {};
 
-    GreedyAlgorithm greedy;
-    VariableNeighborhoodDescent vnd;
+    // Fisher-Yates parcial: só os k primeiros precisam ser sorteados
+    for (int i = 0; i < k; ++i)
+        std::swap(all[i], all[randomInt(gen, i, static_cast<int>(all.size()) - 1)]);
+    all.resize(k);
 
-    // Inicializa a solução atual
-    auto currentSolution = initialSolution.empty() && instance.numberOfFlights > 0
-                               ? greedy.graspNearestNeighbor(instance, 0.2)
-                               : initialSolution;
-    vnd.vnd(instance, currentSolution);
-    auto bestSolution = currentSolution;
-    int bestCost = instance.calculateTotalCost(bestSolution);
-
-    // Estruturas para armazenar resultados por thread
-    std::vector<std::vector<std::vector<int>>> solutionsPerThread(numThreads);
-    std::vector<int> costsPerThread(numThreads);
-    std::vector<std::mt19937> generators(numThreads);
-    std::random_device rd;
-    for (size_t i = 0; i < numThreads; ++i)
-        generators[i].seed(rd() + i);
-
-    // Loop principal
-    for (int iter = 0; iter < maxIterations; ++iter)
-    {
-#pragma omp parallel num_threads(numThreads)
-        {
-            int t = omp_get_thread_num();
-            int k = kValues[t % kValues.size()];
-            auto s = currentSolution;
-            auto removed = destroy(s, k);       // Destruição
-            auto repaired = repair(s, removed); // Reparação
-            vnd.vnd(instance, repaired);        // Melhoria local
-            solutionsPerThread[t] = repaired;
-            costsPerThread[t] = instance.calculateTotalCost(repaired);
-        }
-
-        // Encontra a melhor solução entre as threads
-        int minCost = std::numeric_limits<int>::max();
-        int bestThread = 0;
-        for (size_t i = 0; i < numThreads; ++i)
-        {
-            if (costsPerThread[i] < minCost)
-            {
-                minCost = costsPerThread[i];
-                bestThread = i;
-            }
-        }
-
-        // Atualiza a melhor solução se houver melhoria
-        if (minCost < bestCost)
-        {
-            bestSolution = solutionsPerThread[bestThread];
-            bestCost = minCost;
-            std::cout << "Iter " << iter
-                      << ": novo melhor custo LNS = " << bestCost
-                      << " (thread " << bestThread << ")" << std::endl;
-            if (minCost < 13807)
-                instance.writeFlightList(outputBaseName, solutionsPerThread[bestThread]);
-        }
-        else
-        {
-            std::cout << "Iter: " << iter << " | best: " << bestCost << std::endl;
-        }
-    }
-
-    return bestSolution;
+    std::vector<char> removed(instance.numberOfFlights, 0);
+    for (int f : all)
+        removed[f] = 1;
+    for (auto &runway : solution)
+        runway.erase(std::remove_if(runway.begin(), runway.end(), [&](int f)
+                                    { return removed[f]; }),
+                     runway.end());
+    return all;
 }
 
-// Função repair adaptada com GRASP e RCL
-std::vector<std::vector<int>> MetaHeuristics::repair_grasp(const std::vector<std::vector<int>> &part,
-                                                           const std::vector<int> &rem,
-                                                           double alpha)
+Schedule MetaHeuristics::lns(const LnsParameters &params, const Schedule &initialSolution)
 {
-    auto sol = part;
-    std::vector<int> cost(sol.size());
-    for (size_t i = 0; i < sol.size(); ++i)
-        cost[i] = instance.calculateRunwayCost(sol[i]);
+    std::mt19937 gen(resolveSeed(params.seed));
+    VariableNeighborhoodDescent localSearch(instance, gen());
+    GreedyAlgorithm greedy;
+    const Timer timer(params.timeLimit);
 
-    std::mt19937 gen(std::random_device{}());
+    Schedule current = initialSolution.empty() ? greedy.graspNearestNeighbor(instance, 0.01, gen)
+                                               : initialSolution;
+    long long currentCost = localSearch.rvnd(current);
+    Schedule best = current;
+    long long bestCost = currentCost;
 
-    for (int f : rem)
+    int k = params.minDestroy;
+    int withoutImprovement = 0;
+
+    for (int iter = 0; iter < params.maxIterations && !timer.expired(); ++iter)
     {
-        std::vector<std::tuple<int, int, int>> candidates; // (incremento, pista, posição)
-        int minInc = INT_MAX;
-        int maxInc = INT_MIN;
+        Schedule s = current;
+        const auto removed = destroy(s, k, gen);
+        localSearch.insertCheapest(s, removed);
+        const long long cost = localSearch.rvnd(s);
 
-        // Calcula o incremento de custo para todas as posições possíveis
-        for (size_t r = 0; r < sol.size(); ++r)
+        if (cost < currentCost)
         {
-            for (size_t p = 0; p <= sol[r].size(); ++p)
+            current = std::move(s);
+            currentCost = cost;
+            withoutImprovement = 0;
+            k = params.minDestroy;
+
+            if (currentCost < bestCost)
             {
-                std::vector<int> tmp = sol[r];
-                tmp.insert(tmp.begin() + p, f);
-                int c = instance.calculateRunwayCost(tmp);
-                int inc = c - cost[r];
-                candidates.push_back(std::make_tuple(inc, r, p));
-                if (inc < minInc)
-                    minInc = inc;
-                if (inc > maxInc)
-                    maxInc = inc;
+                best = current;
+                bestCost = currentCost;
+                if (params.verbose)
+                    std::cout << "  [LNS] iter " << iter << ": melhor custo = " << bestCost
+                              << " (" << timer.elapsed() << " s)\n";
             }
         }
-
-        // Define o limiar para a RCL
-        int threshold = minInc + static_cast<int>(alpha * (maxInc - minInc));
-
-        // Cria a RCL com candidatos cujo incremento <= threshold
-        std::vector<std::tuple<int, int, int>> rcl;
-        for (auto &cand : candidates)
+        else if (++withoutImprovement >= params.patience)
         {
-            if (std::get<0>(cand) <= threshold)
+            withoutImprovement = 0;
+            k += params.destroyStep;
+            if (k > params.maxDestroy)
             {
-                rcl.push_back(cand);
+                current = greedy.graspNearestNeighbor(instance, 0.01, gen);
+                currentCost = localSearch.rvnd(current);
+                k = params.minDestroy;
             }
         }
-
-        // Se a RCL estiver vazia, usa todos os candidatos
-        if (rcl.empty())
-            rcl = candidates;
-
-        // Seleciona aleatoriamente um candidato da RCL
-        std::uniform_int_distribution<int> dist(0, rcl.size() - 1);
-        int idx = dist(gen);
-        auto [inc, br, bp] = rcl[idx];
-
-        // Insere o voo na posição selecionada
-        sol[br].insert(sol[br].begin() + bp, f);
-        cost[br] += inc; // Atualiza o custo da pista
     }
 
-    return sol;
+    return best;
 }

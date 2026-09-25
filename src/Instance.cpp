@@ -1,6 +1,7 @@
 #include "Instance.hpp"
 #include <fstream>
 #include <iostream>
+#include <sstream>
 #include <algorithm>
 #include <filesystem>
 #include <string>
@@ -10,181 +11,144 @@ bool Instance::read(const std::string &filePath)
     std::ifstream file(filePath);
     if (!file.is_open())
     {
-        std::cerr << "Error opening    //atributos file: " << filePath << std::endl;
+        std::cerr << "Erro ao abrir o arquivo: " << filePath << std::endl;
         return false;
     }
 
+    if (!(file >> numberOfFlights >> numberOfRunways) || numberOfFlights <= 0 || numberOfRunways <= 0)
+    {
+        std::cerr << "Cabeçalho inválido em: " << filePath << std::endl;
+        return false;
+    }
 
-    file >> numberOfFlights >> numberOfRunways;
+    const int n = numberOfFlights;
+    landingTakeoffTime.assign(n, 0);
+    waitingTime.assign(n, 0);
+    penalties.assign(n, 0);
+    separationTimes.assign(static_cast<std::size_t>(n) * n, 0);
 
-
-    landingTakeoffTime.resize(numberOfFlights);
-    waitingTime.resize(numberOfFlights);
-    penalties.resize(numberOfFlights);
-    costMatrix.resize(numberOfFlights, std::vector<int>(numberOfFlights));
-
-
-    for (int i = 0; i < numberOfFlights; ++i) 
+    for (int i = 0; i < n; ++i)
         file >> landingTakeoffTime[i];
-
-    for (int i = 0; i < numberOfFlights; ++i)
+    for (int i = 0; i < n; ++i)
         file >> waitingTime[i];
-
-    for (int i = 0; i < numberOfFlights; ++i)
+    for (int i = 0; i < n; ++i)
         file >> penalties[i];
+    for (auto &t : separationTimes)
+        file >> t;
 
-    for (int i = 0; i < numberOfFlights; ++i)
-        for (int j = 0; j < numberOfFlights; ++j)
-            file >> costMatrix[i][j];
-
-
-    file.close();
-
+    if (!file)
+    {
+        std::cerr << "Arquivo incompleto ou mal formatado: " << filePath << std::endl;
+        return false;
+    }
     return true;
 }
 
 void Instance::print() const
 {
-    std::cout << "numberOfFlights: " << numberOfFlights << "";
-    std::cout << "\n";
-    std::cout << "numberOfRunways: " << numberOfRunways << " ";
-    std::cout << "\n";
+    std::cout << "numberOfFlights: " << numberOfFlights << "\n";
+    std::cout << "numberOfRunways: " << numberOfRunways << "\n";
 
-    std::cout
-        << "Landing/Takeoff Times: ";
+    std::cout << "Landing/Takeoff Times: ";
     for (int val : landingTakeoffTime)
         std::cout << val << " ";
-    std::cout << "\n";
-
-    std::cout << "Waiting Times: ";
+    std::cout << "\nWaiting Times: ";
     for (int val : waitingTime)
         std::cout << val << " ";
-    std::cout << "\n";
-
-    std::cout << "Penalties: ";
+    std::cout << "\nPenalties: ";
     for (int val : penalties)
         std::cout << val << " ";
-    std::cout << "\n";
 
-    std::cout << "\nCost Matrix:\n";
+    std::cout << "\n\nSeparation Matrix:\n";
     for (int i = 0; i < numberOfFlights; ++i)
     {
         for (int j = 0; j < numberOfFlights; ++j)
-            std::cout << costMatrix[i][j] << " ";
+            std::cout << separation(i, j) << " ";
         std::cout << "\n";
     }
 }
 
-int Instance::calculateTotalCost(const std::vector<std::vector<int>> &schedules) const
+long long Instance::calculateRunwayCost(const std::vector<int> &runway) const
 {
-    int totalCost = 0;
-
-    // Para cada pista no escalonamento
-    for (const auto &runwaySchedule : schedules)
-    {
-        int prevEndTime = 0;
-        int prevFlight = -1;
-
-        for (int flight : runwaySchedule)
-        {
-            int ri = landingTakeoffTime[flight];
-            int tij = (prevFlight == -1) ? 0 : costMatrix[prevFlight][flight];
-            int startTime = std::max(prevEndTime + tij, ri);
-            totalCost += (startTime - ri) * penalties[flight];
-            prevEndTime = startTime + waitingTime[flight];
-            prevFlight = flight;
-        }
-    }
-
-    return totalCost;
-}
-
-int Instance::calculateRunwayCost(const std::vector<int> &runway) const
-{
-    //é parecido com o outro mas pra uma pista só (pras funções de vizinhança calcular só uma pista
-    //é bem menos custoso)
-    int cost = 0;
+    long long cost = 0;
     int prevEndTime = 0;
     int prevFlight = -1;
     for (int flight : runway)
     {
-        int tij = (prevFlight == -1) ? 0 : costMatrix[prevFlight][flight];
+        int tij = (prevFlight == -1) ? 0 : separation(prevFlight, flight);
         int startTime = std::max(prevEndTime + tij, landingTakeoffTime[flight]);
-        cost += (startTime - landingTakeoffTime[flight]) * penalties[flight];
+        cost += static_cast<long long>(startTime - landingTakeoffTime[flight]) * penalties[flight];
         prevEndTime = startTime + waitingTime[flight];
         prevFlight = flight;
     }
     return cost;
 }
 
-int Instance::calculatePartialRunwayCost(const std::vector<int> &runway, int startPos, int prevEndTime, int prevFlight) const
+long long Instance::calculateTotalCost(const Schedule &schedule) const
 {
-    int cost = 0;
-    for (size_t i = startPos; i < runway.size(); ++i)
-    {
-        int flight = runway[i];
-        int tij = (prevFlight == -1) ? 0 : costMatrix[prevFlight][flight];
-        int startTime = std::max(prevEndTime + tij, landingTakeoffTime[flight]);
-        cost += (startTime - landingTakeoffTime[flight]) * penalties[flight];
-        prevEndTime = startTime + waitingTime[flight];
-        prevFlight = flight;
-    }
-    return cost;
+    long long totalCost = 0;
+    for (const auto &runway : schedule)
+        totalCost += calculateRunwayCost(runway);
+    return totalCost;
 }
 
-std::pair<std::vector<int>, std::vector<int>> Instance::calculateRunwayDetails(const std::vector<int> &runway) const
+bool Instance::isFeasible(const Schedule &schedule, std::string *reason) const
 {
-    std::vector<int> startTimes(runway.size());
-    std::vector<int> accumulatedCosts(runway.size());
-    int prevEndTime = 0;
-    int prevFlight = -1;
-
-    for (size_t k = 0; k < runway.size(); ++k)
+    auto fail = [&](const std::string &msg)
     {
-        int flight = runway[k];
-        int tij = (prevFlight == -1) ? 0 : costMatrix[prevFlight][flight];
-        startTimes[k] = std::max(prevEndTime + tij, landingTakeoffTime[flight]);
-        accumulatedCosts[k] = (k > 0 ? accumulatedCosts[k - 1] : 0) +
-                              (startTimes[k] - landingTakeoffTime[flight]) * penalties[flight];
-        prevEndTime = startTimes[k] + waitingTime[flight];
-        prevFlight = flight;
-    }
-    return {startTimes, accumulatedCosts};
+        if (reason)
+            *reason = msg;
+        return false;
+    };
+
+    if (static_cast<int>(schedule.size()) != numberOfRunways)
+        return fail("número de pistas diferente de " + std::to_string(numberOfRunways));
+
+    std::vector<int> seen(numberOfFlights, 0);
+    for (const auto &runway : schedule)
+        for (int flight : runway)
+        {
+            if (flight < 0 || flight >= numberOfFlights)
+                return fail("voo fora do intervalo: " + std::to_string(flight + 1));
+            if (seen[flight]++)
+                return fail("voo repetido: " + std::to_string(flight + 1));
+        }
+
+    for (int i = 0; i < numberOfFlights; ++i)
+        if (!seen[i])
+            return fail("voo não alocado: " + std::to_string(i + 1));
+    return true;
 }
 
-void Instance::writeFlightList(const std::string &filePath, std::vector<std::vector<int>> flightList) const
+std::string Instance::writeSolution(const std::string &directory, const std::string &instanceName,
+                                    const Schedule &schedule) const
 {
-    // Cria um path a partir do filePath original
-    std::filesystem::path originalPath(filePath);
+    namespace fs = std::filesystem;
+    const long long cost = calculateTotalCost(schedule);
 
-    //dá pra melhorar isso passando o valor calculado na main aqui, mas esse é o menor dos nossos problemas
-    std::string newFileName = originalPath.stem().string() + "_" + std::to_string(calculateTotalCost(flightList)) + originalPath.extension().string();
-    std::filesystem::path newFilePath = originalPath.parent_path() / newFileName;
+    std::error_code ec;
+    fs::create_directories(directory, ec);
+    fs::path outPath = fs::path(directory) /
+                       (fs::path(instanceName).stem().string() + "_" + std::to_string(cost) + ".txt");
 
-    // Abre (ou cria) o novo arquivo
-    std::ofstream outFile(newFilePath);
+    std::ofstream outFile(outPath);
     if (!outFile.is_open())
     {
-        std::cerr << "Error creating file: " << newFilePath << std::endl;
-        return;
+        std::cerr << "Erro ao criar o arquivo: " << outPath << std::endl;
+        return "";
     }
 
-    outFile << calculateTotalCost(flightList) << "\n";
-    
-    for (size_t i = 0; i < flightList.size(); ++i)
+    outFile << cost << "\n";
+    for (const auto &runway : schedule)
     {
-        for (int flight : flightList[i])
-        {
-            outFile << flight + 1 << " "; // <- precisa do +1 pra estar de acordo com a especificação do projeto
-        }
+        for (int flight : runway)
+            outFile << flight + 1 << " "; // a especificação usa voos 1-indexados
         outFile << "\n";
     }
-
-    outFile.close();
-    std::cout << "Flight list written to: " << newFilePath << std::endl;
+    return outPath.string();
 }
 
-std::vector<std::vector<int>> Instance::readSolution(const std::string &filePath) const
+Schedule Instance::readSolution(const std::string &filePath) const
 {
     std::ifstream file(filePath);
     if (!file.is_open())
@@ -194,23 +158,28 @@ std::vector<std::vector<int>> Instance::readSolution(const std::string &filePath
     }
 
     std::string line;
-    //Descarta a primeira linha
+    // A primeira linha contém o custo, que é recalculado
     if (!std::getline(file, line))
-        return {}; // arquivo vazio ou sem linhas
+        return {};
 
-    std::vector<std::vector<int>> matrix;
-    // Para cada linha restante, extrai os inteiros
-    while (std::getline(file, line))
+    // Linhas vazias também são pistas (vazias), então não podem ser descartadas.
+    Schedule schedule;
+    while (std::getline(file, line) && static_cast<int>(schedule.size()) < numberOfRunways)
     {
         std::istringstream iss(line);
-        std::vector<int> row;
+        std::vector<int> runway;
         int value;
         while (iss >> value)
-            row.push_back(value - 1);
-        if (!row.empty())
-            matrix.push_back(std::move(row));
+            runway.push_back(value - 1);
+        schedule.push_back(std::move(runway));
     }
+    schedule.resize(numberOfRunways);
 
-    file.close();
-    return matrix;
+    std::string reason;
+    if (!isFeasible(schedule, &reason))
+    {
+        std::cerr << "Solução inválida em " << filePath << ": " << reason << std::endl;
+        return {};
+    }
+    return schedule;
 }

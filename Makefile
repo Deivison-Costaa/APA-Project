@@ -1,33 +1,35 @@
 # Compilador e flags
-CXX = g++
-CXXFLAGS = -Wall -Wextra -std=c++17 -I./Include -O3 -fopenmp
+CXX      = g++
+CXXFLAGS = -Wall -Wextra -std=c++17 -I./Include -O3 -fopenmp -MMD -MP
+LDFLAGS  = -fopenmp
 
 # Nome do executável final
 TARGET = apa_project
 
-# Fontes
 SRCS = src/main.cpp \
        src/Instance.cpp \
        src/GreedyAlgorithm.cpp \
-	   src/VariableNeighborhoodDescent.cpp \
-	   src/MetaHeuristics.cpp \
+       src/VariableNeighborhoodDescent.cpp \
+       src/MetaHeuristics.cpp
 
-# Objetos (substitui .cpp por .o)
 OBJS = $(SRCS:.cpp=.o)
+DEPS = $(OBJS:.o=.d)
 
-# Regra principal
+.PHONY: all clean test
+
 all: $(TARGET)
 
-# Linkagem final + limpeza automática dos .o
 $(TARGET): $(OBJS)
-	$(CXX) $(CXXFLAGS) -o $@ $^
-	rm -f $(OBJS)
+	$(CXX) $(LDFLAGS) -o $@ $^
 
-
-# Compilação dos arquivos fonte para objeto
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-# Limpeza
+# Confere o custo do exemplo do enunciado (deve ser 2800)
+test: $(TARGET)
+	./$(TARGET) tests/exemplo.txt --check tests/exemplo_solucao.txt
+
 clean:
-	rm -f $(OBJS) $(TARGET)
+	rm -f $(OBJS) $(DEPS) $(TARGET)
+
+-include $(DEPS)
